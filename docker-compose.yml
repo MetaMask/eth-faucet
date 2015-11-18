@@ -1,0 +1,4 @@
+ethNode:
+  image: ethereum/client-go
+  volumes:
+    - /var/data/geth:/root/.ethereum

@@ -1,0 +1,19 @@
+{
+  "name": "metamask-blockchain",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "express": "^4.13.3",
+    "request": "^2.66.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"No tests yet...\"",
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC"
+}

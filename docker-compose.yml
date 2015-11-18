@@ -1,4 +1,21 @@
+rpcProxy:
+  image: kumavis/eth-rpc-whitelist-proxy
+  restart: always
+  environment:
+    VIRTUAL_HOST: "rpc.metamask.io"
+    VIRTUAL_PORT: "9000"
+    PORT: "9000"
+    RPC_NODE: "ethNode:8545"
+  ports:
+    - "9000"
+  links:
+    - ethNode
+
 ethNode:
   image: ethereum/client-go
+  restart: always
+  command: "--rpc"
   volumes:
     - /var/data/geth:/root/.ethereum
+  ports:
+    - "8545"

@@ -5,7 +5,7 @@ rpcProxy:
     VIRTUAL_HOST: "rpc.metamask.io"
     VIRTUAL_PORT: "9000"
     PORT: "9000"
-    RPC_NODE: "ethNode:8545"
+    RPC_NODE: "ethNode:9000"
   ports:
     - "9000"
   links:
@@ -14,8 +14,8 @@ rpcProxy:
 ethNode:
   image: ethereum/client-go
   restart: always
-  command: "--rpc"
+  command: "--rpc --rpcaddr '0.0.0.0' --rpcport '9000' --rpccorsdomain '\"*\"' "
   volumes:
     - /var/data/geth:/root/.ethereum
   ports:
-    - "8545"
+    - "9000"

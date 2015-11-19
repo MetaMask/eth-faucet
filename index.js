@@ -1,6 +1,7 @@
-const express = require('express')
 const request = require('request')
+const express = require('express')
 const bodyParser = require('body-parser')
+const cors = require('cors')
 const PORT = process.env.PORT ||  9000
 const RPC_NODE = process.env.RPC_NODE
 const METHOD_WHITELIST =
@@ -9,6 +10,7 @@ const METHOD_WHITELIST =
   : ['eth_getBalance', 'eth_getStorage', 'eth_getBlock', 'eth_gasPrice']
 
 const app = express()
+app.use(cors())
 app.use(bodyParser.json())
 
 app.post('/', function(req, res){

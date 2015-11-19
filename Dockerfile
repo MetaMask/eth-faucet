@@ -1,4 +1,4 @@
-FROM ethereum/client-go
+FROM node:0.12
 MAINTAINER kumavis
 
 # setup app dir

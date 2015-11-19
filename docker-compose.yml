@@ -14,7 +14,7 @@ rpcProxy:
 ethNode:
   image: ethereum/client-go
   restart: always
-  command: "--rpc --rpcaddr '0.0.0.0' --rpcport '9000' --rpccorsdomain '\"*\"' "
+  command: "--rpc --rpcaddr '0.0.0.0' --rpcport '9000' "
   volumes:
     - /var/data/geth:/root/.ethereum
   ports:

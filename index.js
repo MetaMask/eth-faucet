@@ -7,7 +7,7 @@ const RPC_NODE = process.env.RPC_NODE
 const METHOD_WHITELIST =
   process.env.METHOD_WHITELIST
   ? process.env.METHOD_WHITELIST.split(',')
-  : ['eth_getBalance', 'eth_getStorage', 'eth_getBlock', 'eth_gasPrice']
+  : ['eth_getBalance', 'eth_getStorage', 'eth_getBlockByNumber', 'eth_gasPrice']
 
 const app = express()
 app.use(cors())

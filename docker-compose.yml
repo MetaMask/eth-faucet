@@ -6,6 +6,7 @@ rpcProxy:
     VIRTUAL_PORT: "9000"
     PORT: "9000"
     RPC_NODE: "ethNode:9000"
+    METHOD_WHITELIST: "eth_getBalance,eth_getTransactionCount,eth_getStorageAt,eth_getCode,eth_getBlockByNumber,eth_gasPrice"
   ports:
     - "9000"
   links:

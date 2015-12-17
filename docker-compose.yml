@@ -6,7 +6,6 @@ rpcProxy:
     VIRTUAL_PORT: "9000"
     PORT: "9000"
     RPC_NODE: "ethNode:9000"
-    METHOD_WHITELIST: "eth_getBalance,eth_getTransactionCount,eth_getStorageAt,eth_getCode,eth_getBlockByNumber,eth_gasPrice"
   ports:
     - "9000"
   links:
@@ -14,8 +13,11 @@ rpcProxy:
 
 ethNode:
   image: ethereum/client-go
-  restart: always
   command: "--rpc --rpcaddr '0.0.0.0' --rpcport '9000' "
+  restart: always
+  environment:
+    VIRTUAL_HOST: "rawrpc.metamask.io"
+    VIRTUAL_PORT: "9000"
   volumes:
     - /var/data/geth:/root/.ethereum
   ports:

@@ -8,12 +8,26 @@ const METHOD_WHITELIST =
   process.env.METHOD_WHITELIST
   ? process.env.METHOD_WHITELIST.split(',')
   : [
-    'eth_getBalance',
-    'eth_getTransactionCount',
-    'eth_getStorageAt',
-    'eth_getCode',
-    'eth_getBlockByNumber',
     'eth_gasPrice',
+    'eth_blockNumber',
+    'eth_getBalance',
+    'eth_getBlockByHash',
+    'eth_getBlockByNumber',
+    'eth_getBlockTransactionCountByHash',
+    'eth_getBlockTransactionCountByNumber',
+    'eth_getCode',
+    'eth_getStorageAt',
+    'eth_getTransactionByBlockHashAndIndex',
+    'eth_getTransactionByBlockNumberAndIndex',
+    'eth_getTransactionByHash',
+    'eth_getTransactionCount',
+    'eth_getTransactionReceipt',
+    'eth_getUncleByBlockHashAndIndex',
+    'eth_getUncleByBlockNumberAndIndex',
+    'eth_getUncleCountByBlockHash',
+    'eth_getUncleCountByBlockNumber',
+    'eth_sendRawTransaction',
+    'eth_getLogs',
     ]
 
 const app = express()
@@ -34,6 +48,8 @@ app.listen(PORT, function(){
   console.log('ethereum rpc listening on', PORT)
 })
 
+// example request format
+//
 // {
 // "jsonrpc": "2.0",
 // "method": "eth_getBalance",

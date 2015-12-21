@@ -1,22 +1,47 @@
-rpcProxy:
+mainRpcProxy:
   image: kumavis/eth-rpc-whitelist-proxy
   restart: always
   environment:
     VIRTUAL_HOST: "rpc.metamask.io"
     VIRTUAL_PORT: "9000"
     PORT: "9000"
-    RPC_NODE: "ethNode:9000"
+    RPC_NODE: "http://mainEthNode:9000"
   ports:
     - "9000"
   links:
-    - ethNode
+    - mainEthNode
 
-ethNode:
+testRpcProxy:
+  image: kumavis/eth-rpc-whitelist-proxy
+  restart: always
+  environment:
+    VIRTUAL_HOST: "testrpc.metamask.io"
+    VIRTUAL_PORT: "9000"
+    PORT: "9000"
+    RPC_NODE: "http://testEthNode:9000"
+  ports:
+    - "9000"
+  links:
+    - testEthNode
+
+mainEthNode:
   image: ethereum/client-go
   command: "--rpc --rpcaddr '0.0.0.0' --rpcport '9000' "
   restart: always
   environment:
     VIRTUAL_HOST: "rawrpc.metamask.io"
+    VIRTUAL_PORT: "9000"
+  volumes:
+    - /var/data/geth:/root/.ethereum
+  ports:
+    - "9000"
+
+testEthNode:
+  image: ethereum/client-go
+  command: "--rpc --rpcaddr '0.0.0.0' --rpcport '9000' --testnet --mine --minerthreads '1' --etherbase '0x4b9ab6d832cd623751cda87a2714352d4c3b62a7'"
+  restart: always
+  environment:
+    VIRTUAL_HOST: "rawtestrpc.metamask.io"
     VIRTUAL_PORT: "9000"
   volumes:
     - /var/data/geth:/root/.ethereum

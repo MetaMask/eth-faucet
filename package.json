@@ -8,7 +8,8 @@
     "body-parser": "^1.14.1",
     "cors": "^2.7.1",
     "express": "^4.13.3",
-    "request": "^2.66.0"
+    "request": "^2.66.0",
+    "web3-provider-engine": "^2.0.0"
   },
   "devDependencies": {},
   "scripts": {

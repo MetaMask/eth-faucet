@@ -1,9 +1,11 @@
+const ProviderEngine = require('web3-provider-engine')
+const RpcSubprovider = require('web3-provider-engine/subproviders/rpc.js')
 const request = require('request')
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const PORT = process.env.PORT ||  9000
-const RPC_NODE = process.env.RPC_NODE
+const RPC_NODE = process.env.RPC_NODE || 'https://testrpc.metamask.io/'
 const METHOD_WHITELIST =
   process.env.METHOD_WHITELIST
   ? process.env.METHOD_WHITELIST.split(',')
@@ -32,20 +34,55 @@ const METHOD_WHITELIST =
 
 const app = express()
 app.use(cors())
-app.use(bodyParser.json())
+app.use(bodyParser.text({ type: '*/*' }))
+
+// ProviderEngine based caching layer, with fallback to geth
+var proxyUrl = RPC_NODE
+var rpcProvider = CacheLayerProvider({
+  rpcUrl: proxyUrl,
+})
 
 app.post('/', function(req, res){
-  var requestObject = req.body
-  if (!validateRequest( requestObject )) return res.status(400).send('Not a valid request.')
-  if (!checkWhitelist( requestObject.method )) return res.status(400).send('Not a valid method.')
-  request.post({
-    uri: 'http://'+RPC_NODE,
-    json: requestObject,
-  }).pipe(res)
+  
+  // parse request
+  try {
+    var requestObject = JSON.parse(req.body)
+  } catch (err) {
+    return didError(new Error('JSON parse failure - '+err.message))
+  }
+
+  // validate request
+  if (!validateRequest( requestObject )) return invalidRequest()
+  if (!checkWhitelist( requestObject.method )) return invalidMethod()
+
+  // process request
+  rpcProvider.sendAsync(requestObject, function(err, result){
+    if (err) {
+      didError(err)
+    } else {
+      console.log('RPC:', requestObject.method, requestObject.params)//, '->', result.result || result.error)
+      res.send(result)
+    }
+  })
+
+  function didError(err){
+    console.error(err.stack)
+    res.status(500).json({ error: err.message })
+  }
+
+  function invalidRequest(){
+    res.status(400).json({ error: 'Not a valid request.' })
+  }
+
+  function invalidMethod(){
+    res.status(400).json({ error: 'Not a permitted RPC method.' })
+  }
+
 })
 
 app.listen(PORT, function(){
   console.log('ethereum rpc listening on', PORT)
+  console.log('and proxying to', proxyUrl)
 })
 
 // example request format
@@ -63,4 +100,25 @@ function validateRequest( requestObject ){
 
 function checkWhitelist( requestMethod ){
   return METHOD_WHITELIST.indexOf(requestMethod) !== -1
+}
+
+function CacheLayerProvider(opts){
+  opts = opts || {}
+
+  var engine = new ProviderEngine()
+
+  // data source
+  var rpcSubprovider = new RpcSubprovider({
+    rpcUrl: opts.rpcUrl || 'https://testrpc.metamask.io/',
+  })
+  engine.addSource(rpcSubprovider)
+
+  // done adding subproviders
+  engine.start()
+
+  engine.on('block', function(block){
+    console.log('BLOCK CHANGED:', '#'+block.number.toString('hex'), '0x'+block.hash.toString('hex'))
+  })
+
+  return engine
 }

@@ -1,5 +1,8 @@
 const ProviderEngine = require('web3-provider-engine')
 const RpcSubprovider = require('web3-provider-engine/subproviders/rpc.js')
+const WhitelistSubprovider = require('web3-provider-engine/subproviders/whitelist.js')
+const CacheSubprovider = require('web3-provider-engine/subproviders/cache.js')
+const VMSubprovider = require('web3-provider-engine/subproviders/vm.js')
 const request = require('request')
 const express = require('express')
 const bodyParser = require('body-parser')
@@ -38,12 +41,12 @@ app.use(bodyParser.text({ type: '*/*' }))
 
 // ProviderEngine based caching layer, with fallback to geth
 var proxyUrl = RPC_NODE
-var rpcProvider = CacheLayerProvider({
+var engine = startEngine({
   rpcUrl: proxyUrl,
 })
 
 app.post('/', function(req, res){
-  
+
   // parse request
   try {
     var requestObject = JSON.parse(req.body)
@@ -53,14 +56,14 @@ app.post('/', function(req, res){
 
   // validate request
   if (!validateRequest( requestObject )) return invalidRequest()
-  if (!checkWhitelist( requestObject.method )) return invalidMethod()
+
+  console.log('RPC:', requestObject.method, requestObject.params)//, '->', result.result || result.error)
 
   // process request
-  rpcProvider.sendAsync(requestObject, function(err, result){
+  engine.sendAsync(requestObject, function(err, result){
     if (err) {
       didError(err)
     } else {
-      console.log('RPC:', requestObject.method, requestObject.params)//, '->', result.result || result.error)
       res.send(result)
     }
   })
@@ -72,10 +75,6 @@ app.post('/', function(req, res){
 
   function invalidRequest(){
     res.status(400).json({ error: 'Not a valid request.' })
-  }
-
-  function invalidMethod(){
-    res.status(400).json({ error: 'Not a permitted RPC method.' })
   }
 
 })
@@ -98,19 +97,20 @@ function validateRequest( requestObject ){
   return typeof requestObject === 'object' && !!requestObject.method
 }
 
-function checkWhitelist( requestMethod ){
-  return METHOD_WHITELIST.indexOf(requestMethod) !== -1
-}
-
-function CacheLayerProvider(opts){
+function startEngine(opts){
   opts = opts || {}
 
   var engine = new ProviderEngine()
+
+  //engine.addSource(new WhitelistSubprovider(METHOD_WHITELIST));
+  engine.addSource(new CacheSubprovider());
+  engine.addSource(new VMSubprovider())
 
   // data source
   var rpcSubprovider = new RpcSubprovider({
     rpcUrl: opts.rpcUrl || 'https://testrpc.metamask.io/',
   })
+
   engine.addSource(rpcSubprovider)
 
   // done adding subproviders

@@ -1,5 +1,5 @@
 mainRpcProxy:
-  image: kumavis/eth-rpc-whitelist-proxy
+  image: kumavis/eth-rpc-wrapper
   restart: always
   environment:
     VIRTUAL_HOST: "rpc.metamask.io"
@@ -12,7 +12,7 @@ mainRpcProxy:
     - mainEthNode
 
 testRpcProxy:
-  image: kumavis/eth-rpc-whitelist-proxy
+  image: kumavis/eth-rpc-wrapper
   restart: always
   environment:
     VIRTUAL_HOST: "testrpc.metamask.io"

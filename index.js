@@ -10,7 +10,9 @@ function rpcWrapperEngine(opts){
 
   var engine = opts.engine || new ProviderEngine()
 
-  engine.addSource(new CacheSubprovider())
+  engine.addSource(new CacheSubprovider({
+    cacheLength: 6,
+  }))
 
   // data source
   engine.addSource(new RpcSubprovider({

@@ -9,12 +9,12 @@
     "cors": "^2.7.1",
     "express": "^4.13.3",
     "request": "^2.66.0",
-    "web3-provider-engine": "^2.0.0"
+    "web3-provider-engine": "^3.0.1"
   },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"No tests yet...\"",
-    "start": "node index.js"
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC"

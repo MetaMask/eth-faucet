@@ -3,7 +3,8 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const PORT = process.env.PORT ||  9000
-const RPC_NODE = process.env.RPC_NODE || throw new Error('Env var RPC_NODE not specified.')
+const RPC_NODE = process.env.RPC_NODE
+if (!RPC_NODE) throw new Error('Env var RPC_NODE not specified.')
 const METHOD_WHITELIST =
   process.env.METHOD_WHITELIST
   ? process.env.METHOD_WHITELIST.split(',')

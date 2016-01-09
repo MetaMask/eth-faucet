@@ -38,7 +38,7 @@ mainEthNode:
 
 testEthNode:
   image: ethereum/client-go
-  command: "--rpc --rpcaddr '0.0.0.0' --rpcport '9000' --testnet --mine --minerthreads '1' --etherbase '0x4b9ab6d832cd623751cda87a2714352d4c3b62a7'"
+  command: "--rpc --rpcaddr '0.0.0.0' --rpcport '9000' --testnet --mine --minerthreads '1' --etherbase '0x18a3462427bcc9133bb46e88bcbe39cd7ef0e761'"
   restart: always
   environment:
     VIRTUAL_HOST: "rawtestrpc.metamask.io"

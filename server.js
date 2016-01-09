@@ -2,6 +2,7 @@ const request = require('request')
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const rpcWrapperEngine = require('./index.js')
 const PORT = process.env.PORT ||  9000
 const RPC_NODE = process.env.RPC_NODE
 if (!RPC_NODE) throw new Error('Env var RPC_NODE not specified.')
@@ -36,7 +37,7 @@ const METHOD_WHITELIST =
 //
 
 // ProviderEngine based caching layer, with fallback to geth
-var engine = startEngine({
+var engine = rpcWrapperEngine({
   rpcUrl: RPC_NODE,
 })
 

@@ -93,7 +93,7 @@ app.post('/', function(req, res){
 
 app.listen(PORT, function(){
   console.log('ethereum rpc listening on', PORT)
-  console.log('and proxying to', proxyUrl)
+  console.log('and proxying to', RPC_NODE)
 })
 
 // example request format

@@ -44,6 +44,7 @@ app.use(bodyParser.text({ type: '*/*' }))
 
 // serve app
 app.get('/', function(req, res){
+  res.send('usage:  curl -d "0x92172d94d7e1c196177afee2e61c85164f81b762" -X POST http://thiswebserver')
 })
 
 // send ether

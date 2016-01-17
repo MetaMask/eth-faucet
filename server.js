@@ -2,35 +2,24 @@ const request = require('request')
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const ethUtil = require('ethereumjs-util')
+const Web3 = require('web3')
 const rpcWrapperEngine = require('./index.js')
+
 const PORT = process.env.PORT ||  9000
-const RPC_NODE = process.env.RPC_NODE
+const PRIVATE_KEY = process.env.PRIVATE_KEY || '0x693148ab1226b1c6536bcf240079bcb36a12cd1c8e4f42468903c734d22718be'
+if (!PRIVATE_KEY) throw new Error('Env var PRIVATE_KEY not specified.')
+const RPC_NODE = process.env.RPC_NODE || 'https://rawtestrpc.metamask.io/'
 if (!RPC_NODE) throw new Error('Env var RPC_NODE not specified.')
-const METHOD_WHITELIST =
-  process.env.METHOD_WHITELIST
-  ? process.env.METHOD_WHITELIST.split(',')
-  : [
-    'eth_gasPrice',
-    'eth_blockNumber',
-    'eth_getBalance',
-    'eth_getBlockByHash',
-    'eth_getBlockByNumber',
-    'eth_getBlockTransactionCountByHash',
-    'eth_getBlockTransactionCountByNumber',
-    'eth_getCode',
-    'eth_getStorageAt',
-    'eth_getTransactionByBlockHashAndIndex',
-    'eth_getTransactionByBlockNumberAndIndex',
-    'eth_getTransactionByHash',
-    'eth_getTransactionCount',
-    'eth_getTransactionReceipt',
-    'eth_getUncleByBlockHashAndIndex',
-    'eth_getUncleByBlockNumberAndIndex',
-    'eth_getUncleCountByBlockHash',
-    'eth_getUncleCountByBlockNumber',
-    'eth_sendRawTransaction',
-    'eth_getLogs',
-    ]
+
+// calculate faucet address
+var faucetKey = ethUtil.toBuffer(PRIVATE_KEY)
+var faucetAddress = ethUtil.privateToAddress(faucetKey)
+var faucetAddressHex = '0x'+faucetAddress.toString('hex')
+var ether = 1e18
+var weiValue = 30*ether
+
+console.log('Acting as faucet for address:', faucetAddressHex)
 
 //
 // create engine
@@ -39,15 +28,11 @@ const METHOD_WHITELIST =
 // ProviderEngine based caching layer, with fallback to geth
 var engine = rpcWrapperEngine({
   rpcUrl: RPC_NODE,
+  addressHex: faucetAddressHex,
+  privateKey: faucetKey,
 })
 
-// log new blocks
-engine.on('block', function(block){
-  console.log('BLOCK CHANGED:', '#'+block.number.toString('hex'), '0x'+block.hash.toString('hex'))
-})
-
-// start polling
-engine.start()
+var web3 = new Web3(engine)
 
 //
 // create webserver
@@ -57,22 +42,30 @@ const app = express()
 app.use(cors())
 app.use(bodyParser.text({ type: '*/*' }))
 
+// serve app
+app.get('/', function(req, res){
+})
+
+// send ether
 app.post('/', function(req, res){
 
+  // address: 18a3462427bcc9133bb46e88bcbe39cd7ef0e761
+  // priv: 693148ab1226b1c6536bcf240079bcb36a12cd1c8e4f42468903c734d22718be
+
   // parse request
-  try {
-    var requestObject = JSON.parse(req.body)
-  } catch (err) {
-    return didError(new Error('JSON parse failure - '+err.message))
+  var targetAddress = req.body
+  if (targetAddress.slice(0,2) !== '0x') {
+    targetAddress = '0x'+targetAddress
+  }
+  if (targetAddress.length != 42) {
+    return didError(new Error('Address parse failure - '+err.message))
   }
 
-  // validate request
-  if (!validateRequest( requestObject )) return invalidRequest()
-
-  console.log('RPC:', requestObject.method, requestObject.params)//, '->', result.result || result.error)
-
-  // process request
-  engine.sendAsync(requestObject, function(err, result){
+  web3.eth.sendTransaction({
+    address: targetAddress,
+    from: faucetAddressHex,
+    value: weiValue,
+  }, function(err, result){
     if (err) {
       didError(err)
     } else {

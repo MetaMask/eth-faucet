@@ -1,10 +1,12 @@
 const request = require('request')
 const express = require('express')
+const Browserify = require('browserify')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const ethUtil = require('ethereumjs-util')
 const Web3 = require('web3')
 const rpcWrapperEngine = require('./index.js')
+const pageCode = require('fs').readFileSync('./index.html', 'utf-8')
 
 const PORT = process.env.PORT ||  9000
 const PRIVATE_KEY = process.env.PRIVATE_KEY || '0x693148ab1226b1c6536bcf240079bcb36a12cd1c8e4f42468903c734d22718be'
@@ -34,61 +36,80 @@ var engine = rpcWrapperEngine({
 
 var web3 = new Web3(engine)
 
+var browserify = Browserify()
+browserify.add('./app.js')
+browserify.bundle(function(err, bundle){
+  if (err) throw err
+  var appCode = bundle.toString()
+  startServer(appCode)
+})
+
 //
 // create webserver
 //
+function startServer(appCode) {
 
-const app = express()
-app.use(cors())
-app.use(bodyParser.text({ type: '*/*' }))
+  const app = express()
+  app.use(cors())
+  app.use(bodyParser.text({ type: '*/*' }))
 
-// serve app
-app.get('/', function(req, res){
-  res.send('usage:  curl -d "0x92172d94d7e1c196177afee2e61c85164f81b762" -X POST http://thiswebserver')
-})
+  // serve app
+  app.get('/', deliverPage)
+  app.get('/index.html', deliverPage)
+  app.get('/app.js', deliverApp)
 
-// send ether
-app.post('/', function(req, res){
+  // send ether
+  app.post('/', function(req, res){
 
-  // address: 18a3462427bcc9133bb46e88bcbe39cd7ef0e761
-  // priv: 693148ab1226b1c6536bcf240079bcb36a12cd1c8e4f42468903c734d22718be
+    // address: 18a3462427bcc9133bb46e88bcbe39cd7ef0e761
+    // priv: 693148ab1226b1c6536bcf240079bcb36a12cd1c8e4f42468903c734d22718be
 
-  // parse request
-  var targetAddress = req.body
-  if (targetAddress.slice(0,2) !== '0x') {
-    targetAddress = '0x'+targetAddress
-  }
-  if (targetAddress.length != 42) {
-    return didError(new Error('Address parse failure - '+err.message))
-  }
-
-  web3.eth.sendTransaction({
-    to: targetAddress,
-    from: faucetAddressHex,
-    value: weiValue,
-  }, function(err, result){
-    if (err) {
-      didError(err)
-    } else {
-      res.send(result)
+    // parse request
+    var targetAddress = req.body
+    if (targetAddress.slice(0,2) !== '0x') {
+      targetAddress = '0x'+targetAddress
     }
+    if (targetAddress.length != 42) {
+      return didError(new Error('Address parse failure - '+err.message))
+    }
+
+    web3.eth.sendTransaction({
+      to: targetAddress,
+      from: faucetAddressHex,
+      value: weiValue,
+    }, function(err, result){
+      if (err) {
+        didError(err)
+      } else {
+        res.send(result)
+      }
+    })
+
+    function didError(err){
+      console.error(err.stack)
+      res.status(500).json({ error: err.message })
+    }
+
+    function invalidRequest(){
+      res.status(400).json({ error: 'Not a valid request.' })
+    }
+
   })
 
-  function didError(err){
-    console.error(err.stack)
-    res.status(500).json({ error: err.message })
-  }
-
-  function invalidRequest(){
-    res.status(400).json({ error: 'Not a valid request.' })
-  }
-
+  app.listen(PORT, function(){
+    console.log('ethereum rpc listening on', PORT)
+    console.log('and proxying to', RPC_NODE)
 })
 
-app.listen(PORT, function(){
-  console.log('ethereum rpc listening on', PORT)
-  console.log('and proxying to', RPC_NODE)
-})
+  function deliverPage(req, res){
+    res.status(200).send(pageCode)
+  }
+
+  function deliverApp(req, res){
+    res.status(200).send(appCode)
+  }
+
+}
 
 // example request format
 //

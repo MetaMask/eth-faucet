@@ -20,7 +20,7 @@ function rpcWrapperEngine(opts){
     },
     signTransaction: function(txParams, cb){
       try {
-        console.log('signing tx:', txParams)
+        // console.log('signing tx:', txParams)
         var tx = new Transaction({
           nonce: txParams.nonce,
           to: txParams.to,
@@ -31,6 +31,18 @@ function rpcWrapperEngine(opts){
         })
         tx.sign(privateKey)
         var serializedTx = '0x'+tx.serialize().toString('hex')
+
+        // deserialize and dump values to confirm configuration
+        var verifyTx = new Transaction(tx.serialize())
+        console.log('signed transaction:', {
+          to: '0x'+verifyTx.to.toString('hex'),
+          from: '0x'+verifyTx.from.toString('hex'),
+          nonce: '0x'+verifyTx.nonce.toString('hex'),
+          value: (ethUtil.bufferToInt(verifyTx.value)/1e18)+' ether',
+          data: '0x'+verifyTx.data.toString('hex'),
+          gasPrice: '0x'+verifyTx.gasPrice.toString('hex'),
+          gasLimit: '0x'+verifyTx.gasLimit.toString('hex'),
+        })
         cb(null, serializedTx)
       } catch (err) {
         cb(err)

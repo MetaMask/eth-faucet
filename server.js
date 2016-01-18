@@ -17,7 +17,7 @@ var faucetKey = ethUtil.toBuffer(PRIVATE_KEY)
 var faucetAddress = ethUtil.privateToAddress(faucetKey)
 var faucetAddressHex = '0x'+faucetAddress.toString('hex')
 var ether = 1e18
-var weiValue = 30*ether
+var weiValue = 1.337*ether
 
 console.log('Acting as faucet for address:', faucetAddressHex)
 
@@ -63,7 +63,7 @@ app.post('/', function(req, res){
   }
 
   web3.eth.sendTransaction({
-    address: targetAddress,
+    to: targetAddress,
     from: faucetAddressHex,
     value: weiValue,
   }, function(err, result){

@@ -112,6 +112,7 @@ function renderApp(){
 }
 
 function getEther(){
+  if (state.userAddress) return alert('no user accounts found')
   var uri = window.location.href
   var http = new XMLHttpRequest()
   var data = state.userAddress
@@ -121,6 +122,7 @@ function getEther(){
 }
 
 function sendTx(value){
+  if (state.userAddress) return alert('no user accounts found')
   web3.eth.sendTransaction({
     from: state.userAddress,
     to: state.faucetAddress,

@@ -70,7 +70,7 @@ function startServer(appCode) {
       targetAddress = '0x'+targetAddress
     }
     if (targetAddress.length != 42) {
-      return didError(new Error('Address parse failure - '+err.message))
+      return didError(new Error('Address parse failure - '+targetAddress))
     }
 
     web3.eth.sendTransaction({
@@ -99,7 +99,7 @@ function startServer(appCode) {
   app.listen(PORT, function(){
     console.log('ethereum rpc listening on', PORT)
     console.log('and proxying to', RPC_NODE)
-})
+  })
 
   function deliverPage(req, res){
     res.status(200).send(pageCode)

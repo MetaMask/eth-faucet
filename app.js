@@ -116,12 +116,7 @@ function getEther(){
   var http = new XMLHttpRequest()
   var data = state.userAddress
   http.open('POST', uri, true)
-
-  http.onreadystatechange = function() {//Call a function when the state changes.
-      if(http.readyState == 4 && http.status == 200) {
-          alert(http.responseText)
-      }
-  }
+  http.setRequestHeader('Content-type', 'application/rawdata')
   http.send(data)
 }
 

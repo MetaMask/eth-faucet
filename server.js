@@ -8,10 +8,10 @@ const Web3 = require('web3')
 const rpcWrapperEngine = require('./index.js')
 const pageCode = require('fs').readFileSync('./index.html', 'utf-8')
 
-const PORT = process.env.PORT ||  9000
+const PORT = process.env.PORT || 9000
 const PRIVATE_KEY = process.env.PRIVATE_KEY || '0x693148ab1226b1c6536bcf240079bcb36a12cd1c8e4f42468903c734d22718be'
 if (!PRIVATE_KEY) throw new Error('Env var PRIVATE_KEY not specified.')
-const RPC_NODE = process.env.RPC_NODE || 'https://rawtestrpc.metamask.io/'
+const RPC_NODE = process.env.RPC_NODE || 'https://morden.infura.io/'
 if (!RPC_NODE) throw new Error('Env var RPC_NODE not specified.')
 
 // calculate faucet address
@@ -19,7 +19,7 @@ var faucetKey = ethUtil.toBuffer(PRIVATE_KEY)
 var faucetAddress = ethUtil.privateToAddress(faucetKey)
 var faucetAddressHex = '0x'+faucetAddress.toString('hex')
 var ether = 1e18
-var weiValue = 1.337*ether
+var weiValue = 1*ether
 
 console.log('Acting as faucet for address:', faucetAddressHex)
 

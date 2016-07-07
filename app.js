@@ -22,6 +22,7 @@ startApp()
 
 function startApp(){
   renderApp()
+  updateState()
   setInterval(updateState, 4000)
 }
 

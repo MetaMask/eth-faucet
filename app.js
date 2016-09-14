@@ -11,16 +11,16 @@ var state = {
   txSendResult: null,
 }
 
-// check environment
-if (typeof web3 === 'undefined') {
-  return render(h('span', 'No web3 detected.'))
-}
-
-
-startApp()
+window.addEventListener('load', startApp)
 
 
 function startApp(){
+  // check environment
+  if (global.web3 === 'undefined') {
+    render(h('span', 'No web3 detected.'))
+    return
+  }
+
   renderApp()
   updateState()
   setInterval(updateState, 4000)
@@ -76,7 +76,10 @@ function renderApp(){
         h('div.panel-body', [
           h('div', 'address: '+state.faucetAddress),
           h('div', 'balance: '+formatBalance(state.faucetBalance)),
-          h('button.btn.btn-default', 'request 1 ether from faucet', {
+          h('button.btn.btn-success', 'request 1 ether from faucet', {
+            style: {
+              margin: '4px',
+            },
             // disabled: state.userAddress ? null : true,
             click: getEther,
           }),
@@ -91,15 +94,24 @@ function renderApp(){
           h('div', 'address: '+state.userAddress),
           h('div', 'balance: '+formatBalance(state.fromBalance)),
           h('div', 'donate to faucet:'),
-          h('button.btn.btn-default', '1 ether', {
+          h('button.btn.btn-warning', '1 ether', {
+            style: {
+              margin: '4px',
+            },
             // disabled: state.userAddress ? null : true,
             click: sendTx.bind(null, 1),
           }),
-          h('button.btn.btn-default', '10 ether', {
+          h('button.btn.btn-warning', '10 ether', {
+            style: {
+              margin: '4px',
+            },
             // disabled: state.userAddress ? null : true,
             click: sendTx.bind(null, 10),
           }),
-          h('button.btn.btn-default', '100 ether', {
+          h('button.btn.btn-warning', '100 ether', {
+            style: {
+              margin: '4px',
+            },
             // disabled: state.userAddress ? null : true,
             click: sendTx.bind(null, 100),
           }),

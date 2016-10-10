@@ -16,7 +16,7 @@ window.addEventListener('load', startApp)
 
 function startApp(){
   // check environment
-  if (global.web3 === 'undefined') {
+  if (!global.web3) {
     render(h('span', 'No web3 detected.'))
     return
   }

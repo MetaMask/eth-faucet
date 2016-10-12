@@ -3,9 +3,10 @@ const express = require('express')
 const Browserify = require('browserify')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-// const ethUtil = require('ethereumjs-util')
-const ethUtil = require('./ethUtil')
+const RateLimit = require('express-rate-limit')
 const Web3 = require('web3')
+const BN = require('bn.js')
+const ethUtil = require('./ethUtil')
 const rpcWrapperEngine = require('./index.js')
 const pageCode = require('fs').readFileSync('./index.html', 'utf-8')
 
@@ -60,6 +61,16 @@ function startServer(appCode) {
   app.get('/app.js', deliverApp)
 
   // send ether
+  app.enable('trust proxy')
+  // add IP-based rate limiting
+  app.post('/', new RateLimit({
+    // 15 minutes
+    windowMs: 15*60*1000,
+    // limit each IP to N requests per windowMs
+    max: 200,
+    // disable delaying - full speed until the max limit is reached
+    delayMs: 0,
+  }))
   app.post('/', function(req, res){
 
     // address: 18a3462427bcc9133bb46e88bcbe39cd7ef0e761
@@ -74,16 +85,20 @@ function startServer(appCode) {
       return didError(new Error('Address parse failure - '+targetAddress))
     }
 
-    web3.eth.sendTransaction({
-      to: targetAddress,
-      from: faucetAddressHex,
-      value: weiValue,
-    }, function(err, result){
-      if (err) {
-        didError(err)
-      } else {
+    // check for greediness
+    web3.eth.getBalance(targetAddress, function(err, balance){
+      if (err) return didError(err)
+      var balanceTooFull = balance.gt(new BN('5e18'))
+      if (balanceTooFull) return didError(new Error('User is greedy.'))
+      // send value
+      web3.eth.sendTransaction({
+        to: targetAddress,
+        from: faucetAddressHex,
+        value: weiValue,
+      }, function(err, result){
+        if (err) return didError(err)
         res.send(result)
-      }
+      })
     })
 
     function didError(err){

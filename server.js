@@ -86,9 +86,9 @@ function startServer(appCode) {
     }
 
     // check for greediness
-    web3.eth.getBalance(targetAddress, function(err, balance){
+    web3.eth.getBalance(targetAddress, 'pending', function(err, balance){
       if (err) return didError(err)
-      var balanceTooFull = balance.gt(new BN('5e18'))
+      var balanceTooFull = balance.gt(new BN('5000000000000000000', 10))
       if (balanceTooFull) return didError(new Error('User is greedy.'))
       // send value
       web3.eth.sendTransaction({
@@ -97,6 +97,7 @@ function startServer(appCode) {
         value: weiValue,
       }, function(err, result){
         if (err) return didError(err)
+        console.log('sent tx:', result)
         res.send(result)
       })
     })

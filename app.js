@@ -1,4 +1,6 @@
 const h = require('h')
+const xhr = require('xhr')
+
 
 var state = {
   isLoading: true,
@@ -129,9 +131,31 @@ function getEther(){
   var uri = window.location.href
   var http = new XMLHttpRequest()
   var data = state.userAddress
-  http.open('POST', uri, true)
-  http.setRequestHeader('Content-type', 'application/rawdata')
-  http.send(data)
+
+  xhr({
+    method: 'POST',
+    body: data,
+    uri: uri,
+    headers: {
+      'Content-Type': 'application/rawdata',
+    }
+  }, function (err, resp, body) {
+    // display error
+    if (err) {
+      state.txSendResult = err.stack
+      return
+    }
+    // display error-in-body
+    try {
+      var parsedResponse = JSON.parse(body)
+      if (parsedResponse.error) {
+        state.txSendResult = parsedResponse.error
+      }
+      return
+    } catch (err) {}
+    // display tx hash
+    console.log('faucet tx hash:', body)
+  })
 }
 
 function sendTx(value){

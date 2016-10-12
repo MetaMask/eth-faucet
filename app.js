@@ -150,6 +150,7 @@ function getEther(){
       var parsedResponse = JSON.parse(body)
       if (parsedResponse.error) {
         state.txSendResult = parsedResponse.error
+        updateState()
       }
       return
     } catch (err) {}
@@ -166,6 +167,7 @@ function sendTx(value){
     value: '0x'+(value*1e18).toString(16),
   }, function(err, txHash){
     state.txSendResult = (err && err.stack) || txHash
+    updateState()
   })
 }
 

@@ -70,7 +70,7 @@ function startServer(appCode) {
     if (targetAddress.slice(0,2) !== '0x') {
       targetAddress = '0x'+targetAddress
     }
-    if (targetAddress.length != 42) {
+    if (targetAddress.length !== 42) {
       return didError(new Error('Address parse failure - '+targetAddress))
     }
 

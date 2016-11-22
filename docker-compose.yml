@@ -4,6 +4,7 @@ faucet:
   ports:
     - "9000"
   environment:
+    RPC_NODE: "https://ropsten.infura.io"
     VIRTUAL_PORT: "9000"
     VIRTUAL_HOST: "faucet.metamask.io,testfaucet.metamask.io"
     LETSENCRYPT_HOST: "faucet.metamask.io,testfaucet.metamask.io"

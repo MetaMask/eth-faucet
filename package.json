@@ -15,7 +15,7 @@
     "h": "^0.1.0",
     "request": "^2.75.0",
     "web3": "^0.16.0",
-    "web3-provider-engine": "^8.1.7",
+    "web3-provider-engine": "^11.0.0",
     "xhr": "^2.2.2",
     "xtend": "^4.0.1"
   },

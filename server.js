@@ -1,4 +1,3 @@
-const request = require('request')
 const express = require('express')
 const Browserify = require('browserify')
 const bodyParser = require('body-parser')
@@ -127,17 +126,3 @@ function startServer(appCode) {
   }
 
 }
-
-// example request format
-//
-// {
-// "jsonrpc": "2.0",
-// "method": "eth_getBalance",
-// "params": ["0x407d73d8a49eeb85d32cf465507dd71d507100c1", "latest"],
-// "id":1
-// }
-
-function validateRequest( requestObject ){
-  return typeof requestObject === 'object' && !!requestObject.method
-}
-

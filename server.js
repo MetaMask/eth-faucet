@@ -12,7 +12,7 @@ const pageCode = require('fs').readFileSync('./index.html', 'utf-8')
 const PORT = process.env.PORT || 9000
 const PRIVATE_KEY = process.env.PRIVATE_KEY || '0x693148ab1226b1c6536bcf240079bcb36a12cd1c8e4f42468903c734d22718be'
 if (!PRIVATE_KEY) throw new Error('Env var PRIVATE_KEY not specified.')
-const RPC_NODE = process.env.RPC_NODE || 'https://morden.infura.io/'
+const RPC_NODE = process.env.RPC_NODE || 'https://ropsten.infura.io/'
 if (!RPC_NODE) throw new Error('Env var RPC_NODE not specified.')
 
 // calculate faucet address

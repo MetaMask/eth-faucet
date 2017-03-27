@@ -9,7 +9,7 @@
     "browserify": "^14.1.0",
     "cors": "^2.8.1",
     "ethereumjs-tx": "^1.1.2",
-    "ethereumjs-util": "^4.5.0",
+    "ethereumjs-util": "^5.1.1",
     "express": "^4.14.0",
     "express-rate-limit": "^2.5.0",
     "h": "^0.1.0",

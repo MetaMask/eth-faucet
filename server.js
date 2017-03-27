@@ -5,7 +5,7 @@ const cors = require('cors')
 const RateLimit = require('express-rate-limit')
 const Web3 = require('web3')
 const BN = require('bn.js')
-const ethUtil = require('./ethUtil')
+const ethUtil = require('ethereumjs-util')
 const rpcWrapperEngine = require('./index.js')
 const pageCode = require('fs').readFileSync('./index.html', 'utf-8')
 

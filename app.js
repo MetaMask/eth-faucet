@@ -10,7 +10,9 @@ var state = {
 
   userAddress: null,
   fromBalance: null,
-  txSendResult: null,
+  errorMessage: null,
+
+  transactions: [],
 }
 
 window.addEventListener('load', startApp)
@@ -24,13 +26,14 @@ function startApp(){
   }
 
   renderApp()
-  updateState()
-  setInterval(updateState, 4000)
+  updateStateFromNetwork()
+  setInterval(updateStateFromNetwork, 4000)
 }
 
-function updateState(){
+function updateStateFromNetwork(){
   getAccounts()
   getBalances()
+  renderApp()
 }
 
 function getAccounts(){
@@ -117,13 +120,34 @@ function renderApp(){
             // disabled: state.userAddress ? null : true,
             click: sendTx.bind(null, 100),
           }),
-          state.txSendResult ? h('div', state.txSendResult) : null,
         ]),
+      ]),
+
+      h('div.panel.panel-default', [
+        h('div.panel-heading', [
+          h('h3', 'transactions'),
+        ]),
+        h('div.panel-body', {
+          style: {
+            'flex-direction': 'column',
+            display: 'flex',
+          }
+        }, (
+          state.transactions.map((txHash) => {
+            return link(`https://ropsten.etherscan.io/tx/${txHash}`, txHash)
+          })
+        ))
       ]),
       
     ]),
 
+    state.errorMessage ? h('div', { style: { color: 'red', } }, state.errorMessage) : null,
+
   ])
+}
+
+function link(url, content){
+  return h('a', { href: url, target: '_blank' }, content)
 }
 
 function getEther(){
@@ -142,20 +166,22 @@ function getEther(){
   }, function (err, resp, body) {
     // display error
     if (err) {
-      state.txSendResult = err.stack
+      state.errorMessage = err || err.stack
       return
     }
     // display error-in-body
     try {
-      var parsedResponse = JSON.parse(body)
-      if (parsedResponse.error) {
-        state.txSendResult = parsedResponse.error
-        updateState()
+      if (body.slice(0,2) === '0x') {
+        state.transactions.push(body)
+      } else {
+        state.errorMessage = body
       }
-      return
-    } catch (err) {}
+    } catch (err) {
+      state.errorMessage = err || err.stack
+    }
     // display tx hash
-    console.log('faucet tx hash:', body)
+    console.log('faucet response:', body)
+    updateStateFromNetwork()
   })
 }
 
@@ -166,13 +192,20 @@ function sendTx(value){
     to: state.faucetAddress,
     value: '0x'+(value*1e18).toString(16),
   }, function(err, txHash){
-    state.txSendResult = (err && err.stack) || txHash
-    updateState()
+    if (err) {
+      state.errorMessage = (err && err.stack)
+    } else {
+      console.log('user sent tx:', txHash)
+      state.errorMessage = null
+      state.transactions.push(txHash)
+    }
+    updateStateFromNetwork()
   })
 }
 
 function render(elements){
   if (!Array.isArray(elements)) elements = [elements]
+  elements = elements.filter(Boolean)
   // clear
   document.body.innerHTML = ''
   // insert

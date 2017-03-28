@@ -87,7 +87,7 @@ function startServer(appCode) {
     // check for greediness
     web3.eth.getBalance(targetAddress, 'pending', function(err, balance){
       if (err) return didError(err)
-      var balanceTooFull = balance.gt(new BN('5000000000000000000', 10))
+      var balanceTooFull = balance.gt(new BN('10000000000000000000', 10))
       if (balanceTooFull) return didError(new Error('User is greedy.'))
       // send value
       web3.eth.sendTransaction({

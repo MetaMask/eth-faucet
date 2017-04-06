@@ -29,7 +29,7 @@ zero:
     - "9000"
   environment:
     FAUCET_CONFIG: "zero"
-    MASCARA_SUPPORT: true
+    MASCARA_SUPPORT: "to infinity and beyond"
     VIRTUAL_PORT: "9000"
     VIRTUAL_HOST: "zero-faucet.metamask.io"
     LETSENCRYPT_HOST: "zero-faucet.metamask.io"

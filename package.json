@@ -4,6 +4,11 @@
   "private": true,
   "description": "",
   "main": "index.js",
+  "browserify": {
+    "transform": [
+      "envify"
+    ]
+  },
   "dependencies": {
     "body-parser": "^1.15.2",
     "browserify": "^14.1.0",

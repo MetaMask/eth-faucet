@@ -1,11 +1,12 @@
 const h = require('h')
 const xhr = require('xhr')
+const config = require('./get-config')
 
 
 var state = {
   isLoading: true,
 
-  faucetAddress: '0x18a3462427bcc9133bb46e88bcbe39cd7ef0e761',
+  faucetAddress: config.address,
   faucetBalance: null,
 
   userAddress: null,

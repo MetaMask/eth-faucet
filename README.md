@@ -16,4 +16,4 @@ docker-compose build && docker-compose stop && docker-compose up -d && docker-co
 our nonce tracking sucks, so dont reuse the key or you'll have to restart the faucet.
 
 ### deploy:
-docker-compose build && docker-compose stop && docker-compose up -d && docker-compose logs
+docker-compose build && docker-compose stop && docker-compose up -d && docker-compose logs -f

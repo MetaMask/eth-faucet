@@ -3,6 +3,7 @@ const PORT = process.env.PORT || 9000
 
 const express = require('express')
 const Browserify = require('browserify')
+const envify = require('envify/custom')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const RateLimit = require('express-rate-limit')
@@ -33,7 +34,13 @@ var engine = rpcWrapperEngine({
 
 var web3 = new Web3(engine)
 
+// prepare app bundle
 var browserify = Browserify()
+// inject faucet address
+browserify.transform(envify({
+  FAUCET_ADDRESS: config.address,
+}))
+// build app
 browserify.add('./app.js')
 browserify.bundle(function(err, bundle){
   if (err) throw err

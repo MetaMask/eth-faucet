@@ -1,12 +1,12 @@
 const h = require('h')
 const xhr = require('xhr')
-const config = require('./get-config')
 
 
 var state = {
   isLoading: true,
 
-  faucetAddress: config.address,
+  // injected at build time
+  faucetAddress: process.env.FAUCET_ADDRESS,
   faucetBalance: null,
 
   userAddress: null,

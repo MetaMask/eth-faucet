@@ -1,12 +1,12 @@
 const h = require('h')
 const xhr = require('xhr')
-const config = require('./get-config')
+const config = require('./public-config')
 
 
 var state = {
   isLoading: true,
 
-  faucetAddress: config.address,
+  faucetAddress: window.MASCARA_SUPPORT ? config.mascaraAddress : config.regularAddress,
   faucetBalance: null,
 
   userAddress: null,
@@ -71,7 +71,7 @@ function renderApp(){
 
     h('nav.navbar.navbar-default', [
       h('h1.container-fluid', 'MetaMask Ether Faucet')
-    ]),    
+    ]),
 
     h('section.container', [
 
@@ -139,7 +139,7 @@ function renderApp(){
           })
         ))
       ]),
-      
+
     ]),
 
     state.errorMessage ? h('div', { style: { color: 'red', } }, state.errorMessage) : null,

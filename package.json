@@ -20,8 +20,8 @@
     "express-rate-limit": "^2.5.0",
     "h": "^0.1.0",
     "request": "^2.75.0",
-    "web3": "^0.16.0",
-    "web3-provider-engine": "^11.0.0",
+    "web3": "^0.20.1",
+    "web3-provider-engine": "^13.2.9",
     "xhr": "^2.2.2",
     "xtend": "^4.0.1"
   },

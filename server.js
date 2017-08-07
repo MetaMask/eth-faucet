@@ -26,7 +26,7 @@ console.log('Acting as faucet for address:', config.address)
 setTimeout(() => {
   console.log('Restarting for better nonce tracking')
   process.exit()
-}, 1 * 1000)
+}, 10 * 60 * 1000)
 
 //
 // create engine

@@ -7,7 +7,7 @@ const envify = require('envify/custom')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const RateLimit = require('express-rate-limit')
-const Web3 = require('web3')
+const EthQuery = require('ethjs-query')
 const BN = require('bn.js')
 const ethUtil = require('ethereumjs-util')
 const config = require('./get-config')
@@ -39,7 +39,7 @@ var engine = rpcWrapperEngine({
   privateKey: ethUtil.toBuffer(config.privateKey),
 })
 
-var web3 = new Web3(engine)
+var ethQuery = new EthQuery(engine)
 
 // prepare app bundle
 var browserify = Browserify()
@@ -86,6 +86,8 @@ function startServer(appCode) {
     // address: 18a3462427bcc9133bb46e88bcbe39cd7ef0e761
     // priv: 693148ab1226b1c6536bcf240079bcb36a12cd1c8e4f42468903c734d22718be
 
+    console.log('hit post')
+
     // parse request
     var targetAddress = req.body
     if (targetAddress.slice(0,2) !== '0x') {
@@ -95,22 +97,28 @@ function startServer(appCode) {
       return didError(new Error('Address parse failure - '+targetAddress))
     }
 
+    console.log('balance query')
+
     // check for greediness
-    web3.eth.getBalance(targetAddress, 'pending', function(err, balance){
-      if (err) return didError(err)
+    ethQuery.getBalance(targetAddress, 'pending').then(function(balance){
+      console.log('balance get result')
       var balanceTooFull = balance.gt(new BN('10000000000000000000', 10))
       if (balanceTooFull) return didError(new Error('User is greedy.'))
+        console.log('balance pass')
       // send value
-      web3.eth.sendTransaction({
+      ethQuery.sendTransaction({
         to: targetAddress,
         from: config.address,
         value: faucetAmountWei,
-      }, function(err, result){
-        if (err) return didError(err)
+        data: '',
+      }).then(function(result){
+        console.log('did send')
         console.log('sent tx:', result)
         res.send(result)
-      })
-    })
+      }).catch(didError)
+
+    }).catch(didError)
+
 
     function didError(err){
       console.error(err.stack)

@@ -16,11 +16,11 @@
     "envify": "^4.0.0",
     "ethereumjs-tx": "^1.1.2",
     "ethereumjs-util": "^5.1.1",
+    "ethjs-query": "^0.2.6",
     "express": "^4.14.0",
     "express-rate-limit": "^2.5.0",
     "h": "^0.1.0",
     "request": "^2.75.0",
-    "web3": "^0.20.1",
     "web3-provider-engine": "^13.2.9",
     "xhr": "^2.2.2",
     "xtend": "^4.0.1"

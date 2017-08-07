@@ -21,6 +21,13 @@ const faucetAmountWei = (1 * ETHER)
 
 console.log('Acting as faucet for address:', config.address)
 
+// Lazy nonce tracking fix:
+// Force an exit after ten minutes (docker will trigger a restart)
+setTimeout(() => {
+  console.log('Restarting for better nonce tracking')
+  process.exit()
+}, 10 * 60 * 1000)
+
 //
 // create engine
 //

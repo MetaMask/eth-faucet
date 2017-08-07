@@ -1,4 +1,4 @@
-const environment = process.env.FAUCET_CONFIG
+const environment = process.env.FAUCET_CONFIG || 'ropsten'
 const ethUtil = require('ethereumjs-util')
 const allConfigs = require('./config.js')
 const config = allConfigs[environment]

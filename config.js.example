@@ -1,0 +1,6 @@
+module.exports = {
+  ropsten: {
+    rpcOrigin: 'https://ropsten.infura.io',
+    privateKey: '0xefg1234....',
+  },
+}

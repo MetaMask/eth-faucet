@@ -4,18 +4,24 @@
   "private": true,
   "description": "",
   "main": "index.js",
+  "browserify": {
+    "transform": [
+      "envify"
+    ]
+  },
   "dependencies": {
     "body-parser": "^1.15.2",
-    "browserify": "^13.1.0",
+    "browserify": "^14.1.0",
     "cors": "^2.8.1",
+    "envify": "^4.0.0",
     "ethereumjs-tx": "^1.1.2",
-    "ethereumjs-util": "^5.0.1",
+    "ethereumjs-util": "^5.1.1",
     "express": "^4.14.0",
     "express-rate-limit": "^2.5.0",
     "h": "^0.1.0",
     "request": "^2.75.0",
     "web3": "^0.16.0",
-    "web3-provider-engine": "^8.1.5",
+    "web3-provider-engine": "^11.0.0",
     "xhr": "^2.2.2",
     "xtend": "^4.0.1"
   },

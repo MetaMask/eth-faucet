@@ -1,29 +1,25 @@
-const request = require('request')
+const MASCARA_SUPPORT = process.env.MASCARA_SUPPORT
+const PORT = process.env.PORT || 9000
+
 const express = require('express')
 const Browserify = require('browserify')
+const envify = require('envify/custom')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const RateLimit = require('express-rate-limit')
 const Web3 = require('web3')
 const BN = require('bn.js')
-const ethUtil = require('./ethUtil')
+const ethUtil = require('ethereumjs-util')
+const config = require('./get-config')
 const rpcWrapperEngine = require('./index.js')
-const pageCode = require('fs').readFileSync('./index.html', 'utf-8')
+const regularPageCode = require('fs').readFileSync('./index.html', 'utf-8')
+const mascaraPageCode = require('fs').readFileSync('./zero.html', 'utf-8')
+const pageCode = MASCARA_SUPPORT ? mascaraPageCode : regularPageCode
 
-const PORT = process.env.PORT || 9000
-const PRIVATE_KEY = process.env.PRIVATE_KEY || '0x693148ab1226b1c6536bcf240079bcb36a12cd1c8e4f42468903c734d22718be'
-if (!PRIVATE_KEY) throw new Error('Env var PRIVATE_KEY not specified.')
-const RPC_NODE = process.env.RPC_NODE || 'https://morden.infura.io/'
-if (!RPC_NODE) throw new Error('Env var RPC_NODE not specified.')
+const ETHER = 1e18
+const faucetAmountWei = (1 * ETHER)
 
-// calculate faucet address
-var faucetKey = ethUtil.toBuffer(PRIVATE_KEY)
-var faucetAddress = ethUtil.privateToAddress(faucetKey)
-var faucetAddressHex = '0x'+faucetAddress.toString('hex')
-var ether = 1e18
-var weiValue = 1*ether
-
-console.log('Acting as faucet for address:', faucetAddressHex)
+console.log('Acting as faucet for address:', config.address)
 
 //
 // create engine
@@ -31,14 +27,20 @@ console.log('Acting as faucet for address:', faucetAddressHex)
 
 // ProviderEngine based caching layer, with fallback to geth
 var engine = rpcWrapperEngine({
-  rpcUrl: RPC_NODE,
-  addressHex: faucetAddressHex,
-  privateKey: faucetKey,
+  rpcUrl: config.rpcOrigin,
+  addressHex: config.address,
+  privateKey: ethUtil.toBuffer(config.privateKey),
 })
 
 var web3 = new Web3(engine)
 
+// prepare app bundle
 var browserify = Browserify()
+// inject faucet address
+browserify.transform(envify({
+  FAUCET_ADDRESS: config.address,
+}))
+// build app
 browserify.add('./app.js')
 browserify.bundle(function(err, bundle){
   if (err) throw err
@@ -71,6 +73,7 @@ function startServer(appCode) {
     // disable delaying - full speed until the max limit is reached
     delayMs: 0,
   }))
+  // the fauceting request
   app.post('/', function(req, res){
 
     // address: 18a3462427bcc9133bb46e88bcbe39cd7ef0e761
@@ -88,13 +91,13 @@ function startServer(appCode) {
     // check for greediness
     web3.eth.getBalance(targetAddress, 'pending', function(err, balance){
       if (err) return didError(err)
-      var balanceTooFull = balance.gt(new BN('5000000000000000000', 10))
+      var balanceTooFull = balance.gt(new BN('10000000000000000000', 10))
       if (balanceTooFull) return didError(new Error('User is greedy.'))
       // send value
       web3.eth.sendTransaction({
         to: targetAddress,
-        from: faucetAddressHex,
-        value: weiValue,
+        from: config.address,
+        value: faucetAmountWei,
       }, function(err, result){
         if (err) return didError(err)
         console.log('sent tx:', result)
@@ -115,7 +118,7 @@ function startServer(appCode) {
 
   app.listen(PORT, function(){
     console.log('ethereum rpc listening on', PORT)
-    console.log('and proxying to', RPC_NODE)
+    console.log('and proxying to', config.rpcOrigin)
   })
 
   function deliverPage(req, res){
@@ -127,17 +130,3 @@ function startServer(appCode) {
   }
 
 }
-
-// example request format
-//
-// {
-// "jsonrpc": "2.0",
-// "method": "eth_getBalance",
-// "params": ["0x407d73d8a49eeb85d32cf465507dd71d507100c1", "latest"],
-// "id":1
-// }
-
-function validateRequest( requestObject ){
-  return typeof requestObject === 'object' && !!requestObject.method
-}
-

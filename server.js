@@ -83,11 +83,6 @@ function startServer(appCode) {
   // the fauceting request
   app.post('/', function(req, res){
 
-    // address: 18a3462427bcc9133bb46e88bcbe39cd7ef0e761
-    // priv: 693148ab1226b1c6536bcf240079bcb36a12cd1c8e4f42468903c734d22718be
-
-    console.log('hit post')
-
     // parse request
     var targetAddress = req.body
     if (targetAddress.slice(0,2) !== '0x') {
@@ -97,14 +92,10 @@ function startServer(appCode) {
       return didError(new Error('Address parse failure - '+targetAddress))
     }
 
-    console.log('balance query')
-
     // check for greediness
     ethQuery.getBalance(targetAddress, 'pending').then(function(balance){
-      console.log('balance get result')
       var balanceTooFull = balance.gt(new BN('10000000000000000000', 10))
       if (balanceTooFull) return didError(new Error('User is greedy.'))
-        console.log('balance pass')
       // send value
       ethQuery.sendTransaction({
         to: targetAddress,
@@ -112,7 +103,6 @@ function startServer(appCode) {
         value: faucetAmountWei,
         data: '',
       }).then(function(result){
-        console.log('did send')
         console.log('sent tx:', result)
         res.send(result)
       }).catch(didError)

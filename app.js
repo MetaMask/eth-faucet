@@ -62,12 +62,12 @@ function getAccounts(){
 function getBalances(){
   if (state.faucetAddress) global.ethQuery.getBalance(state.faucetAddress, function(err, result){
     if (err) return console.error(err)
-    state.faucetBalance = result.toNumber()/1e18
+    state.faucetBalance = (parseInt(result, 16)/1e18).toFixed(2)
     renderApp()
   })
   if (state.userAddress) global.ethQuery.getBalance(state.userAddress, function(err, result){
     if (err) return console.error(err)
-    state.fromBalance = result.toNumber()/1e18
+    state.fromBalance = (parseInt(result, 16)/1e18).toFixed(2)
     renderApp()
   })
 }

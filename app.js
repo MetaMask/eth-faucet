@@ -1,6 +1,7 @@
 const h = require('h')
 const xhr = require('xhr')
-
+const EthQuery = require('eth-query')
+const metamask = require('metamascara')
 
 var state = {
   isLoading: true,
@@ -22,9 +23,18 @@ window.addEventListener('load', startApp)
 function startApp(){
   // check environment
   if (!global.web3) {
-    render(h('span', 'No web3 detected.'))
-    return
+    // abort
+    if (!window.ENABLE_MASCARA) {
+      render(h('span', 'No web3 detected.'))
+      return
+    }
+    // start mascara
+    const provider = metamask.createDefaultProvider({})
+    global.web3 = { currentProvider: provider }
   }
+
+  // create query helper
+  global.ethQuery = new EthQuery(global.web3.currentProvider)
 
   renderApp()
   updateStateFromNetwork()
@@ -38,7 +48,7 @@ function updateStateFromNetwork(){
 }
 
 function getAccounts(){
-  web3.eth.getAccounts(function(err, accounts){
+  global.ethQuery.accounts(function(err, accounts){
     if (err) return console.error(err)
     var address = accounts[0]
     if (state.userAddress === address) return
@@ -50,12 +60,12 @@ function getAccounts(){
 }
 
 function getBalances(){
-  if (state.faucetAddress)  web3.eth.getBalance(state.faucetAddress, function(err, result){
+  if (state.faucetAddress) global.ethQuery.getBalance(state.faucetAddress, function(err, result){
     if (err) return console.error(err)
     state.faucetBalance = result.toNumber()/1e18
     renderApp()
   })
-  if (state.userAddress) web3.eth.getBalance(state.userAddress, function(err, result){
+  if (state.userAddress) global.ethQuery.getBalance(state.userAddress, function(err, result){
     if (err) return console.error(err)
     state.fromBalance = result.toNumber()/1e18
     renderApp()
@@ -188,7 +198,7 @@ function getEther(){
 
 function sendTx(value){
   if (!state.userAddress) return alert('no user accounts found')
-  web3.eth.sendTransaction({
+  global.ethQuery.sendTransaction({
     from: state.userAddress,
     to: state.faucetAddress,
     value: '0x'+(value*1e18).toString(16),

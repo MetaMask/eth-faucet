@@ -2,11 +2,10 @@
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/MetaMask/eth-faucet.svg?token=126240abfcbf915f71b337dfc332d4ad63e362166827d61078593e2ae20aff36&ts=1501793671323)](https://greenkeeper.io/)
 
-configure:
-edit config.js to have your config details.
-first namespace is used in `docker-compose.yml`.
+#### configure:
+generate a configuration using the provided script, and template file `config.js.template`.
 ```
-cp config.js.example config.js
+python config.py --privatekey-file pkfile --rpc-endpoint 'localhost:8545' --template config.js.template > config.js
 ```
 
 ### note:

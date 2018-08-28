@@ -1,0 +1,6 @@
+module.exports = {
+  "ewasm-testnet": {
+    rpcOrigin: "{rpcendpoint}"
+    privateKey: "{privatekey}",
+  },
+}

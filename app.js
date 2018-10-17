@@ -145,7 +145,7 @@ function renderApp(){
           }
         }, (
           state.transactions.map((txHash) => {
-            return link(`https://ropsten.etherscan.io/tx/${txHash}`, txHash)
+            return link(`http://ewasm.ethereum.org/explorer/tx/${txHash}`, txHash)
           })
         ))
       ]),

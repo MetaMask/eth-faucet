@@ -80,7 +80,7 @@ function renderApp(){
   render([
 
     h('nav.navbar.navbar-default', [
-      h('h1.container-fluid', 'MetaMask Ether Faucet')
+      h('h1.container-fluid', 'EWASM Testnet Ether Faucet')
     ]),    
 
     h('section.container', [
@@ -145,7 +145,7 @@ function renderApp(){
           }
         }, (
           state.transactions.map((txHash) => {
-            return link(`https://ropsten.etherscan.io/tx/${txHash}`, txHash)
+            return link(`http://ewasm.ethereum.org/explorer/tx/${txHash}`, txHash)
           })
         ))
       ]),

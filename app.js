@@ -59,12 +59,35 @@ function getAccounts(){
   })
 }
 
+/*
+ * The big new method added for EIP-1102 privacy mode compatibility.
+ * Read more here:
+ * https://medium.com/metamask/eip-1102-preparing-your-dapp-5027b2c9ed76
+ */
+function requestAccounts() {
+  const provider = global.web3.currentProvider
+  if ('enable' in global.web3.currentProvider) {
+    return provider.enable()
+    .then((accounts) => {
+      getAccounts()
+      return accounts[0]
+    })
+    .catch((err) => {
+      alert('Your web3 account is currently locked. Please unlock it to continue.')
+    })
+  } else {
+    alert('Your web3 account is currently locked. Please unlock it to continue.')
+    return new Promise.resolve()
+  }
+}
+
 function getBalances(){
   if (state.faucetAddress) global.ethQuery.getBalance(state.faucetAddress, function(err, result){
     if (err) return console.error(err)
     state.faucetBalance = (parseInt(result, 16)/1e18).toFixed(2)
     renderApp()
   })
+
   if (state.userAddress) global.ethQuery.getBalance(state.userAddress, function(err, result){
     if (err) return console.error(err)
     state.fromBalance = (parseInt(result, 16)/1e18).toFixed(2)
@@ -81,7 +104,7 @@ function renderApp(){
 
     h('nav.navbar.navbar-default', [
       h('h1.container-fluid', 'MetaMask Ether Faucet')
-    ]),    
+    ]),
 
     h('section.container', [
 
@@ -149,7 +172,7 @@ function renderApp(){
           })
         ))
       ]),
-      
+
     ]),
 
     state.errorMessage ? h('div', { style: { color: 'red', } }, state.errorMessage) : null,
@@ -162,55 +185,66 @@ function link(url, content){
 }
 
 function getEther(){
-  if (!state.userAddress) return alert('no user accounts found')
-  var uri = window.location.href
-  var http = new XMLHttpRequest()
-  var data = state.userAddress
 
-  xhr({
-    method: 'POST',
-    body: data,
-    uri: uri,
-    headers: {
-      'Content-Type': 'application/rawdata',
-    }
-  }, function (err, resp, body) {
-    // display error
-    if (err) {
-      state.errorMessage = err || err.stack
-      return
-    }
-    // display error-in-body
-    try {
-      if (body.slice(0,2) === '0x') {
-        state.transactions.push(body)
-      } else {
-        state.errorMessage = body
+  requestAccounts()
+  .then(function (account) {
+
+    // We already prompted to unlock in requestAccounts()
+    if (!account) return
+
+    var uri = window.location.href
+    var http = new XMLHttpRequest()
+    var data = account
+
+    xhr({
+      method: 'POST',
+      body: data,
+      uri: uri,
+      headers: {
+        'Content-Type': 'application/rawdata',
       }
-    } catch (err) {
-      state.errorMessage = err || err.stack
-    }
-    // display tx hash
-    console.log('faucet response:', body)
-    updateStateFromNetwork()
+    }, function (err, resp, body) {
+      // display error
+      if (err) {
+        state.errorMessage = err || err.stack
+        return
+      }
+      // display error-in-body
+      try {
+        if (body.slice(0,2) === '0x') {
+          state.transactions.push(body)
+        } else {
+          state.errorMessage = body
+        }
+      } catch (err) {
+        state.errorMessage = err || err.stack
+      }
+      // display tx hash
+      console.log('faucet response:', body)
+      updateStateFromNetwork()
+    })
   })
 }
 
 function sendTx(value){
-  if (!state.userAddress) return alert('no user accounts found')
-  global.ethQuery.sendTransaction({
-    from: state.userAddress,
-    to: state.faucetAddress,
-    value: '0x'+(value*1e18).toString(16),
-  }, function(err, txHash){
-    if (err) {
-      state.errorMessage = (err && err.stack)
-    } else {
-      console.log('user sent tx:', txHash)
-      state.errorMessage = null
-      state.transactions.push(txHash)
-    }
-    updateStateFromNetwork()
+  requestAccounts()
+  .then((address) => {
+    if (!address) return
+
+    global.ethQuery.sendTransaction({
+      from: address,
+      to: state.faucetAddress,
+      value: '0x'+(value*1e18).toString(16),
+    }, function(err, txHash){
+      if (err) {
+        state.errorMessage = (err && err.stack)
+      } else {
+        console.log('user sent tx:', txHash)
+        state.errorMessage = null
+        state.transactions.push(txHash)
+      }
+      updateStateFromNetwork()
+    })
   })
 }
 

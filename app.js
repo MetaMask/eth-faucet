@@ -76,8 +76,13 @@ function requestAccounts() {
       alert('Your web3 account is currently locked. Please unlock it to continue.')
     })
   } else {
-    alert('Your web3 account is currently locked. Please unlock it to continue.')
-    return new Promise.resolve()
+    // Fallback to old way if no privacy mode available
+    if(state.userAddress){
+      return new Promise.resolve(state.userAddress);
+    } else {
+      alert('Your web3 account is currently locked. Please unlock it to continue.')
+      return new Promise.resolve()
+    }
   }
 }
 

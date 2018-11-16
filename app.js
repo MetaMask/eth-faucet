@@ -81,7 +81,7 @@ function requestAccounts() {
       return Promise.resolve(state.userAddress);
     } else {
       alert('Your web3 account is currently locked. Please unlock it to continue.')
-      return new Promise.resolve()
+      return Promise.reject()
     }
   }
 }

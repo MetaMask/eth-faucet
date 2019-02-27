@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "body-parser": "^1.15.2",
-    "browserify": "^14.1.0",
+    "browserify": "^16.2.3",
     "cors": "^2.8.1",
     "envify": "^4.0.0",
     "eth-query": "^2.1.2",

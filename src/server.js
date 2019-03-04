@@ -11,23 +11,22 @@ const RateLimit = require('express-rate-limit')
 const EthQuery = require('ethjs-query')
 const BN = require('bn.js')
 const ethUtil = require('ethereumjs-util')
+const geoIp = require('@pablopunk/geo-ip')
+const emojiFlag = require('emoji-flag')
+
 const config = require('./get-config')
 const rpcWrapperEngine = require('./index.js')
 const regularPageCode = fs.readFileSync(__dirname + '/index.html', 'utf-8')
 const mascaraPageCode = fs.readFileSync(__dirname + '/zero.html', 'utf-8')
 const pageCode = MASCARA_SUPPORT ? mascaraPageCode : regularPageCode
 
-const ETHER = 1e18
-const faucetAmountWei = (1 * ETHER)
+const min = 60 * 1000
+const ether = 1e18
+const faucetAmountWei = (1 * ether)
+const EtherBN = new BN('1000000000000000000', 10)
+const MAX_BALANCE = EtherBN.mul(new BN('10', 10))
 
 console.log('Acting as faucet for address:', config.address)
-
-// Lazy nonce tracking fix:
-// Force an exit after ten minutes (docker will trigger a restart)
-setTimeout(() => {
-  console.log('Restarting for better nonce tracking')
-  process.exit()
-}, 10 * 60 * 1000)
 
 //
 // create engine
@@ -69,21 +68,23 @@ function startServer(appCode) {
   // trust the "x-forwarded-for" header from our reverse proxy
   app.enable('trust proxy')
 
+  // configure rate limiter
+  const rateLimiter = new RateLimit({
+    // 15 minutes
+    windowMs: 15 * min,
+    // limit each IP to N requests per windowMs
+    max: 20,
+    // disable delaying - full speed until the max limit is reached
+    delayMs: 0,
+  })
+
   // serve app
   app.get('/', deliverPage)
   app.get('/index.html', deliverPage)
   app.get('/app.js', deliverApp)
 
   // add IP-based rate limiting
-  app.post('/', new RateLimit({
-    // 15 minutes
-    windowMs: 15*60*1000,
-    // limit each IP to N requests per windowMs
-    max: 200,
-    // disable delaying - full speed until the max limit is reached
-    delayMs: 0,
-  }))
-
+  app.post('/', rateLimiter)
   // handle fauceting request
   app.post('/', handleRequest)
 
@@ -95,49 +96,70 @@ function startServer(appCode) {
 
   setupGracefulShutdown(server)
 
+  // Lazy nonce tracking fix:
+  // Force an exit after ten minutes (docker will trigger a restart)
+  setTimeout(() => {
+    console.log('Restarting for better nonce tracking')
+    shutdown()
+  }, 10 * min)
+
+  return
+
 
   async function handleRequest (req, res) {
-    // parse ip-address
-    const ipAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress
-
-    // parse address
-    const targetAddress = req.body
-    if (targetAddress.slice(0,2) !== '0x') {
-      targetAddress = '0x'+targetAddress
-    }
-    if (targetAddress.length !== 42) {
-      return didError(new Error('Address parse failure - '+targetAddress))
-    }
-
-    console.log(`${ipAddress} requesting for ${targetAddress}`)
-
     try {
+      // parse ip-address
+      const ipAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress
+      
+      let flag
+      try {
+        const geoData = geoIp({ ip: ipAddress })
+        const countryCode = geoData.country_code
+        flag = emojiFlag(countryCode) + ' '
+      } catch (err) {
+        flag = '  '
+      }
+      
+      // parse address
+      const targetAddress = req.body
+      if (targetAddress.slice(0,2) !== '0x') {
+        targetAddress = '0x'+targetAddress
+      }
+      if (targetAddress.length !== 42) {
+        return didError(res, new Error(`Address parse failure - "${targetAddress}"`))
+      }
+
+      const requestorMessage = `${flag} ${ipAddress} requesting for ${targetAddress}`
+
       // check for greediness
       const balance = await ethQuery.getBalance(targetAddress, 'pending')
-      const balanceTooFull = balance.gt(new BN('10000000000000000000', 10))
-      if (balanceTooFull) return didError(new Error('User is greedy.'))
+      const balanceTooFull = balance.gt(MAX_BALANCE)
+      if (balanceTooFull) {
+        console.log(`${requestorMessage} - already has too much ether`)
+        return didError(res, new Error('User is greedy - already has too much ether'))
+      }
       // send value
-      const result = await ethQuery.sendTransaction({
+      const txHash = await ethQuery.sendTransaction({
         to: targetAddress,
         from: config.address,
         value: faucetAmountWei,
         data: '',
       })
-      console.log('sent tx:', result)
-      res.send(result)
+      console.log(`${requestorMessage} - sent tx: ${txHash}`)
+      res.send(txHash)
+
     } catch (err) {
-      return didError(err)
-    }
-
-    function didError(err){
       console.error(err.stack)
-      res.status(500).json({ error: err.message })
+      return didError(res, err)
     }
+  }
 
-    function invalidRequest(){
-      res.status(400).json({ error: 'Not a valid request.' })
-    }
+  function didError(res, err){
+    res.status(500).json({ error: err.message })
+  }
 
+  function invalidRequest(res){
+    res.status(400).json({ error: 'Not a valid request.' })
   }
 
   function deliverPage(req, res){

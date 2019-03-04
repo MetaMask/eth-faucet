@@ -10,9 +10,11 @@
     ]
   },
   "dependencies": {
+    "@pablopunk/geo-ip": "^1.0.0",
     "body-parser": "^1.15.2",
     "browserify": "^16.2.3",
     "cors": "^2.8.1",
+    "emoji-flag": "^1.1.0",
     "envify": "^4.0.0",
     "eth-query": "^2.1.2",
     "ethereumjs-tx": "^1.1.2",
@@ -31,7 +33,8 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"No tests yet...\"",
-    "start": "MASCARA_SUPPORT='yes' node src/server.js"
+    "start": "MASCARA_SUPPORT='yes' node src/server.js",
+    "deploy": "docker-compose pull && docker-compose build && docker-compose stop && docker-compose up -d && docker-compose logs -f --tail 200"
   },
   "author": "",
   "license": "ISC"

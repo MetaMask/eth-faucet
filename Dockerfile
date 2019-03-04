@@ -1,4 +1,4 @@
-FROM node:6
+FROM node:10
 MAINTAINER kumavis
 
 # setup app dir

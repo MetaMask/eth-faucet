@@ -1,6 +1,6 @@
 const environment = process.env.FAUCET_CONFIG || 'ropsten'
 const ethUtil = require('ethereumjs-util')
-const allConfigs = require('./config.js')
+const allConfigs = require('../config.js')
 const config = allConfigs[environment]
 if (!config) throw new Error(`Unable to find config for environment "${environment}"`)
 if (!config.privateKey) throw new Error('No "privateKey" specified in config.')

@@ -12,8 +12,8 @@ const BN = require('bn.js')
 const ethUtil = require('ethereumjs-util')
 const config = require('./get-config')
 const rpcWrapperEngine = require('./index.js')
-const regularPageCode = require('fs').readFileSync('./index.html', 'utf-8')
-const mascaraPageCode = require('fs').readFileSync('./zero.html', 'utf-8')
+const regularPageCode = require('fs').readFileSync(__dirname + '/index.html', 'utf-8')
+const mascaraPageCode = require('fs').readFileSync(__dirname + '/zero.html', 'utf-8')
 const pageCode = MASCARA_SUPPORT ? mascaraPageCode : regularPageCode
 
 const ETHER = 1e18
@@ -48,7 +48,7 @@ browserify.transform(envify({
   FAUCET_ADDRESS: config.address,
 }))
 // build app
-browserify.add('./app.js')
+browserify.add(__dirname + '/app.js')
 browserify.bundle(function(err, bundle){
   if (err) throw err
   var appCode = bundle.toString()

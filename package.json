@@ -31,7 +31,7 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"No tests yet...\"",
-    "start": "MASCARA_SUPPORT='yes' node server.js"
+    "start": "MASCARA_SUPPORT='yes' node src/server.js"
   },
   "author": "",
   "license": "ISC"

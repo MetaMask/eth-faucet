@@ -24,7 +24,7 @@ const min = 60 * 1000
 const ether = 1e18
 const faucetAmountWei = (1 * ether)
 const EtherBN = new BN('1000000000000000000', 10)
-const MAX_BALANCE = EtherBN.mul(new BN('10', 10))
+const MAX_BALANCE = EtherBN.mul(new BN('4', 10))
 
 console.log('Acting as faucet for address:', config.address)
 

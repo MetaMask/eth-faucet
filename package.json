@@ -19,7 +19,7 @@
     "eth-query": "^2.1.2",
     "ethereumjs-tx": "^1.1.2",
     "ethereumjs-util": "^5.1.1",
-    "ethjs-query": "^0.2.6",
+    "ethjs-query": "^0.3.8",
     "express": "^4.14.0",
     "express-rate-limit": "^2.5.0",
     "h": "^0.1.0",

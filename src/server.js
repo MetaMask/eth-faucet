@@ -75,7 +75,7 @@ function startServer(appCode) {
     // limit each IP to N requests per windowMs
     max: 20,
     // disable delaying - full speed until the max limit is reached
-    delayMs: 0,
+    delayMs: 200,
   })
 
   // serve app

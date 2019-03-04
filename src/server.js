@@ -25,6 +25,7 @@ const ether = 1e18
 const faucetAmountWei = (1 * ether)
 const EtherBN = new BN('1000000000000000000', 10)
 const MAX_BALANCE = EtherBN.mul(new BN('4', 10))
+const AUTO_RESTART_INTERVAL = 60 * min
 
 console.log('Acting as faucet for address:', config.address)
 
@@ -97,11 +98,11 @@ function startServer(appCode) {
   setupGracefulShutdown(server)
 
   // Lazy nonce tracking fix:
-  // Force an exit after ten minutes (docker will trigger a restart)
+  // Force an exit (docker will trigger a restart)
   setTimeout(() => {
     console.log('Restarting for better nonce tracking')
     shutdown()
-  }, 10 * min)
+  }, AUTO_RESTART_INTERVAL)
 
   return
 

@@ -129,7 +129,8 @@ function startServer(appCode) {
         return didError(res, new Error(`Address parse failure - "${targetAddress}"`))
       }
 
-      const requestorMessage = `${flag} ${ipAddress} requesting for ${targetAddress}`
+      const alignedIpAddress = ipAddress.padStart(15, ' ')
+      const requestorMessage = `${flag} ${alignedIpAddress} requesting for ${targetAddress}`
 
       // check for greediness
       const balance = await ethQuery.getBalance(targetAddress, 'pending')
@@ -185,4 +186,3 @@ function startServer(appCode) {
   }
 
 }
-

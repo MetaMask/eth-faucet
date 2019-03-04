@@ -1,6 +1,7 @@
 const MASCARA_SUPPORT = process.env.MASCARA_SUPPORT
 const PORT = process.env.PORT || 9000
 
+const fs = require('fs')
 const express = require('express')
 const Browserify = require('browserify')
 const envify = require('envify/custom')
@@ -12,8 +13,8 @@ const BN = require('bn.js')
 const ethUtil = require('ethereumjs-util')
 const config = require('./get-config')
 const rpcWrapperEngine = require('./index.js')
-const regularPageCode = require('fs').readFileSync(__dirname + '/index.html', 'utf-8')
-const mascaraPageCode = require('fs').readFileSync(__dirname + '/zero.html', 'utf-8')
+const regularPageCode = fs.readFileSync(__dirname + '/index.html', 'utf-8')
+const mascaraPageCode = fs.readFileSync(__dirname + '/zero.html', 'utf-8')
 const pageCode = MASCARA_SUPPORT ? mascaraPageCode : regularPageCode
 
 const ETHER = 1e18
@@ -33,16 +34,16 @@ setTimeout(() => {
 //
 
 // ProviderEngine based caching layer, with fallback to geth
-var engine = rpcWrapperEngine({
+const engine = rpcWrapperEngine({
   rpcUrl: config.rpcOrigin,
   addressHex: config.address,
   privateKey: ethUtil.toBuffer(config.privateKey),
 })
 
-var ethQuery = new EthQuery(engine)
+const ethQuery = new EthQuery(engine)
 
 // prepare app bundle
-var browserify = Browserify()
+const browserify = Browserify()
 // inject faucet address
 browserify.transform(envify({
   FAUCET_ADDRESS: config.address,
@@ -51,7 +52,7 @@ browserify.transform(envify({
 browserify.add(__dirname + '/app.js')
 browserify.bundle(function(err, bundle){
   if (err) throw err
-  var appCode = bundle.toString()
+  const appCode = bundle.toString()
   startServer(appCode)
 })
 
@@ -61,16 +62,18 @@ browserify.bundle(function(err, bundle){
 function startServer(appCode) {
 
   const app = express()
+  // set CORS headers
   app.use(cors())
+  // parse body
   app.use(bodyParser.text({ type: '*/*' }))
+  // trust the "x-forwarded-for" header from our reverse proxy
+  app.enable('trust proxy')
 
   // serve app
   app.get('/', deliverPage)
   app.get('/index.html', deliverPage)
   app.get('/app.js', deliverApp)
 
-  // send ether
-  app.enable('trust proxy')
   // add IP-based rate limiting
   app.post('/', new RateLimit({
     // 15 minutes
@@ -80,11 +83,25 @@ function startServer(appCode) {
     // disable delaying - full speed until the max limit is reached
     delayMs: 0,
   }))
-  // the fauceting request
-  app.post('/', function(req, res){
 
-    // parse request
-    var targetAddress = req.body
+  // handle fauceting request
+  app.post('/', handleRequest)
+
+  // start server
+  const server = app.listen(PORT, function(){
+    console.log('ethereum rpc listening on', PORT)
+    console.log('and proxying to', config.rpcOrigin)
+  })
+
+  setupGracefulShutdown(server)
+
+
+  async function handleRequest (req, res) {
+    // parse ip-address
+    const ipAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress
+
+    // parse address
+    const targetAddress = req.body
     if (targetAddress.slice(0,2) !== '0x') {
       targetAddress = '0x'+targetAddress
     }
@@ -92,23 +109,25 @@ function startServer(appCode) {
       return didError(new Error('Address parse failure - '+targetAddress))
     }
 
-    // check for greediness
-    ethQuery.getBalance(targetAddress, 'pending').then(function(balance){
-      var balanceTooFull = balance.gt(new BN('10000000000000000000', 10))
+    console.log(`${ipAddress} requesting for ${targetAddress}`)
+
+    try {
+      // check for greediness
+      const balance = await ethQuery.getBalance(targetAddress, 'pending')
+      const balanceTooFull = balance.gt(new BN('10000000000000000000', 10))
       if (balanceTooFull) return didError(new Error('User is greedy.'))
       // send value
-      ethQuery.sendTransaction({
+      const result = await ethQuery.sendTransaction({
         to: targetAddress,
         from: config.address,
         value: faucetAmountWei,
         data: '',
-      }).then(function(result){
-        console.log('sent tx:', result)
-        res.send(result)
-      }).catch(didError)
-
-    }).catch(didError)
-
+      })
+      console.log('sent tx:', result)
+      res.send(result)
+    } catch (err) {
+      return didError(err)
+    }
 
     function didError(err){
       console.error(err.stack)
@@ -119,12 +138,7 @@ function startServer(appCode) {
       res.status(400).json({ error: 'Not a valid request.' })
     }
 
-  })
-
-  app.listen(PORT, function(){
-    console.log('ethereum rpc listening on', PORT)
-    console.log('and proxying to', config.rpcOrigin)
-  })
+  }
 
   function deliverPage(req, res){
     res.status(200).send(pageCode)
@@ -134,4 +148,19 @@ function startServer(appCode) {
     res.status(200).send(appCode)
   }
 
+  function setupGracefulShutdown() {
+    process.on('SIGTERM', shutdown)
+    process.on('SIGINT', shutdown)  
+  }
+
+  // Do graceful shutdown
+  function shutdown() {
+    console.log('gracefully shutting down...')
+    server.close(() => {
+      console.log('shut down complete.')
+      process.exit(0)
+    })
+  }
+
 }
+

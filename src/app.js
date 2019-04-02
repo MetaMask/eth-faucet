@@ -34,7 +34,9 @@ function startApp(){
   }
 
   // create query helper
-  global.ethQuery = new EthQuery(global.web3.currentProvider)
+  const provider = global.web3.currentProvider
+  global.ethQuery = new EthQuery(provider)
+  global.provider = provider
 
   renderApp()
   updateStateFromNetwork()
@@ -42,9 +44,20 @@ function startApp(){
 }
 
 function updateStateFromNetwork(){
+  getNetwork()
   getAccounts()
   getBalances()
   renderApp()
+}
+
+function getNetwork(){
+  global.provider.sendAsync({ id: 1, jsonrpc: '2.0', method: 'net_version' }, function(err, res){
+    if (err) return console.error(err)
+    if (res.error) return console.res.error(res.error)
+    var network = res.result
+    state.network = network
+    renderApp()
+  })
 }
 
 function getAccounts(){
@@ -105,10 +118,29 @@ function renderApp(){
   //   return render(h('span', 'web3 detected - Loading...'))
   // }
 
+  // render wrong network warning
+  if (state.network === '1') {
+    return render([
+
+      h('section.container', [
+        h('div.panel.panel-default', [
+          h('div.panel-heading', [
+            h('h3', 'network'),
+          ]),
+          h('div.panel-body', [
+            'currently on mainnet - please select the correct test network',
+          ]),
+        ]),
+      ]),
+
+    ])
+  }
+
+  // render faucet ui
   render([
 
     h('nav.navbar.navbar-default', [
-      h('h1.container-fluid', 'MetaMask Ether Faucet')
+      h('h1.container-fluid', 'MetaMask Ether Faucet'),
     ]),
 
     h('section.container', [

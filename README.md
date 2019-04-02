@@ -33,5 +33,5 @@ our nonce tracking sucks, so we shutdown the faucet regularly
 
 ### deploy:
 ```
-docker-compose build && docker-compose stop && docker-compose up -d && docker-compose logs -f
+docker-compose pull && docker-compose build && docker-compose stop && docker-compose up -d && docker-compose logs -f --tail 200
 ```

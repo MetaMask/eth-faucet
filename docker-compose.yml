@@ -9,28 +9,3 @@ ropsten:
     VIRTUAL_HOST: "faucet.metamask.io,ropsten-faucet.metamask.io"
     LETSENCRYPT_HOST: "faucet.metamask.io,ropsten-faucet.metamask.io"
     LETSENCRYPT_EMAIL: "admin@metamask.io"
-
-infuranet:
-  build: ./
-  restart: always
-  ports:
-    - "9000"
-  environment:
-    FAUCET_CONFIG: "infuranet"
-    VIRTUAL_PORT: "9000"
-    VIRTUAL_HOST: "infuranet-faucet.metamask.io"
-    LETSENCRYPT_HOST: "infuranet-faucet.metamask.io"
-    LETSENCRYPT_EMAIL: "admin@metamask.io"
-
-zero:
-  build: ./
-  restart: always
-  ports:
-    - "9000"
-  environment:
-    FAUCET_CONFIG: "zero"
-    MASCARA_SUPPORT: "to infinity and beyond"
-    VIRTUAL_PORT: "9000"
-    VIRTUAL_HOST: "zero-faucet.metamask.io"
-    LETSENCRYPT_HOST: "zero-faucet.metamask.io"
-    LETSENCRYPT_EMAIL: "admin@metamask.io"

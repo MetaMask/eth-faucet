@@ -1,6 +1,6 @@
 # App Specific
 
-config.js
+.env
 
 
 # Created by https://www.gitignore.io/api/osx,node
@@ -62,4 +62,3 @@ build/Release
 # Dependency directory
 # https://docs.npmjs.com/misc/faq#should-i-check-my-node-modules-folder-into-git
 node_modules
-

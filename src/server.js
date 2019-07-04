@@ -21,11 +21,12 @@ const mascaraPageCode = fs.readFileSync(__dirname + '/zero.html', 'utf-8')
 const pageCode = MASCARA_SUPPORT ? mascaraPageCode : regularPageCode
 
 const min = 60 * 1000
-const ether = 1e18
-const faucetAmountWei = (1 * ether)
 const EtherBN = new BN('1000000000000000000', 10)
 const MAX_BALANCE = EtherBN.mul(new BN('4', 10))
 const AUTO_RESTART_INTERVAL = 60 * min
+const metamask = require('metamascara')
+const minimal_abi = require('./safe_token_abi');
+let contract, decimals;
 
 console.log('Acting as faucet for address:', config.address)
 
@@ -41,6 +42,37 @@ const engine = rpcWrapperEngine({
 })
 
 const ethQuery = new EthQuery(engine)
+
+// check environment
+if (!global.web3) {
+  // abort
+  if (!window.ENABLE_MASCARA) {
+    render(h('span', 'No web3 detected.'))
+    return
+  }
+  // start mascara
+  const provider = metamask.createDefaultProvider({})
+  global.web3 = { currentProvider: provider }
+}
+
+// load SafeToken contract
+const faucetEthBalance = await global.web3.eth.getBalance(config.address);
+if(faucetEthBalance === 0) {
+  console.error(`ERR: Faucet account ${config.address} has no funds for tx fees.`);
+  process.exit(1);
+}
+
+contract = new global.web3.eth.Contract(minimal_abi, config.tokenAddress, { from: config.address });
+console.log(`contract initialized at ${config.tokenAddress}`);
+
+try {
+  decimals = await contract.methods.decimals().call();
+  console.log(`token has ${decimals} decimals`);
+} catch(e) {
+  console.log(`ERR: there seems to be no ERC-20 compatible contract at address ${config.tokenAddress} on this network`);
+  process.exit(1);
+}
+const faucetAmountWei = (config.amount * Math.pow(10, decimals))
 
 // prepare app bundle
 const browserify = Browserify()
@@ -141,14 +173,21 @@ function startServer(appCode) {
         return didError(res, new Error('User is greedy - already has too much ether'))
       }
       // send value
-      const txHash = await ethQuery.sendTransaction({
-        to: targetAddress,
-        from: config.address,
-        value: faucetAmountWei,
-        data: '',
-      })
+      refuelAccount(targetAddress, (err, txHash) => {
+        // this is an ugly workaround needed because web3 may throw an error after giving us a txHash
+        if(res.finished) return;
+  
+        if(err) {
+          res.writeHead(500, {'Content-Type': 'text/plain'});
+          res.end(`${err}\n`);
+        }
+        if(txHash) {
+          res.writeHead(200, {'Content-Type': 'text/plain'});
+          res.end(`txHash: ${txHash}\n`);
+        }
+      });
       console.log(`${requestorMessage} - sent tx: ${txHash}`)
-      res.send(txHash)
+      
 
     } catch (err) {
       console.error(err.stack)
@@ -186,4 +225,33 @@ function startServer(appCode) {
     })
   }
 
+  // sends some tokens to the given account <userAddr>, invokes the given callback with the resulting transaction hash
+  async function refuelAccount(userAddr, callback) {
+    console.log(`sending ${faucetAmountWei} tokens to ${userAddr}...`);
+
+    const txObj = {
+      from: config.address,
+      to: config.tokenAddress,
+      data: contract.methods.transfer(userAddr, new BN(faucetAmountWei).mul(new BN(10).pow(new BN(decimals))).toString()).encodeABI(),
+      gas: config.gas
+    };
+    const signedTxObj = await web3.eth.accounts.signTransaction(txObj, config.privateKey);
+
+    web3.eth.sendSignedTransaction(signedTxObj.rawTransaction)
+      .once('transactionHash', function (txHash) {
+        console.log(`waiting for processing of token transfer transaction ${txHash}`);
+        callback(null, txHash);
+      })
+      .once('receipt', function (receipt) {
+        if (! receipt.status) {
+          console.error(`token transfer transaction ${receipt.transactionHash} failed`);
+        } else {
+          console.log(`token transfer transaction ${receipt.transactionHash} executed in block ${receipt.blockNumber} consuming ${receipt.gasUsed} gas`);
+        }
+      })
+      .on('error', function (err) {
+        console.error(`token transfer transaction failed: ${err}`);
+        callback(err, null);
+      });
+  }
 }

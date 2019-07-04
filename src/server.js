@@ -21,12 +21,13 @@ const mascaraPageCode = fs.readFileSync(__dirname + '/zero.html', 'utf-8')
 const pageCode = MASCARA_SUPPORT ? mascaraPageCode : regularPageCode
 
 const min = 60 * 1000
+const faucetAmountWei = (config.amount * Math.pow(10, config.decimals))
 const EtherBN = new BN('1000000000000000000', 10)
 const MAX_BALANCE = EtherBN.mul(new BN('4', 10))
 const AUTO_RESTART_INTERVAL = 60 * min
-const metamask = require('metamascara')
-const minimal_abi = require('./safe_token_abi');
-let contract, decimals;
+const minimal_abi = require('../safe_token_abi');
+const Web3 = require('web3');
+let web3, contract, decimals;
 
 console.log('Acting as faucet for address:', config.address)
 
@@ -43,36 +44,11 @@ const engine = rpcWrapperEngine({
 
 const ethQuery = new EthQuery(engine)
 
-// check environment
-if (!global.web3) {
-  // abort
-  if (!window.ENABLE_MASCARA) {
-    render(h('span', 'No web3 detected.'))
-    return
-  }
-  // start mascara
-  const provider = metamask.createDefaultProvider({})
-  global.web3 = { currentProvider: provider }
-}
+web3 = new Web3(new Web3.providers.HttpProvider(config.rpcOrigin));
 
 // load SafeToken contract
-const faucetEthBalance = await global.web3.eth.getBalance(config.address);
-if(faucetEthBalance === 0) {
-  console.error(`ERR: Faucet account ${config.address} has no funds for tx fees.`);
-  process.exit(1);
-}
-
-contract = new global.web3.eth.Contract(minimal_abi, config.tokenAddress, { from: config.address });
+contract = new web3.eth.Contract(minimal_abi, config.tokenAddress, { from: config.address });
 console.log(`contract initialized at ${config.tokenAddress}`);
-
-try {
-  decimals = await contract.methods.decimals().call();
-  console.log(`token has ${decimals} decimals`);
-} catch(e) {
-  console.log(`ERR: there seems to be no ERC-20 compatible contract at address ${config.tokenAddress} on this network`);
-  process.exit(1);
-}
-const faucetAmountWei = (config.amount * Math.pow(10, decimals))
 
 // prepare app bundle
 const browserify = Browserify()
@@ -186,9 +162,6 @@ function startServer(appCode) {
           res.end(`txHash: ${txHash}\n`);
         }
       });
-      console.log(`${requestorMessage} - sent tx: ${txHash}`)
-      
-
     } catch (err) {
       console.error(err.stack)
       return didError(res, err)
@@ -232,7 +205,7 @@ function startServer(appCode) {
     const txObj = {
       from: config.address,
       to: config.tokenAddress,
-      data: contract.methods.transfer(userAddr, new BN(faucetAmountWei).mul(new BN(10).pow(new BN(decimals))).toString()).encodeABI(),
+      data: contract.methods.transfer(userAddr, new BN(faucetAmountWei).toString()).encodeABI(),
       gas: config.gas
     };
     const signedTxObj = await web3.eth.accounts.signTransaction(txObj, config.privateKey);

@@ -1,0 +1,24 @@
+{
+  "addons": [
+
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ],
+  "env": {
+    "PRIVATE_KEY": {
+      "required": true
+    },
+    "TOKEN_ADDRESS": {
+      "required": true
+    }
+  },
+  "formation": {
+  },
+  "name": "eth-faucet",
+  "scripts": {
+  },
+  "stack": "heroku-18"
+}

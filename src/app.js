@@ -3,7 +3,7 @@ const xhr = require("xhr")
 const EthQuery = require("eth-query")
 const metamask = require("metamascara")
 const config = require("./get-config")
-const getSafeTokenInWallet = require("./utils")
+const { getSafeTokenInWallet } = require("./helpers/blockchain")
 
 var state = {
   isLoading: true,

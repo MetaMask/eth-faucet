@@ -285,7 +285,7 @@ const getSafe = () => {
 }
 
 const sendTx = amount => {
-  requestAccounts().then(async address => {
+  requestAccounts().then(address => {
     if (!address) return
 
     const safeAmountWei = amount * Math.pow(10, config.decimals)

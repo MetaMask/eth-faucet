@@ -167,8 +167,7 @@ function startServer(appCode) {
           res.end(`${err}\n`)
         }
         if (txHash) {
-          res.writeHead(200, { "Content-Type": "text/plain" })
-          res.end(`txHash: ${txHash}\n`)
+          res.send(txHash)
         }
       })
     } catch (err) {

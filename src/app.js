@@ -4,7 +4,7 @@ const EthQuery = require("eth-query")
 const metamask = require("metamascara")
 const config = require("./get-config")
 const safeToken = require("../safe_token_abi")
-const getSafeTokenInWallet = require("./utils")
+const { getSafeTokenInWallet } = require("./helpers/blockchain")
 const Web3 = require("web3")
 let web3, contract
 

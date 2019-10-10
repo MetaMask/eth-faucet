@@ -227,7 +227,12 @@ const renderApp = () => {
             }
           },
           state.transactions.map(txHash => {
-            return link(`https://ropsten.etherscan.io/tx/${txHash}`, txHash)
+            if(txHash.type === 'in')  {
+              return link(`https://ropsten.etherscan.io/tx/${txHash.hash}`, `100 SAFE is on its way to your account | See the following tx for details: ${txHash.hash}`)
+            } else {
+              return link(`https://ropsten.etherscan.io/tx/${txHash}`, txHash)
+            }
+          
           })
         )
       ])
@@ -269,7 +274,7 @@ const getSafe = () => {
         // display error-in-body
         try {
           if (body.slice(0, 2) === "0x") {
-            state.transactions.push(body)
+            state.transactions.push({ hash: body, type: "in" })
           } else {
             state.errorMessage = body
           }
@@ -288,7 +293,7 @@ const sendTx = amount => {
   requestAccounts().then(address => {
     if (!address) return
 
-    const safeAmountWei = amount * Math.pow(10, config.decimals)
+    const safeAmountWei = web3.utils.toWei(amount.toString(), "ether")
 
     contract.methods
       .transfer(state.faucetAddress, safeAmountWei.toString())

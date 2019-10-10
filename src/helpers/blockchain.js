@@ -2,7 +2,7 @@ const Web3 = require("web3")
 const safeToken = require("../../safe_token_abi.json")
 const config = require("../get-config")
 
-let web3
+let web3, nonce
 web3 = new Web3(new Web3.providers.HttpProvider(config.rpcOrigin))
 
 const safeContract = new web3.eth.Contract(safeToken, config.tokenAddress)
@@ -16,9 +16,17 @@ const refuelAccount = async (faucetAmountWei, userAddr, callback) => {
       .toString()} tokens to ${userAddr}...`
   )
 
+
+  if(!nonce) {
+    nonce = await web3.eth.getTransactionCount(config.address)
+  } else {
+    nonce+=1
+  }
+ 
   const txObj = {
     from: config.address,
     to: config.tokenAddress,
+    nonce,
     data: safeContract.methods
       .transfer(userAddr, web3.utils.toBN(faucetAmountWei).toString())
       .encodeABI(),

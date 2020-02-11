@@ -30,7 +30,8 @@
     "xtend": "4.0.1"
   },
   "engines": {
-    "node": "10.17.0"
+    "node": "10.17.0",
+    "yarn": "1.22.0"
   },
   "devDependencies": {},
   "scripts": {

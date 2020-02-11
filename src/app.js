@@ -156,7 +156,7 @@ const renderApp = () => {
   // render faucet ui
   render([
     h("nav.navbar.navbar-default", [
-      h("h1.container-fluid", "SAFE Token Faucet")
+      h("h1.container-fluid", "Quantstamp Test DAI Token Faucet")
     ]),
 
     h("section.container", [
@@ -167,7 +167,7 @@ const renderApp = () => {
           h("div", "balance: " + formatBalance(state.faucetBalance)),
           h(
             "button.btn.btn-success",
-            `request ${config.amount} SAFE from faucet`,
+            `request ${config.amount} DAI from faucet`,
             {
               style: {
                 margin: "4px"
@@ -185,28 +185,28 @@ const renderApp = () => {
           h("div", "address: " + state.userAddress),
           h("div", "balance: " + formatBalance(state.fromBalance)),
           h("div", "donate to faucet:"),
-          h("button.btn.btn-warning", "1 SAFE", {
+          h("button.btn.btn-warning", "1 Test DAI", {
             style: {
               margin: "4px"
             },
             // disabled: state.userAddress ? null : true,
             click: sendTx.bind(null, 1)
           }),
-          h("button.btn.btn-warning", "10 SAFE", {
+          h("button.btn.btn-warning", "10 Test DAI", {
             style: {
               margin: "4px"
             },
             // disabled: state.userAddress ? null : true,
             click: sendTx.bind(null, 10)
           }),
-          h("button.btn.btn-warning", "100 SAFE", {
+          h("button.btn.btn-warning", "100 Test DAI", {
             style: {
               margin: "4px"
             },
             // disabled: state.userAddress ? null : true,
             click: sendTx.bind(null, 100)
           }),
-          h("button.btn.btn-warning", `ALL SAFE`, {
+          h("button.btn.btn-warning", `ALL Test DAI`, {
             style: {
               margin: "4px"
             },
@@ -227,12 +227,14 @@ const renderApp = () => {
             }
           },
           state.transactions.map(txHash => {
-            if(txHash.type === 'in')  {
-              return link(`https://ropsten.etherscan.io/tx/${txHash.hash}`, `100 SAFE is on its way to your account | See the following tx for details: ${txHash.hash}`)
+            if (txHash.type === "in") {
+              return link(
+                `https://ropsten.etherscan.io/tx/${txHash.hash}`,
+                `100 Test DAI is on its way to your account | See the following tx for details: ${txHash.hash}`
+              )
             } else {
               return link(`https://ropsten.etherscan.io/tx/${txHash}`, txHash)
             }
-          
           })
         )
       ])
@@ -322,5 +324,5 @@ const render = elements => {
 }
 
 const formatBalance = balance => {
-  return balance ? balance + " SAFE" : "..."
+  return balance ? balance + " Test DAI" : "..."
 }

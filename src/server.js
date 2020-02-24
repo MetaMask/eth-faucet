@@ -1,6 +1,11 @@
 const MASCARA_SUPPORT = process.env.MASCARA_SUPPORT
 const PORT = process.env.PORT || 9000
 
+// log unhandled promise rejections
+process.on('unhandledRejection', error => {
+  console.error('unhandledRejection', error)
+})
+
 const fs = require('fs')
 const express = require('express')
 const Browserify = require('browserify')
@@ -111,7 +116,7 @@ function startServer(appCode) {
     try {
       // parse ip-address
       const ipAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress
-      
+
       let flag
       try {
         const geoData = geoIp({ ip: ipAddress })
@@ -120,7 +125,7 @@ function startServer(appCode) {
       } catch (err) {
         flag = '  '
       }
-      
+
       // parse address
       const targetAddress = req.body
       if (targetAddress.slice(0,2) !== '0x') {
@@ -174,7 +179,7 @@ function startServer(appCode) {
 
   function setupGracefulShutdown() {
     process.on('SIGTERM', shutdown)
-    process.on('SIGINT', shutdown)  
+    process.on('SIGINT', shutdown)
   }
 
   // Do graceful shutdown

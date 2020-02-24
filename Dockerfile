@@ -7,16 +7,16 @@ WORKDIR /www/
 
 # install dependencies
 COPY ./package.json /www/package.json
-RUN npm install
+RUN yarn install
 
 # copy over app dir
 COPY ./ /www/
 
 # run tests
-RUN npm test
+RUN yarn test
 
 # start server
-CMD npm start
+CMD yarn start
 
 # expose server
 EXPOSE 9000

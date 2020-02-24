@@ -178,8 +178,8 @@ function startServer(appCode) {
   }
 
   function setupGracefulShutdown() {
-    process.on('SIGTERM', shutdown)
-    process.on('SIGINT', shutdown)
+    process.once('SIGTERM', shutdown)
+    process.once('SIGINT', shutdown)
   }
 
   // Do graceful shutdown

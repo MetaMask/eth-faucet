@@ -5,7 +5,7 @@ const NonceSubprovider = require('web3-provider-engine/subproviders/nonce-tracke
 
 module.exports = rpcWrapperEngine
 
-function rpcWrapperEngine(opts){
+function rpcWrapperEngine (opts) {
   opts = opts || {}
 
   var engine = opts.engine || new ProviderEngine()
@@ -15,20 +15,20 @@ function rpcWrapperEngine(opts){
   var addresses = [opts.addressHex]
 
   engine.addProvider(new PkHookedWalletSubprovider({
-    getAccounts: function(cb){
+    getAccounts: function (cb) {
       cb(null, addresses)
     },
-    getPrivateKey: function(from, cb){
+    getPrivateKey: function (from, cb) {
       cb(null, privateKey)
-    },
+    }
   }))
-  
+
   // pending nonce
   engine.addProvider(new NonceSubprovider())
 
   // data source
   engine.addProvider(new RpcSubprovider({
-    rpcUrl: opts.rpcUrl,
+    rpcUrl: opts.rpcUrl
   }))
 
   // start polling

@@ -5,6 +5,7 @@ process.on('unhandledRejection', error => {
   console.error('unhandledRejection', error)
 })
 
+const path = require('path')
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
@@ -14,9 +15,10 @@ const BN = require('bn.js')
 const ethUtil = require('ethereumjs-util')
 const geoIp = require('@pablopunk/geo-ip')
 const emojiFlag = require('emoji-flag')
-
 const config = require('./get-config')
 const rpcWrapperEngine = require('./engine.js')
+
+const appPath = path.join(__dirname, 'build')
 
 const min = 60 * 1000
 const ether = 1e18
@@ -35,7 +37,7 @@ console.log('Acting as faucet for address:', config.address)
 const engine = rpcWrapperEngine({
   rpcUrl: config.rpcOrigin,
   addressHex: config.address,
-  privateKey: ethUtil.toBuffer(config.privateKey),
+  privateKey: ethUtil.toBuffer(config.privateKey)
 })
 
 const ethQuery = new EthQuery(engine)
@@ -45,8 +47,7 @@ startServer()
 //
 // create webserver
 //
-function startServer() {
-
+function startServer () {
   const app = express()
   // set CORS headers
   app.use(cors())
@@ -62,11 +63,11 @@ function startServer() {
     // limit each IP to N requests per windowMs
     max: 20,
     // disable delaying - full speed until the max limit is reached
-    delayMs: 200,
+    delayMs: 200
   })
 
   // serve app
-  app.use(express.static(__dirname+ '/../build'))
+  app.use(express.static(appPath))
   // app.get('/', deliverPage)
 
   // add IP-based rate limiting
@@ -75,7 +76,7 @@ function startServer() {
   app.post('/', handleRequest)
 
   // start server
-  const server = app.listen(PORT, function(){
+  const server = app.listen(PORT, function () {
     console.log('ethereum rpc listening on', PORT)
     console.log('and proxying to', config.rpcOrigin)
   })
@@ -88,9 +89,6 @@ function startServer() {
     console.log('Restarting for better nonce tracking')
     shutdown()
   }, AUTO_RESTART_INTERVAL)
-
-  return
-
 
   async function handleRequest (req, res) {
     try {
@@ -107,9 +105,9 @@ function startServer() {
       }
 
       // parse address
-      const targetAddress = req.body
-      if (targetAddress.slice(0,2) !== '0x') {
-        targetAddress = '0x'+targetAddress
+      let targetAddress = req.body
+      if (targetAddress.slice(0, 2) !== '0x') {
+        targetAddress = '0x' + targetAddress
       }
       if (targetAddress.length !== 42) {
         return didError(res, new Error(`Address parse failure - "${targetAddress}"`))
@@ -130,33 +128,31 @@ function startServer() {
         to: targetAddress,
         from: config.address,
         value: faucetAmountWei,
-        data: '',
+        data: ''
       })
       console.log(`${requestorMessage} - sent tx: ${txHash}`)
       res.send(txHash)
-
     } catch (err) {
       console.error(err.stack)
       return didError(res, err)
     }
   }
 
-  function didError(res, err){
+  function didError (res, err) {
     res.status(500).json({ error: err.message })
   }
 
-  function setupGracefulShutdown() {
+  function setupGracefulShutdown () {
     process.once('SIGTERM', shutdown)
     process.once('SIGINT', shutdown)
   }
 
   // Do graceful shutdown
-  function shutdown() {
+  function shutdown () {
     console.log('gracefully shutting down...')
     server.close(() => {
       console.log('shut down complete.')
       process.exit(0)
     })
   }
-
 }

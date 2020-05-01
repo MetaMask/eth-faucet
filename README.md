@@ -9,6 +9,8 @@ first namespace is used in `docker-compose.yml`.
 cp config.js.example config.js
 ```
 
+Or pass the environment variable `FAUCET_CONFIG_LOCATION` to the build step.
+
 ### development:
 
 The `npm start` script runs `node server.js`, which runs browserify once on startup on the `app.js` script. That means the basic approach to development requires restarting the server on each change to see the result.

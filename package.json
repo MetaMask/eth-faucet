@@ -29,15 +29,19 @@
     "browserify": "^16.2.3",
     "envify": "^4.0.0",
     "h": "^0.1.0",
-    "lavamoat": "^1.1.0",
     "standard": "^14.3.3",
-    "xhr": "^2.2.2"
+    "xhr": "^2.2.2",
+    "lavamoat": "^1.1.0",
+    "patch-package": "^6.2.2",
+    "postinstall-postinstall": "^2.1.0"
   },
   "scripts": {
     "test": "echo \"No tests yet...\"",
     "start": "node src/server.js",
     "build": "node src/build.js > build/app.js",
-    "deploy": "docker-compose pull && docker-compose build && docker-compose stop && docker-compose up -d && docker-compose logs -f --tail 200"
+    "deploy": "docker-compose pull && docker-compose build && docker-compose stop && docker-compose up -d && docker-compose logs -f --tail 200",
+    "postinstall": "patch-package"
+
   },
   "author": "",
   "license": "ISC"

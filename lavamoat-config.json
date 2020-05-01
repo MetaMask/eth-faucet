@@ -227,15 +227,6 @@
         "util": true
       }
     },
-    "depd": {
-      "globals": {
-        "process": true
-      },
-      "packages": {
-        "events": true,
-        "path": true
-      }
-    },
     "destroy": {
       "packages": {
         "fs": true,

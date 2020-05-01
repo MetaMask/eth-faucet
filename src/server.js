@@ -1,4 +1,3 @@
-const MASCARA_SUPPORT = process.env.MASCARA_SUPPORT
 const PORT = process.env.PORT || 9000
 
 // log unhandled promise rejections
@@ -6,10 +5,7 @@ process.on('unhandledRejection', error => {
   console.error('unhandledRejection', error)
 })
 
-const fs = require('fs')
 const express = require('express')
-const Browserify = require('browserify')
-const envify = require('envify/custom')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const RateLimit = require('express-rate-limit')
@@ -20,10 +16,7 @@ const geoIp = require('@pablopunk/geo-ip')
 const emojiFlag = require('emoji-flag')
 
 const config = require('./get-config')
-const rpcWrapperEngine = require('./index.js')
-const regularPageCode = fs.readFileSync(__dirname + '/index.html', 'utf-8')
-const mascaraPageCode = fs.readFileSync(__dirname + '/zero.html', 'utf-8')
-const pageCode = MASCARA_SUPPORT ? mascaraPageCode : regularPageCode
+const rpcWrapperEngine = require('./engine.js')
 
 const min = 60 * 1000
 const ether = 1e18
@@ -47,24 +40,12 @@ const engine = rpcWrapperEngine({
 
 const ethQuery = new EthQuery(engine)
 
-// prepare app bundle
-const browserify = Browserify()
-// inject faucet address
-browserify.transform(envify({
-  FAUCET_ADDRESS: config.address,
-}))
-// build app
-browserify.add(__dirname + '/app.js')
-browserify.bundle(function(err, bundle){
-  if (err) throw err
-  const appCode = bundle.toString()
-  startServer(appCode)
-})
+startServer()
 
 //
 // create webserver
 //
-function startServer(appCode) {
+function startServer() {
 
   const app = express()
   // set CORS headers
@@ -85,9 +66,8 @@ function startServer(appCode) {
   })
 
   // serve app
-  app.get('/', deliverPage)
-  app.get('/index.html', deliverPage)
-  app.get('/app.js', deliverApp)
+  app.use(express.static(__dirname+ '/../build'))
+  // app.get('/', deliverPage)
 
   // add IP-based rate limiting
   app.post('/', rateLimiter)
@@ -163,18 +143,6 @@ function startServer(appCode) {
 
   function didError(res, err){
     res.status(500).json({ error: err.message })
-  }
-
-  function invalidRequest(res){
-    res.status(400).json({ error: 'Not a valid request.' })
-  }
-
-  function deliverPage(req, res){
-    res.status(200).send(pageCode)
-  }
-
-  function deliverApp(req, res){
-    res.status(200).send(appCode)
   }
 
   function setupGracefulShutdown() {

@@ -10,10 +10,8 @@ COPY ./package.json /www/package.json
 RUN yarn install
 
 # copy over app dir
-COPY ./ /www/
-
-# run tests
-RUN yarn test
+COPY ./src /www/src
+COPY ./build /www/build
 
 # start server
 CMD yarn start

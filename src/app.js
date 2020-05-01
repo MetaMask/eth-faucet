@@ -1,7 +1,6 @@
 const h = require('h')
 const xhr = require('xhr')
 const EthQuery = require('eth-query')
-const metamask = require('metamascara')
 
 var state = {
   isLoading: true,
@@ -24,13 +23,8 @@ function startApp(){
   // check environment
   if (!global.web3) {
     // abort
-    if (!window.ENABLE_MASCARA) {
-      render(h('span', 'No web3 detected.'))
-      return
-    }
-    // start mascara
-    const provider = metamask.createDefaultProvider({})
-    global.web3 = { currentProvider: provider }
+    render(h('span', 'No web3 detected.'))
+    return
   }
 
   // create query helper

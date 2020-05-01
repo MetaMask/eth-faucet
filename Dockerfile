@@ -12,6 +12,7 @@ RUN yarn install
 # copy over app dir
 COPY ./src /www/src
 COPY ./build /www/build
+COPY ./config.js /www/config.js
 
 # start server
 CMD yarn start

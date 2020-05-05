@@ -1,0 +1,163 @@
+diff --git a/node_modules/ethereumjs-abi/node_modules/keccak/build/Makefile b/node_modules/ethereumjs-abi/node_modules/keccak/build/Makefile
+index 7a4b230..65bacf2 100644
+--- a/node_modules/ethereumjs-abi/node_modules/keccak/build/Makefile
++++ b/node_modules/ethereumjs-abi/node_modules/keccak/build/Makefile
+@@ -308,8 +308,8 @@ ifeq ($(strip $(foreach prefix,$(NO_LOAD),\
+ endif
+ 
+ quiet_cmd_regen_makefile = ACTION Regenerating $@
+-cmd_regen_makefile = cd $(srcdir); /home/xyz/.nvm/versions/node/v10.18.1/lib/node_modules/npm/node_modules/node-gyp/gyp/gyp_main.py -fmake --ignore-environment "--toplevel-dir=." -I/tmp/tmp-8222DZyCLpBwWP6q/node_modules/ethereumjs-abi/node_modules/keccak/build/config.gypi -I/home/xyz/.nvm/versions/node/v10.18.1/lib/node_modules/npm/node_modules/node-gyp/addon.gypi -I/home/xyz/.cache/node-gyp/10.18.1/include/node/common.gypi "--depth=." "-Goutput_dir=." "--generator-output=build" "-Dlibrary=shared_library" "-Dvisibility=default" "-Dnode_root_dir=/home/xyz/.cache/node-gyp/10.18.1" "-Dnode_gyp_dir=/home/xyz/.nvm/versions/node/v10.18.1/lib/node_modules/npm/node_modules/node-gyp" "-Dnode_lib_file=/home/xyz/.cache/node-gyp/10.18.1/<(target_arch)/node.lib" "-Dmodule_root_dir=/tmp/tmp-8222DZyCLpBwWP6q/node_modules/ethereumjs-abi/node_modules/keccak" "-Dnode_engine=v8" binding.gyp
+-Makefile: $(srcdir)/../../../../../../home/xyz/.cache/node-gyp/10.18.1/include/node/common.gypi $(srcdir)/../../../../../../home/xyz/.nvm/versions/node/v10.18.1/lib/node_modules/npm/node_modules/node-gyp/addon.gypi $(srcdir)/build/config.gypi $(srcdir)/binding.gyp
++cmd_regen_makefile = cd $(srcdir); /home/xyz/.nvm/versions/node/v10.18.1/lib/node_modules/npm/node_modules/node-gyp/gyp/gyp_main.py -fmake --ignore-environment "--toplevel-dir=." -I/home/xyz/Development/eth-faucet/node_modules/ethereumjs-abi/node_modules/keccak/build/config.gypi -I/home/xyz/.nvm/versions/node/v10.18.1/lib/node_modules/npm/node_modules/node-gyp/addon.gypi -I/home/xyz/.cache/node-gyp/10.18.1/include/node/common.gypi "--depth=." "-Goutput_dir=." "--generator-output=build" "-Dlibrary=shared_library" "-Dvisibility=default" "-Dnode_root_dir=/home/xyz/.cache/node-gyp/10.18.1" "-Dnode_gyp_dir=/home/xyz/.nvm/versions/node/v10.18.1/lib/node_modules/npm/node_modules/node-gyp" "-Dnode_lib_file=/home/xyz/.cache/node-gyp/10.18.1/<(target_arch)/node.lib" "-Dmodule_root_dir=/home/xyz/Development/eth-faucet/node_modules/ethereumjs-abi/node_modules/keccak" "-Dnode_engine=v8" binding.gyp
++Makefile: $(srcdir)/../../../../../../.cache/node-gyp/10.18.1/include/node/common.gypi $(srcdir)/build/config.gypi $(srcdir)/binding.gyp $(srcdir)/../../../../../../.nvm/versions/node/v10.18.1/lib/node_modules/npm/node_modules/node-gyp/addon.gypi
+ 	$(call do_cmd,regen_makefile)
+ 
+ # "all" is a concatenation of the "all" targets from all the included
+diff --git a/node_modules/ethereumjs-abi/node_modules/keccak/build/Release/.deps/Release/obj.target/keccak/src/addon.o.d b/node_modules/ethereumjs-abi/node_modules/keccak/build/Release/.deps/Release/obj.target/keccak/src/addon.o.d
+index a1ec2ea..1469d0e 100644
+--- a/node_modules/ethereumjs-abi/node_modules/keccak/build/Release/.deps/Release/obj.target/keccak/src/addon.o.d
++++ b/node_modules/ethereumjs-abi/node_modules/keccak/build/Release/.deps/Release/obj.target/keccak/src/addon.o.d
+@@ -1,4 +1,4 @@
+-cmd_Release/obj.target/keccak/src/addon.o := g++ '-DNODE_GYP_MODULE_NAME=keccak' '-DUSING_UV_SHARED=1' '-DUSING_V8_SHARED=1' '-DV8_DEPRECATION_WARNINGS=1' '-D_LARGEFILE_SOURCE' '-D_FILE_OFFSET_BITS=64' '-DOPENSSL_NO_PINSHARED' '-DLIBKECCAK=64' '-DBUILDING_NODE_EXTENSION' -I/home/xyz/.cache/node-gyp/10.18.1/include/node -I/home/xyz/.cache/node-gyp/10.18.1/src -I/home/xyz/.cache/node-gyp/10.18.1/deps/openssl/config -I/home/xyz/.cache/node-gyp/10.18.1/deps/openssl/openssl/include -I/home/xyz/.cache/node-gyp/10.18.1/deps/uv/include -I/home/xyz/.cache/node-gyp/10.18.1/deps/zlib -I/home/xyz/.cache/node-gyp/10.18.1/deps/v8/include -I../../nan  -fPIC -pthread -Wall -Wextra -Wno-unused-parameter -m64 -Wall -Wno-maybe-uninitialized -Wno-uninitialized -Wno-unused-function -Wextra -O3 -fno-omit-frame-pointer -fno-rtti -fno-exceptions -std=gnu++1y -MMD -MF ./Release/.deps/Release/obj.target/keccak/src/addon.o.d.raw   -c -o Release/obj.target/keccak/src/addon.o ../src/addon.cc
++cmd_Release/obj.target/keccak/src/addon.o := g++ '-DNODE_GYP_MODULE_NAME=keccak' '-DUSING_UV_SHARED=1' '-DUSING_V8_SHARED=1' '-DV8_DEPRECATION_WARNINGS=1' '-D_LARGEFILE_SOURCE' '-D_FILE_OFFSET_BITS=64' '-DOPENSSL_NO_PINSHARED' '-DLIBKECCAK=64' '-DBUILDING_NODE_EXTENSION' -I/home/xyz/.cache/node-gyp/10.18.1/include/node -I/home/xyz/.cache/node-gyp/10.18.1/src -I/home/xyz/.cache/node-gyp/10.18.1/deps/openssl/config -I/home/xyz/.cache/node-gyp/10.18.1/deps/openssl/openssl/include -I/home/xyz/.cache/node-gyp/10.18.1/deps/uv/include -I/home/xyz/.cache/node-gyp/10.18.1/deps/zlib -I/home/xyz/.cache/node-gyp/10.18.1/deps/v8/include -I../../../../nan  -fPIC -pthread -Wall -Wextra -Wno-unused-parameter -m64 -Wall -Wno-maybe-uninitialized -Wno-uninitialized -Wno-unused-function -Wextra -O3 -fno-omit-frame-pointer -fno-rtti -fno-exceptions -std=gnu++1y -MMD -MF ./Release/.deps/Release/obj.target/keccak/src/addon.o.d.raw   -c -o Release/obj.target/keccak/src/addon.o ../src/addon.cc
+ Release/obj.target/keccak/src/addon.o: ../src/addon.cc \
+  /home/xyz/.cache/node-gyp/10.18.1/include/node/node.h \
+  /home/xyz/.cache/node-gyp/10.18.1/include/node/v8.h \
+@@ -6,7 +6,7 @@ Release/obj.target/keccak/src/addon.o: ../src/addon.cc \
+  /home/xyz/.cache/node-gyp/10.18.1/include/node/v8config.h \
+  /home/xyz/.cache/node-gyp/10.18.1/include/node/v8-platform.h \
+  /home/xyz/.cache/node-gyp/10.18.1/include/node/node_version.h \
+- ../../nan/nan.h \
++ ../../../../nan/nan.h \
+  /home/xyz/.cache/node-gyp/10.18.1/include/node/node_version.h \
+  /home/xyz/.cache/node-gyp/10.18.1/include/node/uv.h \
+  /home/xyz/.cache/node-gyp/10.18.1/include/node/uv/errno.h \
+@@ -17,12 +17,13 @@ Release/obj.target/keccak/src/addon.o: ../src/addon.cc \
+  /home/xyz/.cache/node-gyp/10.18.1/include/node/node_buffer.h \
+  /home/xyz/.cache/node-gyp/10.18.1/include/node/node.h \
+  /home/xyz/.cache/node-gyp/10.18.1/include/node/node_object_wrap.h \
+- ../../nan/nan_callbacks.h ../../nan/nan_callbacks_12_inl.h \
+- ../../nan/nan_maybe_43_inl.h ../../nan/nan_converters.h \
+- ../../nan/nan_converters_43_inl.h ../../nan/nan_new.h \
+- ../../nan/nan_implementation_12_inl.h ../../nan/nan_persistent_12_inl.h \
+- ../../nan/nan_weak.h ../../nan/nan_object_wrap.h ../../nan/nan_private.h \
+- ../../nan/nan_typedarray_contents.h ../../nan/nan_json.h \
++ ../../../../nan/nan_callbacks.h ../../../../nan/nan_callbacks_12_inl.h \
++ ../../../../nan/nan_maybe_43_inl.h ../../../../nan/nan_converters.h \
++ ../../../../nan/nan_converters_43_inl.h ../../../../nan/nan_new.h \
++ ../../../../nan/nan_implementation_12_inl.h \
++ ../../../../nan/nan_persistent_12_inl.h ../../../../nan/nan_weak.h \
++ ../../../../nan/nan_object_wrap.h ../../../../nan/nan_private.h \
++ ../../../../nan/nan_typedarray_contents.h ../../../../nan/nan_json.h \
+  ../src/libkeccak-64/KeccakSpongeWidth1600.h \
+  ../src/libkeccak-64/KeccakSponge-common.h ../src/libkeccak-64/align.h \
+  ../src/libkeccak-64/KeccakP-1600-SnP.h ../src/libkeccak-64/brg_endian.h \
+@@ -34,7 +35,7 @@ Release/obj.target/keccak/src/addon.o: ../src/addon.cc \
+ /home/xyz/.cache/node-gyp/10.18.1/include/node/v8config.h:
+ /home/xyz/.cache/node-gyp/10.18.1/include/node/v8-platform.h:
+ /home/xyz/.cache/node-gyp/10.18.1/include/node/node_version.h:
+-../../nan/nan.h:
++../../../../nan/nan.h:
+ /home/xyz/.cache/node-gyp/10.18.1/include/node/node_version.h:
+ /home/xyz/.cache/node-gyp/10.18.1/include/node/uv.h:
+ /home/xyz/.cache/node-gyp/10.18.1/include/node/uv/errno.h:
+@@ -45,19 +46,19 @@ Release/obj.target/keccak/src/addon.o: ../src/addon.cc \
+ /home/xyz/.cache/node-gyp/10.18.1/include/node/node_buffer.h:
+ /home/xyz/.cache/node-gyp/10.18.1/include/node/node.h:
+ /home/xyz/.cache/node-gyp/10.18.1/include/node/node_object_wrap.h:
+-../../nan/nan_callbacks.h:
+-../../nan/nan_callbacks_12_inl.h:
+-../../nan/nan_maybe_43_inl.h:
+-../../nan/nan_converters.h:
+-../../nan/nan_converters_43_inl.h:
+-../../nan/nan_new.h:
+-../../nan/nan_implementation_12_inl.h:
+-../../nan/nan_persistent_12_inl.h:
+-../../nan/nan_weak.h:
+-../../nan/nan_object_wrap.h:
+-../../nan/nan_private.h:
+-../../nan/nan_typedarray_contents.h:
+-../../nan/nan_json.h:
++../../../../nan/nan_callbacks.h:
++../../../../nan/nan_callbacks_12_inl.h:
++../../../../nan/nan_maybe_43_inl.h:
++../../../../nan/nan_converters.h:
++../../../../nan/nan_converters_43_inl.h:
++../../../../nan/nan_new.h:
++../../../../nan/nan_implementation_12_inl.h:
++../../../../nan/nan_persistent_12_inl.h:
++../../../../nan/nan_weak.h:
++../../../../nan/nan_object_wrap.h:
++../../../../nan/nan_private.h:
++../../../../nan/nan_typedarray_contents.h:
++../../../../nan/nan_json.h:
+ ../src/libkeccak-64/KeccakSpongeWidth1600.h:
+ ../src/libkeccak-64/KeccakSponge-common.h:
+ ../src/libkeccak-64/align.h:
+diff --git a/node_modules/ethereumjs-abi/node_modules/keccak/build/Release/.deps/Release/obj.target/keccak/src/libkeccak-64/KeccakP-1600-opt64.o.d b/node_modules/ethereumjs-abi/node_modules/keccak/build/Release/.deps/Release/obj.target/keccak/src/libkeccak-64/KeccakP-1600-opt64.o.d
+index c5def97..6099cf1 100644
+--- a/node_modules/ethereumjs-abi/node_modules/keccak/build/Release/.deps/Release/obj.target/keccak/src/libkeccak-64/KeccakP-1600-opt64.o.d
++++ b/node_modules/ethereumjs-abi/node_modules/keccak/build/Release/.deps/Release/obj.target/keccak/src/libkeccak-64/KeccakP-1600-opt64.o.d
+@@ -1,4 +1,4 @@
+-cmd_Release/obj.target/keccak/src/libkeccak-64/KeccakP-1600-opt64.o := cc '-DNODE_GYP_MODULE_NAME=keccak' '-DUSING_UV_SHARED=1' '-DUSING_V8_SHARED=1' '-DV8_DEPRECATION_WARNINGS=1' '-D_LARGEFILE_SOURCE' '-D_FILE_OFFSET_BITS=64' '-DOPENSSL_NO_PINSHARED' '-DLIBKECCAK=64' '-DBUILDING_NODE_EXTENSION' -I/home/xyz/.cache/node-gyp/10.18.1/include/node -I/home/xyz/.cache/node-gyp/10.18.1/src -I/home/xyz/.cache/node-gyp/10.18.1/deps/openssl/config -I/home/xyz/.cache/node-gyp/10.18.1/deps/openssl/openssl/include -I/home/xyz/.cache/node-gyp/10.18.1/deps/uv/include -I/home/xyz/.cache/node-gyp/10.18.1/deps/zlib -I/home/xyz/.cache/node-gyp/10.18.1/deps/v8/include -I../../nan  -fPIC -pthread -Wall -Wextra -Wno-unused-parameter -m64 -Wall -Wno-maybe-uninitialized -Wno-uninitialized -Wno-unused-function -Wextra -O3 -fno-omit-frame-pointer  -MMD -MF ./Release/.deps/Release/obj.target/keccak/src/libkeccak-64/KeccakP-1600-opt64.o.d.raw   -c -o Release/obj.target/keccak/src/libkeccak-64/KeccakP-1600-opt64.o ../src/libkeccak-64/KeccakP-1600-opt64.c
++cmd_Release/obj.target/keccak/src/libkeccak-64/KeccakP-1600-opt64.o := cc '-DNODE_GYP_MODULE_NAME=keccak' '-DUSING_UV_SHARED=1' '-DUSING_V8_SHARED=1' '-DV8_DEPRECATION_WARNINGS=1' '-D_LARGEFILE_SOURCE' '-D_FILE_OFFSET_BITS=64' '-DOPENSSL_NO_PINSHARED' '-DLIBKECCAK=64' '-DBUILDING_NODE_EXTENSION' -I/home/xyz/.cache/node-gyp/10.18.1/include/node -I/home/xyz/.cache/node-gyp/10.18.1/src -I/home/xyz/.cache/node-gyp/10.18.1/deps/openssl/config -I/home/xyz/.cache/node-gyp/10.18.1/deps/openssl/openssl/include -I/home/xyz/.cache/node-gyp/10.18.1/deps/uv/include -I/home/xyz/.cache/node-gyp/10.18.1/deps/zlib -I/home/xyz/.cache/node-gyp/10.18.1/deps/v8/include -I../../../../nan  -fPIC -pthread -Wall -Wextra -Wno-unused-parameter -m64 -Wall -Wno-maybe-uninitialized -Wno-uninitialized -Wno-unused-function -Wextra -O3 -fno-omit-frame-pointer  -MMD -MF ./Release/.deps/Release/obj.target/keccak/src/libkeccak-64/KeccakP-1600-opt64.o.d.raw   -c -o Release/obj.target/keccak/src/libkeccak-64/KeccakP-1600-opt64.o ../src/libkeccak-64/KeccakP-1600-opt64.c
+ Release/obj.target/keccak/src/libkeccak-64/KeccakP-1600-opt64.o: \
+  ../src/libkeccak-64/KeccakP-1600-opt64.c \
+  ../src/libkeccak-64/brg_endian.h \
+diff --git a/node_modules/ethereumjs-abi/node_modules/keccak/build/Release/.deps/Release/obj.target/keccak/src/libkeccak-64/KeccakSpongeWidth1600.o.d b/node_modules/ethereumjs-abi/node_modules/keccak/build/Release/.deps/Release/obj.target/keccak/src/libkeccak-64/KeccakSpongeWidth1600.o.d
+index 1d42a0d..4b55b6c 100644
+--- a/node_modules/ethereumjs-abi/node_modules/keccak/build/Release/.deps/Release/obj.target/keccak/src/libkeccak-64/KeccakSpongeWidth1600.o.d
++++ b/node_modules/ethereumjs-abi/node_modules/keccak/build/Release/.deps/Release/obj.target/keccak/src/libkeccak-64/KeccakSpongeWidth1600.o.d
+@@ -1,4 +1,4 @@
+-cmd_Release/obj.target/keccak/src/libkeccak-64/KeccakSpongeWidth1600.o := cc '-DNODE_GYP_MODULE_NAME=keccak' '-DUSING_UV_SHARED=1' '-DUSING_V8_SHARED=1' '-DV8_DEPRECATION_WARNINGS=1' '-D_LARGEFILE_SOURCE' '-D_FILE_OFFSET_BITS=64' '-DOPENSSL_NO_PINSHARED' '-DLIBKECCAK=64' '-DBUILDING_NODE_EXTENSION' -I/home/xyz/.cache/node-gyp/10.18.1/include/node -I/home/xyz/.cache/node-gyp/10.18.1/src -I/home/xyz/.cache/node-gyp/10.18.1/deps/openssl/config -I/home/xyz/.cache/node-gyp/10.18.1/deps/openssl/openssl/include -I/home/xyz/.cache/node-gyp/10.18.1/deps/uv/include -I/home/xyz/.cache/node-gyp/10.18.1/deps/zlib -I/home/xyz/.cache/node-gyp/10.18.1/deps/v8/include -I../../nan  -fPIC -pthread -Wall -Wextra -Wno-unused-parameter -m64 -Wall -Wno-maybe-uninitialized -Wno-uninitialized -Wno-unused-function -Wextra -O3 -fno-omit-frame-pointer  -MMD -MF ./Release/.deps/Release/obj.target/keccak/src/libkeccak-64/KeccakSpongeWidth1600.o.d.raw   -c -o Release/obj.target/keccak/src/libkeccak-64/KeccakSpongeWidth1600.o ../src/libkeccak-64/KeccakSpongeWidth1600.c
++cmd_Release/obj.target/keccak/src/libkeccak-64/KeccakSpongeWidth1600.o := cc '-DNODE_GYP_MODULE_NAME=keccak' '-DUSING_UV_SHARED=1' '-DUSING_V8_SHARED=1' '-DV8_DEPRECATION_WARNINGS=1' '-D_LARGEFILE_SOURCE' '-D_FILE_OFFSET_BITS=64' '-DOPENSSL_NO_PINSHARED' '-DLIBKECCAK=64' '-DBUILDING_NODE_EXTENSION' -I/home/xyz/.cache/node-gyp/10.18.1/include/node -I/home/xyz/.cache/node-gyp/10.18.1/src -I/home/xyz/.cache/node-gyp/10.18.1/deps/openssl/config -I/home/xyz/.cache/node-gyp/10.18.1/deps/openssl/openssl/include -I/home/xyz/.cache/node-gyp/10.18.1/deps/uv/include -I/home/xyz/.cache/node-gyp/10.18.1/deps/zlib -I/home/xyz/.cache/node-gyp/10.18.1/deps/v8/include -I../../../../nan  -fPIC -pthread -Wall -Wextra -Wno-unused-parameter -m64 -Wall -Wno-maybe-uninitialized -Wno-uninitialized -Wno-unused-function -Wextra -O3 -fno-omit-frame-pointer  -MMD -MF ./Release/.deps/Release/obj.target/keccak/src/libkeccak-64/KeccakSpongeWidth1600.o.d.raw   -c -o Release/obj.target/keccak/src/libkeccak-64/KeccakSpongeWidth1600.o ../src/libkeccak-64/KeccakSpongeWidth1600.c
+ Release/obj.target/keccak/src/libkeccak-64/KeccakSpongeWidth1600.o: \
+  ../src/libkeccak-64/KeccakSpongeWidth1600.c \
+  ../src/libkeccak-64/KeccakSpongeWidth1600.h \
+diff --git a/node_modules/ethereumjs-abi/node_modules/keccak/build/Release/keccak.node b/node_modules/ethereumjs-abi/node_modules/keccak/build/Release/keccak.node
+index 1b1eba6..8e0b891 100755
+Binary files a/node_modules/ethereumjs-abi/node_modules/keccak/build/Release/keccak.node and b/node_modules/ethereumjs-abi/node_modules/keccak/build/Release/keccak.node differ
+diff --git a/node_modules/ethereumjs-abi/node_modules/keccak/build/Release/obj.target/keccak.node b/node_modules/ethereumjs-abi/node_modules/keccak/build/Release/obj.target/keccak.node
+index 1b1eba6..8e0b891 100755
+Binary files a/node_modules/ethereumjs-abi/node_modules/keccak/build/Release/obj.target/keccak.node and b/node_modules/ethereumjs-abi/node_modules/keccak/build/Release/obj.target/keccak.node differ
+diff --git a/node_modules/ethereumjs-abi/node_modules/keccak/build/Release/obj.target/keccak/src/addon.o b/node_modules/ethereumjs-abi/node_modules/keccak/build/Release/obj.target/keccak/src/addon.o
+index f153ddd..dc0609c 100644
+Binary files a/node_modules/ethereumjs-abi/node_modules/keccak/build/Release/obj.target/keccak/src/addon.o and b/node_modules/ethereumjs-abi/node_modules/keccak/build/Release/obj.target/keccak/src/addon.o differ
+diff --git a/node_modules/ethereumjs-abi/node_modules/keccak/build/keccak.target.mk b/node_modules/ethereumjs-abi/node_modules/keccak/build/keccak.target.mk
+index d853bea..538671f 100644
+--- a/node_modules/ethereumjs-abi/node_modules/keccak/build/keccak.target.mk
++++ b/node_modules/ethereumjs-abi/node_modules/keccak/build/keccak.target.mk
+@@ -49,7 +49,7 @@ INCS_Debug := \
+ 	-I/home/xyz/.cache/node-gyp/10.18.1/deps/uv/include \
+ 	-I/home/xyz/.cache/node-gyp/10.18.1/deps/zlib \
+ 	-I/home/xyz/.cache/node-gyp/10.18.1/deps/v8/include \
+-	-I$(srcdir)/../nan
++	-I$(srcdir)/../../../nan
+ 
+ DEFS_Release := \
+ 	'-DNODE_GYP_MODULE_NAME=keccak' \
+@@ -95,7 +95,7 @@ INCS_Release := \
+ 	-I/home/xyz/.cache/node-gyp/10.18.1/deps/uv/include \
+ 	-I/home/xyz/.cache/node-gyp/10.18.1/deps/zlib \
+ 	-I/home/xyz/.cache/node-gyp/10.18.1/deps/v8/include \
+-	-I$(srcdir)/../nan
++	-I$(srcdir)/../../../nan
+ 
+ OBJS := \
+ 	$(obj).target/$(TARGET)/src/addon.o \
+diff --git a/node_modules/ethereumjs-abi/node_modules/keccak/index.js b/node_modules/ethereumjs-abi/node_modules/keccak/index.js
+index 7446e03..bb62b01 100644
+--- a/node_modules/ethereumjs-abi/node_modules/keccak/index.js
++++ b/node_modules/ethereumjs-abi/node_modules/keccak/index.js
+@@ -1,10 +1 @@
+-'use strict'
+-try {
+-  module.exports = require('./bindings')
+-} catch (err) {
+-  if (process.env.DEBUG) {
+-    console.error('Keccak bindings are not compiled. Pure JS implementation will be used.')
+-  }
+-
+-  module.exports = require('./js')
+-}
++module.exports = require('./js')

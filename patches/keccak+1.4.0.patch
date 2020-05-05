@@ -1,0 +1,40 @@
+diff --git a/node_modules/keccak/build/Makefile b/node_modules/keccak/build/Makefile
+index ac326c5..1f9a55b 100644
+--- a/node_modules/keccak/build/Makefile
++++ b/node_modules/keccak/build/Makefile
+@@ -308,8 +308,8 @@ ifeq ($(strip $(foreach prefix,$(NO_LOAD),\
+ endif
+ 
+ quiet_cmd_regen_makefile = ACTION Regenerating $@
+-cmd_regen_makefile = cd $(srcdir); /home/xyz/.nvm/versions/node/v10.18.1/lib/node_modules/npm/node_modules/node-gyp/gyp/gyp_main.py -fmake --ignore-environment "--toplevel-dir=." -I/tmp/tmp-15422GqiqmsKx3Qcu/node_modules/keccak/build/config.gypi -I/home/xyz/.nvm/versions/node/v10.18.1/lib/node_modules/npm/node_modules/node-gyp/addon.gypi -I/home/xyz/.cache/node-gyp/10.18.1/include/node/common.gypi "--depth=." "-Goutput_dir=." "--generator-output=build" "-Dlibrary=shared_library" "-Dvisibility=default" "-Dnode_root_dir=/home/xyz/.cache/node-gyp/10.18.1" "-Dnode_gyp_dir=/home/xyz/.nvm/versions/node/v10.18.1/lib/node_modules/npm/node_modules/node-gyp" "-Dnode_lib_file=/home/xyz/.cache/node-gyp/10.18.1/<(target_arch)/node.lib" "-Dmodule_root_dir=/tmp/tmp-15422GqiqmsKx3Qcu/node_modules/keccak" "-Dnode_engine=v8" binding.gyp
+-Makefile: $(srcdir)/../../../../home/xyz/.nvm/versions/node/v10.18.1/lib/node_modules/npm/node_modules/node-gyp/addon.gypi $(srcdir)/../../../../home/xyz/.cache/node-gyp/10.18.1/include/node/common.gypi $(srcdir)/build/config.gypi $(srcdir)/binding.gyp
++cmd_regen_makefile = cd $(srcdir); /home/xyz/.nvm/versions/node/v10.18.1/lib/node_modules/npm/node_modules/node-gyp/gyp/gyp_main.py -fmake --ignore-environment "--toplevel-dir=." -I/home/xyz/Development/eth-faucet/node_modules/keccak/build/config.gypi -I/home/xyz/.nvm/versions/node/v10.18.1/lib/node_modules/npm/node_modules/node-gyp/addon.gypi -I/home/xyz/.cache/node-gyp/10.18.1/include/node/common.gypi "--depth=." "-Goutput_dir=." "--generator-output=build" "-Dlibrary=shared_library" "-Dvisibility=default" "-Dnode_root_dir=/home/xyz/.cache/node-gyp/10.18.1" "-Dnode_gyp_dir=/home/xyz/.nvm/versions/node/v10.18.1/lib/node_modules/npm/node_modules/node-gyp" "-Dnode_lib_file=/home/xyz/.cache/node-gyp/10.18.1/<(target_arch)/node.lib" "-Dmodule_root_dir=/home/xyz/Development/eth-faucet/node_modules/keccak" "-Dnode_engine=v8" binding.gyp
++Makefile: $(srcdir)/../../../../.nvm/versions/node/v10.18.1/lib/node_modules/npm/node_modules/node-gyp/addon.gypi $(srcdir)/build/config.gypi $(srcdir)/binding.gyp $(srcdir)/../../../../.cache/node-gyp/10.18.1/include/node/common.gypi
+ 	$(call do_cmd,regen_makefile)
+ 
+ # "all" is a concatenation of the "all" targets from all the included
+diff --git a/node_modules/keccak/build/Release/keccak.node b/node_modules/keccak/build/Release/keccak.node
+index 99c6500..b00afc6 100755
+Binary files a/node_modules/keccak/build/Release/keccak.node and b/node_modules/keccak/build/Release/keccak.node differ
+diff --git a/node_modules/keccak/build/Release/obj.target/keccak.node b/node_modules/keccak/build/Release/obj.target/keccak.node
+index 99c6500..b00afc6 100755
+Binary files a/node_modules/keccak/build/Release/obj.target/keccak.node and b/node_modules/keccak/build/Release/obj.target/keccak.node differ
+diff --git a/node_modules/keccak/build/Release/obj.target/keccak/src/addon.o b/node_modules/keccak/build/Release/obj.target/keccak/src/addon.o
+index dbe01ed..6eeebab 100644
+Binary files a/node_modules/keccak/build/Release/obj.target/keccak/src/addon.o and b/node_modules/keccak/build/Release/obj.target/keccak/src/addon.o differ
+diff --git a/node_modules/keccak/index.js b/node_modules/keccak/index.js
+index 7446e03..bb62b01 100644
+--- a/node_modules/keccak/index.js
++++ b/node_modules/keccak/index.js
+@@ -1,10 +1 @@
+-'use strict'
+-try {
+-  module.exports = require('./bindings')
+-} catch (err) {
+-  if (process.env.DEBUG) {
+-    console.error('Keccak bindings are not compiled. Pure JS implementation will be used.')
+-  }
+-
+-  module.exports = require('./js')
+-}
++module.exports = require('./js')

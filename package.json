@@ -27,21 +27,27 @@
   },
   "devDependencies": {
     "browserify": "^16.2.3",
+    "concurrently": "^5.2.0",
     "envify": "^4.0.0",
+    "ethers": "^4.0.47",
+    "ganache-cli": "^6.9.1",
     "h": "^0.1.0",
-    "standard": "^14.3.3",
-    "xhr": "^2.2.2",
     "lavamoat": "^1.1.0",
     "patch-package": "^6.2.2",
-    "postinstall-postinstall": "^2.1.0"
+    "postinstall-postinstall": "^2.1.0",
+    "standard": "^14.3.3",
+    "tape": "^5.0.0",
+    "xhr": "^2.2.2"
   },
   "scripts": {
-    "test": "echo \"No tests yet...\"",
+    "test": "concurrently --kill-others --success=first 'npm:test:ganache' 'npm:test:server' 'npm:test:runner'",
+    "test:ganache": "ganache-cli -m 'stool sorry reveal vacuum notice grass trap aspect trigger marble mountain cargo'",
+    "test:server": "sleep 3 && FAUCET_CONFIG='test' FAUCET_CONFIG_PATH='test/config.js' npm start",
+    "test:runner": "sleep 5 && node test/index.js",
     "start": "node src/server.js",
     "build": "node src/build.js > build/app.js",
     "deploy": "docker-compose pull && docker-compose build && docker-compose stop && docker-compose up -d && docker-compose logs -f --tail 200",
     "postinstall": "patch-package"
-
   },
   "author": "",
   "license": "ISC"

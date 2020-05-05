@@ -68,7 +68,6 @@ function startServer () {
 
   // serve app
   app.use(express.static(appPath))
-  // app.get('/', deliverPage)
 
   // add IP-based rate limiting
   app.post('/', rateLimiter)
@@ -106,6 +105,9 @@ function startServer () {
 
       // parse address
       let targetAddress = req.body
+      if (!targetAddress || typeof targetAddress !== 'string') {
+        return didError(res, new Error(`Address parse failure - request body empty`))
+      }
       if (targetAddress.slice(0, 2) !== '0x') {
         targetAddress = '0x' + targetAddress
       }

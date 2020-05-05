@@ -1173,7 +1173,7 @@ cycle@1.0.x:
   resolved "https://registry.yarnpkg.com/cycle/-/cycle-1.0.3.tgz#21e80b2be8580f98b468f379430662b046c34ad2"
   integrity sha1-IegLK+hYD5i0aPN5QwZisEbDStI=
 
-cytoplasm@^3.0.3:
+cytoplasm@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/cytoplasm/-/cytoplasm-3.1.1.tgz#4ec1d01c869ba44a4b0933319506086d0a696f50"
   integrity sha512-dac6BNKl4WZZtvfhX6wbNDokXzh2gYQVDsz3RbE4uY8deCiOyoUssaByZGn2qowRuIxfxi68LsvYBKtZjIBVFw==
@@ -3571,14 +3571,14 @@ labeled-stream-splicer@^2.0.0:
     inherits "^2.0.1"
     stream-splicer "^2.0.0"
 
-lavamoat-core@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/lavamoat-core/-/lavamoat-core-1.1.0.tgz#7bf48f7a250b47002313d8aa89513257e633eb70"
-  integrity sha512-DupmofLu1G6VQP+AxXgaudK+wvzEVkv/P4wreRzyQq5T4hBq0crOIhff/fXyM9tnl4044+FTAxJkfcPr5AV5BA==
+lavamoat-core@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/lavamoat-core/-/lavamoat-core-2.0.0.tgz#494dae4c43e931deab3d10a88a33d82d84fd9375"
+  integrity sha512-ArNGj0Qf4PLeeJSAaWDNN9ii9odilYa13m9dgPKgajYH2/LKwwQi090Eb4DQ3flePjcmhCWkxm2HNIVTY8805A==
   dependencies:
     acorn-globals "^6.0.0"
     acorn-walk "^7.1.1"
-    cytoplasm "^3.0.3"
+    cytoplasm "^3.1.1"
     fromentries "^1.2.0"
     json-stable-stringify "^1.0.1"
     lavamoat-tofu "^2.0.9"
@@ -3594,13 +3594,13 @@ lavamoat-tofu@^2.0.9:
   dependencies:
     acorn-globals "^4.3.3"
 
-lavamoat@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/lavamoat/-/lavamoat-1.1.0.tgz#3deb15a631c543a7942014e7cfea30923d6d81e2"
-  integrity sha512-FLQdfsjqkyEDs88ZF9ImE1HTkjKLpAonKZMua4ywJHINWYi3B8UE2bjLUdK7KokxazDmByPVWx/yyiyHcSi34Q==
+lavamoat@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/lavamoat/-/lavamoat-1.1.1.tgz#92dd48e70d8a3ddf53e19660765afea72218fc72"
+  integrity sha512-mYoD/FnTYipH2ugADLvuQQvuxuNoe4MYWAEz9lsW4OuztkWCvKUO5wSREuTl/EhUv9o6Kfyc4iYT3BkCCgQXEg==
   dependencies:
     htmlescape "^1.1.1"
-    lavamoat-core "^1.1.0"
+    lavamoat-core "^2.0.0"
     merge-deep "^3.0.2"
     module-deps "^6.2.2"
     resolve "^1.15.1"

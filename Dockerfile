@@ -15,6 +15,10 @@ COPY ./src /www/src
 COPY ./build /www/build
 COPY ./config.js /www/config.js
 
+# copy over lavamoat permissions
+COPY ./lavamoat-config.json /www/lavamoat-config.json
+COPY ./lavamoat-config-override.json /www/lavamoat-config-override.json
+
 # start server
 CMD yarn start
 

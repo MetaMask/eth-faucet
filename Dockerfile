@@ -7,6 +7,7 @@ WORKDIR /www/
 
 # install dependencies
 COPY ./package.json /www/package.json
+COPY ./patches /www/patches
 RUN yarn install --production
 
 # copy over app dir

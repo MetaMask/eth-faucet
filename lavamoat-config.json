@@ -854,9 +854,13 @@
     },
     "secp256k1": {
       "globals": {
-        "Buffer.isBuffer": true
+        "Buffer.isBuffer": true,
+        "__dirname": true,
+        "console.error": true,
+        "process.env.DEBUG": true
       },
       "packages": {
+        "bindings": true,
         "bip66": true,
         "bn.js": true,
         "create-hash": true,

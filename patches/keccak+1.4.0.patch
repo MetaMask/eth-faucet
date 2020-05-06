@@ -5,4 +5,4 @@ index 74b6ecb..f6a9975 100644
 @@ -1,2 +1,2 @@
  'use strict'
 -module.exports = require('./lib/api')(require('bindings')('keccak'))
-+module.exports = require('./lib/api')(require('bindings')({ module_root: __dirname, bindings: 'keccak' }))
++module.exports = require('./lib/api')(require(require('bindings')({ module_root: __dirname, bindings: 'keccak', path: true })))

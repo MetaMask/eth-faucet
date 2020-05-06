@@ -18,7 +18,7 @@ const emojiFlag = require('emoji-flag')
 const config = require('./get-config')
 const rpcWrapperEngine = require('./engine.js')
 
-const appPath = path.join(__dirname, 'build')
+const appPath = path.join(__dirname, '..', 'build')
 
 const min = 60 * 1000
 const ether = 1e18

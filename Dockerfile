@@ -9,7 +9,7 @@ WORKDIR /www/
 COPY ./package.json /www/package.json
 COPY ./yarn.lock /www/yarn.lock
 COPY ./patches /www/patches
-RUN yarn install --production --frozen-lockfile
+RUN yarn install --production
 
 # copy over app dir
 COPY ./src /www/src

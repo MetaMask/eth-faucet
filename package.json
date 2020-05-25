@@ -41,9 +41,11 @@
   },
   "scripts": {
     "test": "concurrently --kill-others --success=first 'npm:test:ganache' 'npm:test:server' 'npm:test:runner'",
-    "test:ganache": "ganache-cli -m 'stool sorry reveal vacuum notice grass trap aspect trigger marble mountain cargo'",
+    "test:ganache": "ganache-cli --defaultBalanceEther '1000000000' -m 'stool sorry reveal vacuum notice grass trap aspect trigger marble mountain cargo'",
     "test:server": "sleep 3 && FAUCET_CONFIG='test' FAUCET_CONFIG_PATH='test/config.js' npm start",
     "test:runner": "sleep 7 && node test/index.js",
+    "test:stress": "SKIP_RATE_LIMITER=true concurrently --kill-others --success=first 'npm:test:ganache' 'npm:test:server' 'npm:test:stress:runner'",
+    "test:stress:runner": "sleep 7 && node test/stress.js",
     "start": "lavamoat src/server.js",
     "build": "node src/build.js > build/app.js",
     "deploy": "docker-compose pull && docker-compose build && docker-compose stop && docker-compose up -d && docker-compose logs -f --tail 200",

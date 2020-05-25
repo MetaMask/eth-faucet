@@ -47,7 +47,12 @@
     "start": "lavamoat src/server.js",
     "build": "node src/build.js > build/app.js",
     "deploy": "docker-compose pull && docker-compose build && docker-compose stop && docker-compose up -d && docker-compose logs -f --tail 200",
-    "postinstall": "patch-package"
+    "postinstall": "yarn run postinstall:patch && yarn run postinstall:scripts",
+    "postinstall:patch": "patch-package",
+    "postinstall:scripts": "yarn run postinstall:scripts:keccak && yarn run postinstall:scripts:keccak2 && yarn run postinstall:scripts:secp256k1",
+    "postinstall:scripts:keccak": "cd node_modules/keccak && yarn run install",
+    "postinstall:scripts:keccak2": "cd node_modules/ethereumjs-abi/node_modules/keccak && yarn run install",
+    "postinstall:scripts:secp256k1": "cd node_modules/secp256k1 && yarn run install"
   },
   "author": "",
   "license": "ISC"

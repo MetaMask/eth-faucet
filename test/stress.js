@@ -80,7 +80,6 @@ function postData (url, data) {
     })
 
     req.once('error', error => {
-      console.log('yeet')
       reject(error)
     })
 

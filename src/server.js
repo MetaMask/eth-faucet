@@ -40,6 +40,10 @@ const engine = rpcWrapperEngine({
   privateKey: ethUtil.toBuffer(config.privateKey)
 })
 
+engine.on('error', (err) => {
+  console.error(`Error in ProviderEngine: ${err.stack}`)
+})
+
 const ethQuery = new EthQuery(engine)
 
 startServer()

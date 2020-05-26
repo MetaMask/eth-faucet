@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@agoric/make-hardener@0.0.8":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@agoric/make-hardener/-/make-hardener-0.0.8.tgz#7f9e9d6874600b2e1b0543ce9456fbf62463be2d"
+  integrity sha512-bd83IYEMQbzpprwyA10RjHIGWmWeUMdsd5EzaHwke+zLH0HyqP6UKxFLv5mqkmrMeQyOMhNgKN1hCagjRyjlxQ==
+
 "@babel/code-frame@^7.0.0":
   version "7.8.3"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.8.3.tgz#33e25903d7481181534e12ec0a25f16b6fcf419e"
@@ -1173,10 +1178,10 @@ cycle@1.0.x:
   resolved "https://registry.yarnpkg.com/cycle/-/cycle-1.0.3.tgz#21e80b2be8580f98b468f379430662b046c34ad2"
   integrity sha1-IegLK+hYD5i0aPN5QwZisEbDStI=
 
-cytoplasm@^3.1.1:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/cytoplasm/-/cytoplasm-3.1.1.tgz#4ec1d01c869ba44a4b0933319506086d0a696f50"
-  integrity sha512-dac6BNKl4WZZtvfhX6wbNDokXzh2gYQVDsz3RbE4uY8deCiOyoUssaByZGn2qowRuIxfxi68LsvYBKtZjIBVFw==
+cytoplasm@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/cytoplasm/-/cytoplasm-3.3.0.tgz#dec707ac3d5dd1da50e387d633a6293fe4da80cb"
+  integrity sha512-T3cG25Xc95obKPwi7nZg+lV7zQW2QtFBDCicM26ILY21zHKfgJmv8PtK9g+QuKHHnLj3g6IkcGQKPMx5Q1zcpg==
 
 d@1, d@^1.0.1:
   version "1.0.1"
@@ -2043,7 +2048,7 @@ ethereumjs-common@^1.1.0, ethereumjs-common@^1.3.2, ethereumjs-common@^1.5.0:
   resolved "https://registry.yarnpkg.com/ethereumjs-common/-/ethereumjs-common-1.5.0.tgz#d3e82fc7c47c0cef95047f431a99485abc9bb1cd"
   integrity sha512-SZOjgK1356hIY7MRj3/ma5qtfr/4B5BL+G4rP/XSMYr2z1H5el4RX5GReYCKmQmYI/nSBmRnwrZ17IfHuG0viQ==
 
-ethereumjs-tx@^1.1.2, ethereumjs-tx@^1.2.0, ethereumjs-tx@^1.2.2, ethereumjs-tx@^1.3.7:
+ethereumjs-tx@^1.2.0, ethereumjs-tx@^1.2.2, ethereumjs-tx@^1.3.7:
   version "1.3.7"
   resolved "https://registry.yarnpkg.com/ethereumjs-tx/-/ethereumjs-tx-1.3.7.tgz#88323a2d875b10549b8347e09f4862b546f3d89a"
   integrity sha512-wvLMxzt1RPhAQ9Yi3/HKZTn0FZYpnsmQdbKYfUUpi4j1SEIcbkd9tndVjcPrufY3V7j2IebOpC00Zp2P/Ay2kA==
@@ -2051,7 +2056,7 @@ ethereumjs-tx@^1.1.2, ethereumjs-tx@^1.2.0, ethereumjs-tx@^1.2.2, ethereumjs-tx@
     ethereum-common "^0.0.18"
     ethereumjs-util "^5.0.0"
 
-ethereumjs-tx@^2.1.1:
+ethereumjs-tx@^2.1.1, ethereumjs-tx@^2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/ethereumjs-tx/-/ethereumjs-tx-2.1.2.tgz#5dfe7688bf177b45c9a23f86cf9104d47ea35fed"
   integrity sha512-zZEK1onCeiORb0wyCXUvg94Ve5It/K6GD1K+26KfFKodiBiS6d9lfCXlUKGBBdQ+bv7Day+JK0tj1K+BeNFRAw==
@@ -2097,6 +2102,19 @@ ethereumjs-util@^6.0.0:
     keccak "^2.0.0"
     rlp "^2.2.3"
     secp256k1 "^3.0.1"
+
+ethereumjs-util@^7.0.0:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/ethereumjs-util/-/ethereumjs-util-7.0.1.tgz#6545ec23924eb1e3bd476bfa1f90de5f87bdfbad"
+  integrity sha512-qp5ZwQEUC+ZV9ESeQT3gBHivGjygYVrNc2xR170HabUFQiOSb9t+Kby0FinOAPq+/pxKkiib8HfoIAy+BEi91Q==
+  dependencies:
+    "@types/bn.js" "^4.11.3"
+    bn.js "^4.11.8"
+    create-hash "^1.1.2"
+    ethjs-util "0.1.6"
+    keccak "^3.0.0"
+    rlp "^2.2.4"
+    secp256k1 "^4.0.1"
 
 ethereumjs-vm@^2.3.4, ethereumjs-vm@^2.6.0:
   version "2.6.0"
@@ -3518,6 +3536,14 @@ keccak@^2.0.0:
     nan "^2.14.0"
     safe-buffer "^5.2.0"
 
+keccak@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/keccak/-/keccak-3.0.0.tgz#420d1de4a38a04f33ff8401f0535fb93756861d4"
+  integrity sha512-/4h4FIfFEpTEuySXi/nVFM5rqSKPnnhI7cL4K3MFSwoI3VyM7AhPSq3SsysARtnEBEeIKMBUWD8cTh9nHE8AkA==
+  dependencies:
+    node-addon-api "^2.0.0"
+    node-gyp-build "^4.2.0"
+
 keyv@^3.0.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/keyv/-/keyv-3.1.0.tgz#ecc228486f69991e49e9476485a5be1e8fc5c4d9"
@@ -3571,19 +3597,20 @@ labeled-stream-splicer@^2.0.0:
     inherits "^2.0.1"
     stream-splicer "^2.0.0"
 
-lavamoat-core@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/lavamoat-core/-/lavamoat-core-2.1.0.tgz#faa4285aa2b498620a28c863403bbc6888ec3515"
-  integrity sha512-/Z0ZxsH3BWE7x3+6MNe9wiHZEENDz3dGYoWqrR7mC+9NBWwjCn0JzVZFGW3QXRM0VA8mgUuR+Fn6xXuUv7y6KQ==
+lavamoat-core@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/lavamoat-core/-/lavamoat-core-3.0.1.tgz#a26bbe5ae0571efe86bf7d3655d75026f72722fa"
+  integrity sha512-97BIKyv6wwGoV8eQrLCE8JMEOG7qBATBZ3zkVuQ+8dLX0dM/39hIFKhyGzv/BFL8iQa/boOH0mqi75nVM9sWpQ==
   dependencies:
     acorn-globals "^6.0.0"
     acorn-walk "^7.1.1"
-    cytoplasm "^3.1.1"
+    cytoplasm "^3.3.0"
     fromentries "^1.2.0"
     json-stable-stringify "^1.0.1"
     lavamoat-tofu "^2.0.9"
     resolve "^1.15.1"
     resolve-package-path "^2.0.0"
+    ses "^0.7.7"
     through2 "^3.0.1"
 
 lavamoat-tofu@^2.0.9:
@@ -3593,13 +3620,13 @@ lavamoat-tofu@^2.0.9:
   dependencies:
     acorn-globals "^4.3.3"
 
-lavamoat@^1.1.4:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/lavamoat/-/lavamoat-1.1.4.tgz#88877028a05d844e50a4dadbe5b4c91d34c4c3f5"
-  integrity sha512-Kz6+42yn3TYnFJl3ytmJoZiSEcfOoolS/Rz7Mk41D3lZwnMFiRrFmhQVegLCwGmFBELy7PTTnfb7QDyBggzNYg==
+lavamoat@^2.0.0:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/lavamoat/-/lavamoat-2.0.1.tgz#4190da41b2a92916cbe7a483d9bbe02140e90fb6"
+  integrity sha512-5gIF3WzqYLqsMONI4DM/ZWbkUnZFWe1217OYZEiHuibQP40MUTycy1F0QGcf9tzEGCZc5+cMpLj+vh5KXMblNA==
   dependencies:
     htmlescape "^1.1.1"
-    lavamoat-core "^2.1.0"
+    lavamoat-core "^3.0.1"
     merge-deep "^3.0.2"
     module-deps "^6.2.2"
     resolve "^1.15.1"
@@ -4289,6 +4316,11 @@ nice-try@^1.0.4:
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
   integrity sha512-1nh45deeb5olNY7eX82BkPO7SSxR5SSYJiPTrTdFUVYwAl8CKMA5N9PjTYkHiRjisVcxcQ1HXdLhx2qxxJzLNQ==
 
+node-addon-api@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/node-addon-api/-/node-addon-api-2.0.0.tgz#f9afb8d777a91525244b01775ea0ddbe1125483b"
+  integrity sha512-ASCL5U13as7HhOExbT6OlWJJUV/lLzL2voOSP1UVehpRD8FbSrSDjfScK/KwAvVTI5AS6r4VwbOMlIqtvRidnA==
+
 node-fetch@2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.1.2.tgz#ab884e8e7e57e38a944753cec706f788d1768bb5"
@@ -4301,6 +4333,11 @@ node-fetch@~1.7.1:
   dependencies:
     encoding "^0.1.11"
     is-stream "^1.0.1"
+
+node-gyp-build@^4.2.0:
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/node-gyp-build/-/node-gyp-build-4.2.2.tgz#3f44b65adaafd42fb6c3d81afd630e45c847eb66"
+  integrity sha512-Lqh7mrByWCM8Cf9UPqpeoVBBo5Ugx+RKu885GAzmLBVYjeywScxHXPGLa4JfYNZmcNGwzR0Glu5/9GaQZMFqyA==
 
 normalize-package-data@^2.3.2:
   version "2.5.0"
@@ -5216,7 +5253,7 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
     hash-base "^3.0.0"
     inherits "^2.0.1"
 
-rlp@^2.0.0, rlp@^2.2.3:
+rlp@^2.0.0, rlp@^2.2.3, rlp@^2.2.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/rlp/-/rlp-2.2.4.tgz#d6b0e1659e9285fc509a5d169a9bd06f704951c1"
   integrity sha512-fdq2yYCWpAQBhwkZv+Z8o/Z4sPmYm1CUq6P7n6lVTOdb949CnqA0sndXal5C1NleSVSZm6q5F3iEbauyVln/iw==
@@ -5303,6 +5340,15 @@ secp256k1@^3.0.1:
     nan "^2.14.0"
     safe-buffer "^5.1.2"
 
+secp256k1@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/secp256k1/-/secp256k1-4.0.1.tgz#b9570ca26ace9e74c3171512bba253da9c0b6d60"
+  integrity sha512-iGRjbGAKfXMqhtdkkuNxsgJQfJO8Oo78Rm7DAvsG3XKngq+nJIOGqrCSXcQqIVsmCj0wFanE5uTKFxV3T9j2wg==
+  dependencies:
+    elliptic "^6.5.2"
+    node-addon-api "^2.0.0"
+    node-gyp-build "^4.2.0"
+
 seek-bzip@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/seek-bzip/-/seek-bzip-1.0.5.tgz#cfe917cb3d274bcffac792758af53173eb1fabdc"
@@ -5369,6 +5415,13 @@ servify@^0.1.12:
     express "^4.14.0"
     request "^2.79.0"
     xhr "^2.3.3"
+
+ses@^0.7.7:
+  version "0.7.7"
+  resolved "https://registry.yarnpkg.com/ses/-/ses-0.7.7.tgz#d608378aa0ed7363e4f3ddadc3bc24b00439a062"
+  integrity sha512-rN+z8Auz+XX/SXUMPHePZhHP0mLeDdihq8Au8UZzxlyOK+SdUeVxDJOjUdrtxebtQYNk8LMqFE0Qst5ea/SN6Q==
+  dependencies:
+    "@agoric/make-hardener" "0.0.8"
 
 set-blocking@^2.0.0:
   version "2.0.0"

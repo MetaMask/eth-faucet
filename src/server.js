@@ -44,7 +44,7 @@ const engine = rpcWrapperEngine({
 })
 
 engine.on('error', (err) => {
-  console.error(`Error in ProviderEngine: ${err.stack}`)
+  console.error(`Error in ProviderEngine: ${err.stack || err.message || err}`)
 })
 
 const ethQuery = new EthQuery(engine)

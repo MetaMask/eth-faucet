@@ -1,8 +1,11 @@
 const PORT = process.env.PORT || 9000
 
-// log unhandled promise rejections
+// log unhandled errors
 process.on('unhandledRejection', error => {
   console.error('unhandledRejection', error)
+})
+process.on('uncaughtException', (err) => {
+  console.error(`uncaughtException: ${err.stack || err.message || err}`)
 })
 
 const path = require('path')
@@ -40,6 +43,10 @@ const engine = rpcWrapperEngine({
   privateKey: ethUtil.toBuffer(config.privateKey)
 })
 
+engine.on('error', (err) => {
+  console.error(`Error in ProviderEngine: ${err.stack}`)
+})
+
 const ethQuery = new EthQuery(engine)
 
 startServer()
@@ -55,22 +62,22 @@ function startServer () {
   app.use(bodyParser.text({ type: '*/*' }))
   // trust the "x-forwarded-for" header from our reverse proxy
   app.enable('trust proxy')
-
-  // configure rate limiter
-  const rateLimiter = new RateLimit({
-    // 15 minutes
-    windowMs: 15 * min,
-    // limit each IP to N requests per windowMs
-    max: 20,
-    // disable delaying - full speed until the max limit is reached
-    delayMs: 200
-  })
-
   // serve app
   app.use(express.static(appPath))
 
   // add IP-based rate limiting
-  app.post('/', rateLimiter)
+  if (!process.env.SKIP_RATE_LIMITER) {
+    // configure rate limiter
+    const rateLimiter = new RateLimit({
+      // 15 minutes
+      windowMs: 15 * min,
+      // limit each IP to N requests per windowMs
+      max: 20,
+      // disable delaying - full speed until the max limit is reached
+      delayMs: 200
+    })
+    app.post('/', rateLimiter)
+  }
   // handle fauceting request
   app.post('/', handleRequest)
 

@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@pablopunk/geo-ip": "^1.0.0",
+    "allow-scripts": "^1.5.3",
     "body-parser": "^1.15.2",
     "cors": "^2.8.1",
     "emoji-flag": "^1.1.0",
@@ -24,7 +25,7 @@
     "patch-package": "^6.2.2",
     "request": "^2.75.0",
     "web3": "^1.0.0-beta.20",
-    "web3-provider-engine": "^15.0.6",
+    "web3-provider-engine": "^15.0.12",
     "xtend": "^4.0.1"
   },
   "devDependencies": {
@@ -34,7 +35,6 @@
     "ethers": "^4.0.47",
     "ganache-cli": "^6.9.1",
     "h": "^0.1.0",
-    "postinstall-postinstall": "^2.1.0",
     "standard": "^14.3.3",
     "tape": "^5.0.0",
     "xhr": "^2.2.2"
@@ -49,13 +49,16 @@
     "start": "lavamoat src/server.js",
     "build": "node src/build.js > build/app.js",
     "deploy": "docker-compose pull && docker-compose build && docker-compose stop && docker-compose up -d && docker-compose logs -f --tail 200",
-    "postinstall": "yarn run postinstall:patch && yarn run postinstall:scripts",
-    "postinstall:patch": "patch-package",
-    "postinstall:scripts": "yarn run postinstall:scripts:keccak && yarn run postinstall:scripts:keccak2 && yarn run postinstall:scripts:secp256k1",
-    "postinstall:scripts:keccak": "cd node_modules/keccak && yarn run install",
-    "postinstall:scripts:keccak2": "cd node_modules/ethereumjs-abi/node_modules/keccak && yarn run install",
-    "postinstall:scripts:secp256k1": "cd node_modules/secp256k1 && yarn run install"
+    "after-install": "NODE_ENV=test patch-package && allow-scripts"
   },
-  "author": "",
+  "allowScripts": {
+    "keccak": true,
+    "secp256k1": true,
+    "core-js": false,
+    "@web3-js/websocket": false,
+    "@web3-js/scrypt-shim": false,
+    "web3": false
+  },
+  "author": "kumavis",
   "license": "ISC"
 }

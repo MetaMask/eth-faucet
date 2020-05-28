@@ -4,6 +4,17 @@
       "packages": {
         "ethereum-common": true
       }
+    },
+    "node-gyp-build": {
+      "packages": {
+        "secp256k1": true,
+        "keccak": true
+      }
+    },
+    "bindings": {
+      "packages": {
+        "keccak": true
+      }
     }
   }
 }

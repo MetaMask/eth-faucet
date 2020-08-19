@@ -24,7 +24,6 @@
     "lavamoat": "^2.0.0",
     "patch-package": "^6.2.2",
     "request": "^2.75.0",
-    "web3": "^1.0.0-beta.20",
     "web3-provider-engine": "^15.0.12",
     "xtend": "^4.0.1"
   },
@@ -54,10 +53,7 @@
   "allowScripts": {
     "keccak": true,
     "secp256k1": true,
-    "core-js": false,
-    "@web3-js/websocket": false,
-    "@web3-js/scrypt-shim": false,
-    "web3": false
+    "core-js": false
   },
   "author": "kumavis",
   "license": "ISC"

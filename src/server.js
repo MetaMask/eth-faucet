@@ -69,12 +69,9 @@ function startServer () {
   if (!process.env.SKIP_RATE_LIMITER) {
     // configure rate limiter
     const rateLimiter = new RateLimit({
-      // 15 minutes
-      windowMs: 15 * min,
-      // limit each IP to N requests per windowMs
-      max: 20,
-      // disable delaying - full speed until the max limit is reached
-      delayMs: 200
+      windowMs: 60 * min,
+      max: 5,
+      message: `Too many requests created from this IP, limit 5/hr`
     })
     app.post('/', rateLimiter)
   }
@@ -98,18 +95,6 @@ function startServer () {
 
   async function handleRequest (req, res) {
     try {
-      // parse ip-address
-      const ipAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress
-
-      let flag
-      try {
-        const geoData = geoIp({ ip: ipAddress })
-        const countryCode = geoData.country_code
-        flag = emojiFlag(countryCode) + ' '
-      } catch (err) {
-        flag = '  '
-      }
-
       // parse address
       let targetAddress = req.body
       if (!targetAddress || typeof targetAddress !== 'string') {
@@ -121,10 +106,20 @@ function startServer () {
       if (targetAddress.length !== 42) {
         return didError(res, new Error(`Address parse failure - "${targetAddress}"`))
       }
-
+      // parse ip-address
+      const ipAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress
+      // get flag for ip-address
+      let flag
+      try {
+        const geoData = geoIp({ ip: ipAddress })
+        const countryCode = geoData.country_code
+        flag = emojiFlag(countryCode) + ' '
+      } catch (err) {
+        flag = '  '
+      }
+      // create label string for log
       const alignedIpAddress = ipAddress.padStart(15, ' ')
       const requestorMessage = `${flag} ${alignedIpAddress} requesting for ${targetAddress}`
-
       // check for greediness
       const balance = await ethQuery.getBalance(targetAddress, 'pending')
       const balanceTooFull = balance.gt(MAX_BALANCE)

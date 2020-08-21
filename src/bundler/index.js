@@ -2,10 +2,10 @@ const fs = require('fs')
 const path = require('path')
 const Browserify = require('browserify')
 const envify = require('envify/custom')
-const { address } = require('./get-config')
+const { address } = require('../server/get-config')
 
-const srcPath = path.join(__dirname, '/app.js')
-const destPath = path.join(__dirname, '/../build/app.js')
+const srcPath = path.join(__dirname, '/../webapp/index.js')
+const destPath = path.join(__dirname, '/../../build/app.js')
 
 // prepare app bundle
 const browserify = Browserify()

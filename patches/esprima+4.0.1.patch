@@ -1,0 +1,13 @@
+diff --git a/node_modules/esprima/dist/esprima.js b/node_modules/esprima/dist/esprima.js
+index 2af3eee..ea2ba4d 100644
+--- a/node_modules/esprima/dist/esprima.js
++++ b/node_modules/esprima/dist/esprima.js
+@@ -5345,7 +5345,7 @@ return /******/ (function(modules) { // webpackBootstrap
+ 	            }
+ 	            else if (ch === 0x3C && !this.isModule) {
+ 	                if (this.source.slice(this.index + 1, this.index + 4) === '!--') {
+-	                    this.index += 4; // `<!--`
++	                    this.index += 4; // `< !--`
+ 	                    var comment = this.skipSingleLineComment(4);
+ 	                    if (this.trackComment) {
+ 	                        comments = comments.concat(comment);

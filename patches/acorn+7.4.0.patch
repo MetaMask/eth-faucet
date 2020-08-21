@@ -1,0 +1,22 @@
+diff --git a/node_modules/acorn/dist/acorn.js b/node_modules/acorn/dist/acorn.js
+index 798c667..c2c9170 100644
+--- a/node_modules/acorn/dist/acorn.js
++++ b/node_modules/acorn/dist/acorn.js
+@@ -4573,7 +4573,7 @@
+     if (next === code) {
+       if (next === 45 && !this.inModule && this.input.charCodeAt(this.pos + 2) === 62 &&
+           (this.lastTokEnd === 0 || lineBreak.test(this.input.slice(this.lastTokEnd, this.pos)))) {
+-        // A `-->` line comment
++        // A `-- >` line comment
+         this.skipLineComment(3);
+         this.skipSpace();
+         return this.nextToken()
+@@ -4594,7 +4594,7 @@
+     }
+     if (next === 33 && code === 60 && !this.inModule && this.input.charCodeAt(this.pos + 2) === 45 &&
+         this.input.charCodeAt(this.pos + 3) === 45) {
+-      // `<!--`, an XML-style comment that should be interpreted as a line comment
++      // `<! --`, an XML-style comment that should be interpreted as a line comment
+       this.skipLineComment(4);
+       this.skipSpace();
+       return this.nextToken()

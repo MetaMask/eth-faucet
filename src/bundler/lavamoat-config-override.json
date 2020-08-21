@@ -1,0 +1,14 @@
+{
+  "resources": {
+    "readable-stream": {
+      "builtin": {
+        "events": true
+      }
+    },
+    "module-deps": {
+      "packages": {
+        "envify": true
+      }
+    }
+  }
+}

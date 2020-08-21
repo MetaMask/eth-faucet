@@ -2,8 +2,8 @@ const path = require('path')
 const ethUtil = require('ethereumjs-util')
 
 // load all configs
-const configPath = path.resolve(process.env.FAUCET_CONFIG_PATH || './config.js')
-console.log(`Using config at "${configPath}"`)
+const configPath = path.resolve(process.env.FAUCET_CONFIG_PATH || '../../config.js')
+console.log(`eth-faucet - using config at "${configPath}"`)
 const allConfigs = require(configPath)
 
 // load config for environment

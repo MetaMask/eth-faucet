@@ -45,8 +45,8 @@
     "test:runner": "sleep 7 && node test/index.js",
     "test:stress": "SKIP_RATE_LIMITER=true concurrently --kill-others --success=first 'npm:test:ganache' 'npm:test:server' 'npm:test:stress:runner'",
     "test:stress:runner": "sleep 7 && node test/stress.js",
-    "start": "lavamoat src/server.js",
-    "build": "node src/build.js > build/app.js",
+    "start": "(cd src/server && lavamoat index.js)",
+    "build": "(cd src/bundler && lavamoat index.js)",
     "deploy": "docker-compose pull && docker-compose build && docker-compose stop && docker-compose up -d && docker-compose logs -f --tail 200",
     "after-install": "NODE_ENV=test patch-package && allow-scripts",
     "post-install": "patch-package"

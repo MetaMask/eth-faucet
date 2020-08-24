@@ -1,0 +1,62 @@
+{
+  "resources": {
+    "eth-query": {
+      "packages": {
+        "json-rpc-random-id": true,
+        "xtend": true
+      }
+    },
+    "h": {
+      "globals": {
+        "HTMLElement": true,
+        "document.createElement": true,
+        "document.createTextNode": true
+      }
+    },
+    "is-function": {
+      "globals": {
+        "alert": true,
+        "confirm": true,
+        "prompt": true,
+        "setTimeout": true
+      }
+    },
+    "process": {
+      "globals": {
+        "clearTimeout": true,
+        "setTimeout": true
+      }
+    },
+    "undefined": {
+      "globals": {
+        "addEventListener": true,
+        "alert": true,
+        "console.error": true,
+        "console.log": true,
+        "console.res.error": true,
+        "document.body.appendChild": true,
+        "document.body.innerHTML": true,
+        "location.href": true,
+        "setInterval": true
+      },
+      "packages": {
+        "eth-query": true,
+        "h": true,
+        "process": true,
+        "xhr": true
+      }
+    },
+    "xhr": {
+      "globals": {
+        "clearTimeout": true,
+        "setTimeout": true
+      },
+      "packages": {
+        "global": true,
+        "is-function": true,
+        "parse-headers": true,
+        "xtend": true
+      }
+    }
+  }
+}

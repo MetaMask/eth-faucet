@@ -34,6 +34,7 @@
     "ethers": "^4.0.47",
     "ganache-cli": "^6.9.1",
     "h": "^0.1.0",
+    "lavamoat-browserify": "^10.2.1",
     "standard": "^14.3.3",
     "tape": "^5.0.0",
     "xhr": "^2.2.2"
@@ -41,7 +42,7 @@
   "scripts": {
     "test": "concurrently --kill-others --success=first 'npm:test:ganache' 'npm:test:server' 'npm:test:runner'",
     "test:ganache": "ganache-cli --defaultBalanceEther '1000000000' -m 'stool sorry reveal vacuum notice grass trap aspect trigger marble mountain cargo'",
-    "test:server": "sleep 3 && FAUCET_CONFIG='test' FAUCET_CONFIG_PATH='test/config.js' npm start",
+    "test:server": "sleep 3 && FAUCET_CONFIG='test' FAUCET_CONFIG_PATH='../../test/config.js' npm start",
     "test:runner": "sleep 7 && node test/index.js",
     "test:stress": "SKIP_RATE_LIMITER=true concurrently --kill-others --success=first 'npm:test:ganache' 'npm:test:server' 'npm:test:stress:runner'",
     "test:stress:runner": "sleep 7 && node test/stress.js",
@@ -49,7 +50,11 @@
     "build": "(cd src/bundler && lavamoat index.js)",
     "deploy": "docker-compose pull && docker-compose build && docker-compose stop && docker-compose up -d && docker-compose logs -f --tail 200",
     "after-install": "NODE_ENV=test patch-package && allow-scripts",
-    "post-install": "patch-package"
+    "post-install": "patch-package",
+    "lavamoat": "yarn run lavamoat:server && yarn run lavamoat:bundler && yarn run lavamoat:webapp",
+    "lavamoat:webapp": "(cd src/webapp && browserify index.js --plugin [ lavamoat-browserify --writeAutoConfig ] > /dev/null)",
+    "lavamoat:bundler": "(cd src/bundler && lavamoat index.js --writeAutoConfig)",
+    "lavamoat:server": "(cd src/server && lavamoat index.js --writeAutoConfig)"
   },
   "allowScripts": {
     "keccak": true,

@@ -1,0 +1,13 @@
+diff --git a/node_modules/jsesc/jsesc.js b/node_modules/jsesc/jsesc.js
+index 7b8b923..c13faaa 100644
+--- a/node_modules/jsesc/jsesc.js
++++ b/node_modules/jsesc/jsesc.js
+@@ -319,7 +319,7 @@ const jsesc = (argument, options) => {
+ 		// https://mathiasbynens.be/notes/etago
+ 		return result
+ 			.replace(/<\/(script|style)/gi, '<\\/$1')
+-			.replace(/<!--/g, json ? '\\u003C!--' : '\\x3C!--');
++			// .replace(/<! --/g, json ? '\\u003C!--' : '\\x3C!--');
+ 	}
+ 	return result;
+ };

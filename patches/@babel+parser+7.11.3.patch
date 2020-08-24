@@ -1,0 +1,28 @@
+diff --git a/node_modules/@babel/parser/lib/index.js b/node_modules/@babel/parser/lib/index.js
+index e2e4230..560da0e 100644
+--- a/node_modules/@babel/parser/lib/index.js
++++ b/node_modules/@babel/parser/lib/index.js
+@@ -634,10 +634,10 @@ const ErrorMessages = Object.freeze({
+   IllegalBreakContinue: "Unsyntactic %0",
+   IllegalLanguageModeDirective: "Illegal 'use strict' directive in function with non-simple parameter list",
+   IllegalReturn: "'return' outside of function",
+-  ImportCallArgumentTrailingComma: "Trailing comma is disallowed inside import(...) arguments",
+-  ImportCallArity: "import() requires exactly %0",
+-  ImportCallNotNewExpression: "Cannot use new with import(...)",
+-  ImportCallSpreadArgument: "... is not allowed in import()",
++  ImportCallArgumentTrailingComma: "Trailing comma is disallowed inside import_(...) arguments",
++  ImportCallArity: "import_() requires exactly %0",
++  ImportCallNotNewExpression: "Cannot use new with import_(...)",
++  ImportCallSpreadArgument: "... is not allowed in import_()",
+   ImportMetaOutsideModule: `import.meta may appear only with 'sourceType: "module"'`,
+   ImportOutsideModule: `'import' and 'export' may appear only with 'sourceType: "module"'`,
+   InvalidBigIntLiteral: "Invalid BigIntLiteral",
+@@ -725,7 +725,7 @@ const ErrorMessages = Object.freeze({
+   UnsupportedBind: "Binding should be performed on object property.",
+   UnsupportedDecoratorExport: "A decorated export must export a class declaration",
+   UnsupportedDefaultExport: "Only expressions, functions or classes are allowed as the `default` export.",
+-  UnsupportedImport: "import can only be used in import() or import.meta",
++  UnsupportedImport: "import can only be used in import_() or import.meta",
+   UnsupportedMetaProperty: "The only valid meta property for %0 is %0.%1",
+   UnsupportedParameterDecorator: "Decorators cannot be used to decorate parameters",
+   UnsupportedPropertyDecorator: "Decorators cannot be used to decorate object literal properties",

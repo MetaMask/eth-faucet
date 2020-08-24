@@ -1,41 +1,83 @@
 {
   "resources": {
-    "envify": {
-      "packages": {
-        "esprima": true,
-        "through": true
-      },
+    "JSONStream": {
       "globals": {
-        "process.env": true
+        "Buffer": true
+      },
+      "packages": {
+        "jsonparse": true,
+        "through": true
       }
     },
-    "browserify": {
+    "acorn": {
+      "globals": {
+        "BigInt": true,
+        "define": true
+      }
+    },
+    "acorn-node": {
+      "globals": {
+        "BigInt": true
+      },
       "packages": {
-        "module-deps": true,
-        "deps-sort": true,
-        "browser-pack": true,
-        "insert-module-globals": true,
-        "syntax-error": true,
-        "labeled-stream-splicer": true,
-        "through2": true,
-        "concat-stream": true,
-        "inherits": true,
-        "xtend": true,
-        "defined": true,
-        "has": true,
-        "htmlescape": true,
-        "shasum": true,
-        "browser-resolve": true,
-        "resolve": true,
-        "read-only-stream": true,
-        "cached-path-relative": true
+        "acorn": true,
+        "acorn-walk": true,
+        "xtend": true
+      }
+    },
+    "acorn-walk": {
+      "globals": {
+        "define": true
+      }
+    },
+    "bn.js": {
+      "builtin": {
+        "buffer.Buffer": true
+      }
+    },
+    "brorand": {
+      "builtin": {
+        "crypto.randomBytes": true
+      },
+      "globals": {
+        "crypto": true,
+        "msCrypto": true
+      }
+    },
+    "browser-pack": {
+      "builtin": {
+        "fs.readFileSync": true,
+        "path.join": true,
+        "path.relative": true
       },
       "globals": {
         "__dirname": true,
-        "process.cwd": true,
-        "process.nextTick": true,
+        "process.cwd": true
+      },
+      "packages": {
+        "JSONStream": true,
+        "combine-source-map": true,
+        "defined": true,
+        "safe-buffer": true,
+        "through2": true,
+        "umd": true
+      }
+    },
+    "browser-resolve": {
+      "builtin": {
+        "fs.readFile": true,
+        "fs.readFileSync": true,
+        "path": true
+      },
+      "globals": {
+        "__dirname": true,
         "process.platform": true
       },
+      "packages": {
+        "resolve": true
+      }
+    },
+    "browserify": {
       "builtin": {
         "events.EventEmitter": true,
         "fs.realpath": true,
@@ -44,115 +86,178 @@
         "path.relative": true,
         "path.resolve": true,
         "path.sep": true
-      }
-    },
-    "through": {
-      "globals": {
-        "process.nextTick": true
       },
-      "builtin": {
-        "stream": true
+      "globals": {
+        "__dirname": true,
+        "process.cwd": true,
+        "process.nextTick": true,
+        "process.platform": true
+      },
+      "packages": {
+        "browser-pack": true,
+        "browser-resolve": true,
+        "cached-path-relative": true,
+        "concat-stream": true,
+        "defined": true,
+        "deps-sort": true,
+        "has": true,
+        "htmlescape": true,
+        "inherits": true,
+        "insert-module-globals": true,
+        "labeled-stream-splicer": true,
+        "module-deps": true,
+        "read-only-stream": true,
+        "resolve": true,
+        "shasum": true,
+        "syntax-error": true,
+        "through2": true,
+        "xtend": true
       }
     },
-    "ethereumjs-util": {
+    "buffer-from": {
+      "globals": {
+        "Buffer": true
+      }
+    },
+    "cached-path-relative": {
+      "builtin": {
+        "path": true
+      },
+      "globals": {
+        "process.cwd": true
+      }
+    },
+    "combine-source-map": {
+      "builtin": {
+        "path.dirname": true,
+        "path.join": true
+      },
+      "globals": {
+        "process.platform": true
+      },
       "packages": {
-        "ethjs-util": true,
-        "bn.js": true,
-        "ethereum-cryptography": true,
-        "create-hash": true,
-        "rlp": true
+        "convert-source-map": true,
+        "inline-source-map": true,
+        "lodash.memoize": true,
+        "source-map": true
+      }
+    },
+    "concat-stream": {
+      "globals": {
+        "Buffer.concat": true,
+        "Buffer.isBuffer": true
+      },
+      "packages": {
+        "buffer-from": true,
+        "inherits": true,
+        "readable-stream": true,
+        "typedarray": true
+      }
+    },
+    "convert-source-map": {
+      "builtin": {
+        "fs.readFileSync": true,
+        "path.join": true
       },
       "globals": {
         "Buffer": true
-      },
+      }
+    },
+    "core-util-is": {
+      "globals": {
+        "Buffer.isBuffer": true
+      }
+    },
+    "create-hash": {
       "builtin": {
-        "assert": true,
-        "buffer.Buffer.from": true
+        "crypto.createHash": true
+      }
+    },
+    "dash-ast": {
+      "builtin": {
+        "assert": true
       }
     },
     "deps-sort": {
       "packages": {
-        "through2": true,
-        "shasum-object": true
+        "shasum-object": true,
+        "through2": true
       }
     },
-    "browser-pack": {
+    "detective": {
       "packages": {
-        "JSONStream": true,
-        "defined": true,
-        "through2": true,
-        "umd": true,
-        "safe-buffer": true,
-        "combine-source-map": true
-      },
-      "globals": {
-        "__dirname": true,
-        "process.cwd": true
-      },
-      "builtin": {
-        "fs.readFileSync": true,
-        "path.join": true,
-        "path.relative": true
-      }
-    },
-    "insert-module-globals": {
-      "packages": {
-        "undeclared-identifiers": true,
-        "through2": true,
-        "xtend": true,
         "acorn-node": true,
-        "path-is-absolute": true,
-        "combine-source-map": true
-      },
-      "globals": {
-        "Buffer.isBuffer": true,
-        "Buffer.concat": true
-      },
-      "builtin": {
-        "path.dirname": true,
-        "path.isAbsolute": true,
-        "path.relative": true,
-        "path.sep": true
+        "defined": true
       }
     },
-    "syntax-error": {
+    "duplexer2": {
       "packages": {
-        "acorn-node": true
+        "readable-stream": true
       }
     },
-    "labeled-stream-splicer": {
+    "elliptic": {
       "packages": {
-        "stream-splicer": true,
-        "inherits": true
-      }
-    },
-    "through2": {
-      "packages": {
-        "readable-stream": true,
-        "xtend": true
-      },
-      "globals": {
-        "process.nextTick": true
-      },
-      "builtin": {
-        "util.inherits": true
-      }
-    },
-    "concat-stream": {
-      "packages": {
-        "readable-stream": true,
+        "bn.js": true,
+        "brorand": true,
+        "hash.js": true,
+        "hmac-drbg": true,
         "inherits": true,
-        "buffer-from": true,
-        "typedarray": true
-      },
-      "globals": {
-        "Buffer.isBuffer": true,
-        "Buffer.concat": true
+        "minimalistic-assert": true,
+        "minimalistic-crypto-utils": true
       }
     },
-    "inherits": {
+    "envify": {
+      "globals": {
+        "process.env": true
+      },
+      "packages": {
+        "esprima": true,
+        "through": true
+      }
+    },
+    "esprima": {
+      "globals": {
+        "define": true
+      }
+    },
+    "ethereum-cryptography": {
+      "globals": {
+        "Buffer.from": true
+      },
+      "packages": {
+        "keccak": true,
+        "randombytes": true,
+        "secp256k1": true
+      }
+    },
+    "ethereumjs-util": {
       "builtin": {
-        "util.inherits": true
+        "assert": true,
+        "buffer.Buffer.from": true
+      },
+      "globals": {
+        "Buffer": true
+      },
+      "packages": {
+        "bn.js": true,
+        "create-hash": true,
+        "ethereum-cryptography": true,
+        "ethjs-util": true,
+        "rlp": true
+      }
+    },
+    "ethjs-util": {
+      "globals": {
+        "Buffer": true
+      },
+      "packages": {
+        "is-hex-prefixed": true,
+        "strip-hex-prefix": true
+      }
+    },
+    "get-assigned-identifiers": {
+      "builtin": {
+        "assert.equal": true
       }
     },
     "has": {
@@ -160,38 +265,203 @@
         "function-bind": true
       }
     },
-    "shasum": {
+    "hash.js": {
       "packages": {
-        "json-stable-stringify": true
-      },
-      "builtin": {
-        "buffer.Buffer.isBuffer": true,
-        "crypto.createHash": true
+        "inherits": true,
+        "minimalistic-assert": true
       }
     },
-    "browser-resolve": {
+    "hmac-drbg": {
       "packages": {
-        "resolve": true
+        "hash.js": true,
+        "minimalistic-assert": true,
+        "minimalistic-crypto-utils": true
+      }
+    },
+    "inherits": {
+      "builtin": {
+        "util.inherits": true
+      }
+    },
+    "inline-source-map": {
+      "globals": {
+        "Buffer": true
+      },
+      "packages": {
+        "source-map": true
+      }
+    },
+    "insert-module-globals": {
+      "builtin": {
+        "path.dirname": true,
+        "path.isAbsolute": true,
+        "path.relative": true,
+        "path.sep": true
       },
       "globals": {
-        "process.platform": true,
+        "Buffer.concat": true,
+        "Buffer.isBuffer": true
+      },
+      "packages": {
+        "acorn-node": true,
+        "combine-source-map": true,
+        "path-is-absolute": true,
+        "through2": true,
+        "undeclared-identifiers": true,
+        "xtend": true
+      }
+    },
+    "json-stable-stringify": {
+      "packages": {
+        "jsonify": true
+      }
+    },
+    "jsonparse": {
+      "globals": {
+        "Buffer": true
+      }
+    },
+    "keccak": {
+      "builtin": {
+        "stream.Transform": true
+      },
+      "globals": {
+        "Buffer.alloc": true,
+        "Buffer.from": true,
+        "Buffer.isBuffer": true,
         "__dirname": true
       },
+      "native": true,
+      "packages": {
+        "node-gyp-build": true
+      }
+    },
+    "labeled-stream-splicer": {
+      "packages": {
+        "inherits": true,
+        "stream-splicer": true
+      }
+    },
+    "module-deps": {
       "builtin": {
+        "fs.createReadStream": true,
         "fs.readFile": true,
-        "fs.readFileSync": true,
-        "path": true
+        "path.delimiter": true,
+        "path.dirname": true,
+        "path.join": true,
+        "path.resolve": true
+      },
+      "globals": {
+        "process.cwd": true,
+        "process.env.NODE_PATH": true,
+        "process.nextTick": true,
+        "process.platform": true,
+        "setTimeout": true,
+        "tr": true
+      },
+      "packages": {
+        "browser-resolve": true,
+        "cached-path-relative": true,
+        "concat-stream": true,
+        "defined": true,
+        "detective": true,
+        "duplexer2": true,
+        "inherits": true,
+        "parents": true,
+        "readable-stream": true,
+        "resolve": true,
+        "stream-combiner2": true,
+        "through2": true,
+        "xtend": true
+      }
+    },
+    "node-gyp-build": {
+      "builtin": {
+        "fs.existsSync": true,
+        "fs.readdirSync": true,
+        "os.arch": true,
+        "os.platform": true,
+        "path.dirname": true,
+        "path.join": true,
+        "path.resolve": true
+      },
+      "globals": {
+        "__non_webpack_require__": true,
+        "__webpack_require__": true,
+        "process": true
+      }
+    },
+    "parents": {
+      "globals": {
+        "process.cwd": true,
+        "process.platform": true
+      },
+      "packages": {
+        "path-platform": true
+      }
+    },
+    "path-is-absolute": {
+      "globals": {
+        "process.platform": true
+      }
+    },
+    "path-parse": {
+      "globals": {
+        "process.platform": true
+      }
+    },
+    "path-platform": {
+      "builtin": {
+        "path": true,
+        "util.isObject": true,
+        "util.isString": true
+      },
+      "globals": {
+        "process.cwd": true,
+        "process.env": true,
+        "process.platform": true
+      }
+    },
+    "process-nextick-args": {
+      "globals": {
+        "process": true
+      }
+    },
+    "randombytes": {
+      "builtin": {
+        "crypto.randomBytes": true
+      }
+    },
+    "read-only-stream": {
+      "packages": {
+        "readable-stream": true
+      }
+    },
+    "readable-stream": {
+      "builtin": {
+        "events.EventEmitter": true,
+        "stream": true,
+        "util": true
+      },
+      "globals": {
+        "process.browser": true,
+        "process.env.READABLE_STREAM": true,
+        "process.stderr": true,
+        "process.stdout": true,
+        "process.version.slice": true,
+        "setImmediate": true
+      },
+      "packages": {
+        "core-util-is": true,
+        "inherits": true,
+        "isarray": true,
+        "process-nextick-args": true,
+        "safe-buffer": true,
+        "string_decoder": true,
+        "util-deprecate": true
       }
     },
     "resolve": {
-      "packages": {
-        "path-parse": true
-      },
-      "globals": {
-        "process.nextTick": true,
-        "process.platform": true,
-        "process.versions": true
-      },
       "builtin": {
         "fs.readFile": true,
         "fs.readFileSync": true,
@@ -204,81 +474,24 @@
         "path.parse": true,
         "path.relative": true,
         "path.resolve": true
-      }
-    },
-    "read-only-stream": {
-      "packages": {
-        "readable-stream": true
-      }
-    },
-    "cached-path-relative": {
-      "globals": {
-        "process.cwd": true
-      },
-      "builtin": {
-        "path": true
-      }
-    },
-    "module-deps": {
-      "packages": {
-        "cached-path-relative": true,
-        "browser-resolve": true,
-        "resolve": true,
-        "detective": true,
-        "through2": true,
-        "concat-stream": true,
-        "parents": true,
-        "stream-combiner2": true,
-        "duplexer2": true,
-        "xtend": true,
-        "defined": true,
-        "inherits": true,
-        "readable-stream": true
       },
       "globals": {
-        "process.cwd": true,
         "process.nextTick": true,
-        "process.env.NODE_PATH": true,
         "process.platform": true,
-        "tr": true,
-        "setTimeout": true
+        "process.versions": true
       },
-      "builtin": {
-        "fs.createReadStream": true,
-        "fs.readFile": true,
-        "path.delimiter": true,
-        "path.dirname": true,
-        "path.join": true,
-        "path.resolve": true
+      "packages": {
+        "path-parse": true
       }
     },
-    "ethjs-util": {
-      "packages": {
-        "is-hex-prefixed": true,
-        "strip-hex-prefix": true
-      },
+    "rlp": {
       "globals": {
-        "Buffer": true
-      }
-    },
-    "shasum-object": {
-      "packages": {
-        "fast-safe-stringify": true
-      },
-      "globals": {
+        "Buffer.concat": true,
+        "Buffer.from": true,
         "Buffer.isBuffer": true
       },
-      "builtin": {
-        "crypto.createHash": true
-      }
-    },
-    "JSONStream": {
       "packages": {
-        "jsonparse": true,
-        "through": true
-      },
-      "globals": {
-        "Buffer": true
+        "bn.js": true
       }
     },
     "safe-buffer": {
@@ -286,252 +499,69 @@
         "buffer": true
       }
     },
-    "combine-source-map": {
-      "packages": {
-        "convert-source-map": true,
-        "lodash.memoize": true,
-        "inline-source-map": true,
-        "source-map": true
-      },
+    "secp256k1": {
       "globals": {
-        "process.platform": true
+        "__dirname": true,
+        "contextRandomize": true,
+        "ecdh": true,
+        "ecdsaRecover": true,
+        "ecdsaSign": true,
+        "ecdsaVerify": true,
+        "privateKeyNegate": true,
+        "privateKeyTweakAdd": true,
+        "privateKeyTweakMul": true,
+        "privateKeyVerify": true,
+        "publicKeyCombine": true,
+        "publicKeyConvert": true,
+        "publicKeyCreate": true,
+        "publicKeyNegate": true,
+        "publicKeyTweakAdd": true,
+        "publicKeyTweakMul": true,
+        "publicKeyVerify": true,
+        "signatureExport": true,
+        "signatureImport": true,
+        "signatureNormalize": true
       },
+      "native": true,
+      "packages": {
+        "elliptic": true,
+        "node-gyp-build": true
+      }
+    },
+    "shasum": {
       "builtin": {
-        "path.dirname": true,
-        "path.join": true
-      }
-    },
-    "undeclared-identifiers": {
-      "packages": {
-        "xtend": true,
-        "acorn-node": true,
-        "dash-ast": true,
-        "get-assigned-identifiers": true
-      }
-    },
-    "acorn-node": {
-      "packages": {
-        "acorn": true,
-        "xtend": true,
-        "acorn-walk": true
+        "buffer.Buffer.isBuffer": true,
+        "crypto.createHash": true
       },
-      "globals": {
-        "BigInt": true
-      }
-    },
-    "path-is-absolute": {
-      "globals": {
-        "process.platform": true
-      }
-    },
-    "stream-splicer": {
       "packages": {
-        "readable-stream": true,
-        "inherits": true
-      },
-      "globals": {
-        "setImmediate": true,
-        "process.nextTick": true
+        "json-stable-stringify": true
       }
     },
-    "readable-stream": {
-      "packages": {
-        "process-nextick-args": true,
-        "core-util-is": true,
-        "inherits": true,
-        "isarray": true,
-        "safe-buffer": true,
-        "string_decoder": true,
-        "util-deprecate": true
-      },
-      "globals": {
-        "process.env.READABLE_STREAM": true,
-        "process.stdout": true,
-        "process.stderr": true,
-        "process.browser": true,
-        "process.version.slice": true,
-        "setImmediate": true
-      },
+    "shasum-object": {
       "builtin": {
-        "stream": true,
-        "util": true
-      }
-    },
-    "buffer-from": {
-      "globals": {
-        "Buffer": true
-      }
-    },
-    "json-stable-stringify": {
-      "packages": {
-        "jsonify": true
-      }
-    },
-    "detective": {
-      "packages": {
-        "acorn-node": true,
-        "defined": true
-      }
-    },
-    "parents": {
-      "packages": {
-        "path-platform": true
+        "crypto.createHash": true
       },
       "globals": {
-        "process.cwd": true,
-        "process.platform": true
+        "Buffer.isBuffer": true
+      },
+      "packages": {
+        "fast-safe-stringify": true
       }
     },
     "stream-combiner2": {
       "packages": {
-        "readable-stream": true,
-        "duplexer2": true
-      }
-    },
-    "duplexer2": {
-      "packages": {
+        "duplexer2": true,
         "readable-stream": true
       }
     },
-    "ethereum-cryptography": {
+    "stream-splicer": {
+      "globals": {
+        "process.nextTick": true,
+        "setImmediate": true
+      },
       "packages": {
-        "secp256k1": true,
-        "keccak": true,
-        "randombytes": true
-      },
-      "globals": {
-        "Buffer.from": true
-      }
-    },
-    "create-hash": {
-      "builtin": {
-        "crypto.createHash": true
-      }
-    },
-    "rlp": {
-      "packages": {
-        "bn.js": true
-      },
-      "globals": {
-        "Buffer.concat": true,
-        "Buffer.from": true,
-        "Buffer.isBuffer": true
-      }
-    },
-    "strip-hex-prefix": {
-      "packages": {
-        "is-hex-prefixed": true
-      }
-    },
-    "jsonparse": {
-      "globals": {
-        "Buffer": true
-      }
-    },
-    "convert-source-map": {
-      "globals": {
-        "Buffer": true
-      },
-      "builtin": {
-        "fs.readFileSync": true,
-        "path.join": true
-      }
-    },
-    "inline-source-map": {
-      "packages": {
-        "source-map": true
-      },
-      "globals": {
-        "Buffer": true
-      }
-    },
-    "dash-ast": {
-      "builtin": {
-        "assert": true
-      }
-    },
-    "get-assigned-identifiers": {
-      "builtin": {
-        "assert.equal": true
-      }
-    },
-    "path-platform": {
-      "globals": {
-        "process.platform": true,
-        "process.cwd": true,
-        "process.env": true
-      },
-      "builtin": {
-        "path": true,
-        "util.isObject": true,
-        "util.isString": true
-      }
-    },
-    "bn.js": {
-      "builtin": {
-        "buffer.Buffer": true
-      }
-    },
-    "secp256k1": {
-      "packages": {
-        "node-gyp-build": true,
-        "elliptic": true
-      },
-      "globals": {
-        "__dirname": true,
-        "contextRandomize": true,
-        "privateKeyVerify": true,
-        "privateKeyNegate": true,
-        "privateKeyTweakAdd": true,
-        "privateKeyTweakMul": true,
-        "publicKeyVerify": true,
-        "publicKeyCreate": true,
-        "publicKeyConvert": true,
-        "publicKeyNegate": true,
-        "publicKeyCombine": true,
-        "publicKeyTweakAdd": true,
-        "publicKeyTweakMul": true,
-        "signatureNormalize": true,
-        "signatureExport": true,
-        "signatureImport": true,
-        "ecdsaSign": true,
-        "ecdsaVerify": true,
-        "ecdsaRecover": true,
-        "ecdh": true
-      }
-    },
-    "keccak": {
-      "packages": {
-        "node-gyp-build": true
-      },
-      "globals": {
-        "__dirname": true,
-        "Buffer.alloc": true,
-        "Buffer.isBuffer": true,
-        "Buffer.from": true
-      },
-      "builtin": {
-        "stream.Transform": true
-      }
-    },
-    "process-nextick-args": {
-      "globals": {
-        "process": true
-      }
-    },
-    "core-util-is": {
-      "globals": {
-        "Buffer.isBuffer": true
-      }
-    },
-    "path-parse": {
-      "globals": {
-        "process.platform": true
-      }
-    },
-    "acorn-walk": {
-      "globals": {
-        "define": true
+        "inherits": true,
+        "readable-stream": true
       }
     },
     "string_decoder": {
@@ -539,74 +569,47 @@
         "safe-buffer": true
       }
     },
+    "strip-hex-prefix": {
+      "packages": {
+        "is-hex-prefixed": true
+      }
+    },
+    "syntax-error": {
+      "packages": {
+        "acorn-node": true
+      }
+    },
+    "through": {
+      "builtin": {
+        "stream": true
+      },
+      "globals": {
+        "process.nextTick": true
+      }
+    },
+    "through2": {
+      "builtin": {
+        "util.inherits": true
+      },
+      "globals": {
+        "process.nextTick": true
+      },
+      "packages": {
+        "readable-stream": true,
+        "xtend": true
+      }
+    },
+    "undeclared-identifiers": {
+      "packages": {
+        "acorn-node": true,
+        "dash-ast": true,
+        "get-assigned-identifiers": true,
+        "xtend": true
+      }
+    },
     "util-deprecate": {
       "builtin": {
         "util.deprecate": true
-      }
-    },
-    "esprima": {
-      "globals": {
-        "define": true
-      }
-    },
-    "randombytes": {
-      "builtin": {
-        "crypto.randomBytes": true
-      }
-    },
-    "acorn": {
-      "globals": {
-        "define": true,
-        "BigInt": true
-      }
-    },
-    "node-gyp-build": {
-      "globals": {
-        "__webpack_require__": true,
-        "__non_webpack_require__": true,
-        "process": true
-      },
-      "builtin": {
-        "fs.existsSync": true,
-        "fs.readdirSync": true,
-        "os.arch": true,
-        "os.platform": true,
-        "path.dirname": true,
-        "path.join": true,
-        "path.resolve": true
-      }
-    },
-    "elliptic": {
-      "packages": {
-        "brorand": true,
-        "bn.js": true,
-        "minimalistic-assert": true,
-        "minimalistic-crypto-utils": true,
-        "hash.js": true,
-        "hmac-drbg": true,
-        "inherits": true
-      }
-    },
-    "brorand": {
-      "globals": {
-        "crypto": true,
-        "msCrypto": true
-      },
-      "builtin": {
-        "crypto.randomBytes": true
-      }
-    },
-    "hash.js": {
-      "packages": {
-        "minimalistic-assert": true,
-        "inherits": true
-      }
-    },
-    "hmac-drbg": {
-      "packages": {
-        "hash.js": true,
-        "minimalistic-crypto-utils": true,
-        "minimalistic-assert": true
       }
     }
   }

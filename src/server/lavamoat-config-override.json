@@ -15,6 +15,26 @@
       "packages": {
         "keccak": true
       }
+    },
+    "mime": {
+      "builtin": {
+        "path": true
+      }
+    },
+    "http-signature": {
+      "builtin": {
+        "http": true
+      }
+    },
+    "jsprim": {
+      "builtin": {
+        "util": true
+      }
+    },
+    "tunnel-agent": {
+      "builtin": {
+        "net": true
+      }
     }
   }
 }

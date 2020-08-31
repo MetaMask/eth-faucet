@@ -9,6 +9,12 @@
       "packages": {
         "envify": true
       }
+    },
+    "node-gyp-build": {
+      "packages": {
+        "secp256k1": true,
+        "keccak": true
+      }
     }
   }
 }

@@ -24,7 +24,7 @@ function startApp () {
   let provider
   if (global.ethereum) {
     provider = global.ethereum
-  } else (global.web3) {
+  } else if (global.web3) {
     provider = global.web3.currentProvider
   }
 

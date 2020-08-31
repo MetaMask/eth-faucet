@@ -3825,10 +3825,22 @@ lavamoat-browserify@^10.2.1:
     through2 "^3.0.0"
     umd "^3.0.3"
 
-lavamoat-core@^5.0.1, lavamoat-core@^5.0.2:
+lavamoat-core@^5.0.1:
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/lavamoat-core/-/lavamoat-core-5.0.2.tgz#dbab560ce7e4cccc483f134065925988ad8b8d46"
   integrity sha512-cPDO1QpRp0Rq9XqHuPOmWKYV9LJwXLPRqyKNt9mdbznDMRyJdddstBWKWUCMVpVIZDJPCEQ8SOKrqW3VhmidVg==
+  dependencies:
+    cytoplasm "^3.3.1"
+    fromentries "^1.2.0"
+    json-stable-stringify "^1.0.1"
+    lavamoat-tofu "^5.1.0"
+    resolve "^1.15.1"
+    ses "^0.7.7"
+
+lavamoat-core@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/lavamoat-core/-/lavamoat-core-6.0.0.tgz#8456084e92f35906fb874cbe62ea0bd3253d2f52"
+  integrity sha512-yugh7I1j8fotWUwUqgqrIGRZbm9fn+nviwhln7TdoyPm1T61iReQAavexPGcDbKFBlbQGR5JMtCmdLdgno3F3A==
   dependencies:
     cytoplasm "^3.3.1"
     fromentries "^1.2.0"
@@ -3853,15 +3865,19 @@ lavamoat-tofu@^5.1.0:
     "@babel/parser" "^7.10.1"
     "@babel/traverse" "^7.10.1"
 
-lavamoat@^3.1.2:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/lavamoat/-/lavamoat-3.1.2.tgz#174f20e595a4ef4f345b639bef79418d2ba4da1d"
-  integrity sha512-I0VWMqkLuhzEImh6fDelvAfks1WDF2xZKtlaH8jGi+dlmhUFVltE9F8Tk9VK+7zXVC2QX8gJq+WaidS3omI0OQ==
+lavamoat@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/lavamoat/-/lavamoat-4.0.1.tgz#d94d4f41b14f0f753ec701873cc33fcfa512c812"
+  integrity sha512-+J4mbkrrSuqmFTDXgfvXfLvyVqBh2aFjLxRNeydg6fGJcq8x2rvYF6iwAjpZ2B2M4c/hRSK9uowx8Kha5abDFw==
   dependencies:
+    "@babel/code-frame" "^7.10.4"
+    bindings "^1.5.0"
     htmlescape "^1.1.1"
-    lavamoat-core "^5.0.2"
+    json-stable-stringify "^1.0.1"
+    lavamoat-core "^6.0.0"
     lavamoat-tofu "^5.0.0"
     merge-deep "^3.0.2"
+    node-gyp-build "^4.2.3"
     resolve "^1.15.1"
     yargs "^15.3.1"
 
@@ -4724,7 +4740,7 @@ node-fetch@~1.7.1:
     encoding "^0.1.11"
     is-stream "^1.0.1"
 
-node-gyp-build@^4.2.0:
+node-gyp-build@^4.2.0, node-gyp-build@^4.2.3:
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/node-gyp-build/-/node-gyp-build-4.2.3.tgz#ce6277f853835f718829efb47db20f3e4d9c4739"
   integrity sha512-MN6ZpzmfNCRM+3t57PTJHgHyw/h4OWnZ6mR8P5j/uZtqQr46RRuDE/P+g3n0YR/AiYXeWixZZzaip77gdICfRg==

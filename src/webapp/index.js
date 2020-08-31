@@ -79,8 +79,8 @@ function getAccounts () {
  * https://medium.com/metamask/eip-1102-preparing-your-dapp-5027b2c9ed76
  */
 async function requestAccounts () {
-  const provider = global.web3.currentProvider
-  if ('enable' in global.web3.currentProvider) {
+  const provider = global.provider
+  if ('enable' in provider) {
     try {
       const accounts = await provider.enable()
       getAccounts()

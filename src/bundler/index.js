@@ -9,7 +9,8 @@ const srcPath = path.join(__dirname, '/../webapp/index.js')
 const destPath = path.join(__dirname, '/../../build/app.js')
 
 // prepare app bundle
-const bundler = browserify(lavamoat.args)
+// const bundler = browserify(lavamoat.args)
+const bundler = browserify()
 
 // inject faucet address
 bundler.transform(envify({

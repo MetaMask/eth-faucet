@@ -19,15 +19,23 @@ var state = {
 window.addEventListener('load', startApp)
 
 function startApp () {
-  // check environment
-  if (!global.web3) {
+
+  // attempt to get provider from environment
+  let provider
+  if (global.ethereum) {
+    provider = global.ethereum
+  } else (global.web3) {
+    provider = global.web3.currentProvider
+  }
+
+  // display warning if incompatible
+  if (!provider) {
     // abort
-    render(h('span', 'No web3 detected.'))
+    render(h('span', 'No ethereum provider detected. Install a web-enabled wallet (eg MetaMask metamask.io) to continue'))
     return
   }
 
   // create query helper
-  const provider = global.web3.currentProvider
   global.ethQuery = new EthQuery(provider)
   global.provider = provider
 

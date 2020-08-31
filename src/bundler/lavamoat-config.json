@@ -439,7 +439,6 @@
     },
     "readable-stream": {
       "builtin": {
-        "events.EventEmitter": true,
         "stream": true,
         "util": true
       },

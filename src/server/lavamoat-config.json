@@ -498,7 +498,6 @@
     "http-signature": {
       "builtin": {
         "crypto.createHmac": true,
-        "http": true,
         "util.format": true,
         "util.inherits": true
       },
@@ -576,9 +575,6 @@
       }
     },
     "jsprim": {
-      "builtin": {
-        "util": true
-      },
       "packages": {
         "assert-plus": true,
         "extsprintf": true,
@@ -702,8 +698,7 @@
     },
     "mime": {
       "builtin": {
-        "fs.readFileSync": true,
-        "path": true
+        "fs.readFileSync": true
       },
       "globals": {
         "console.warn": true,
@@ -982,9 +977,17 @@
     },
     "sshpk": {
       "builtin": {
-        "crypto": true,
+        "crypto.createCipheriv": true,
+        "crypto.createDecipheriv": true,
+        "crypto.createDiffieHellman": true,
+        "crypto.createECDH": true,
+        "crypto.createHash": true,
+        "crypto.createHmac": true,
+        "crypto.createSign": true,
+        "crypto.createVerify": true,
+        "crypto.randomBytes": true,
         "stream.Writable": true,
-        "util": true
+        "util.inherits": true
       },
       "globals": {
         "Buffer.isBuffer": true
@@ -1026,7 +1029,6 @@
         "http.Agent.defaultMaxSockets": true,
         "http.request": true,
         "https.request": true,
-        "net": true,
         "tls.connect": true,
         "util.inherits": true
       },

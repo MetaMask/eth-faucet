@@ -13,7 +13,7 @@ Or pass the environment variable `FAUCET_CONFIG_LOCATION` to the build step.
 
 ### development:
 
-After `yarn install`, you must run `yarn run postinstall` to complete the installation. This is a workaround for applying a dependency install script whitelist.
+After `yarn install`, you must run `yarn run post-install` to complete the installation. This is a workaround for applying a dependency install script whitelist.
 
 The `yarn start` script runs `node server.js`, which runs browserify once on startup on the `app.js` script. That means the basic approach to development requires restarting the server on each change to see the result.
 

@@ -1,5 +1,14 @@
 {
   "resources": {
+    "cross-fetch": {
+      "globals": {
+        "Blob": true,
+        "FileReader": true,
+        "FormData": true,
+        "URLSearchParams.prototype.isPrototypeOf": true,
+        "XMLHttpRequest": true
+      }
+    },
     "eth-query": {
       "packages": {
         "json-rpc-random-id": true,
@@ -13,30 +22,10 @@
         "document.createTextNode": true
       }
     },
-    "is-function": {
-      "globals": {
-        "alert": true,
-        "confirm": true,
-        "prompt": true,
-        "setTimeout": true
-      }
-    },
     "process": {
       "globals": {
         "clearTimeout": true,
         "setTimeout": true
-      }
-    },
-    "xhr": {
-      "globals": {
-        "clearTimeout": true,
-        "setTimeout": true
-      },
-      "packages": {
-        "global": true,
-        "is-function": true,
-        "parse-headers": true,
-        "xtend": true
       }
     }
   }

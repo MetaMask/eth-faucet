@@ -1,5 +1,5 @@
 diff --git a/node_modules/depd/index.js b/node_modules/depd/index.js
-index d758d3c..dbff6c9 100644
+index d758d3c..d1f32c9 100644
 --- a/node_modules/depd/index.js
 +++ b/node_modules/depd/index.js
 @@ -1,522 +1 @@
@@ -525,5 +525,5 @@ index d758d3c..dbff6c9 100644
 -
 -  return error
 -}
-+module.exports = require('./lib/browser/index.js')
++module.exports = require('./lib/browser')
 \ No newline at end of file

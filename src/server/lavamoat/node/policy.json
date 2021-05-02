@@ -196,6 +196,15 @@
         "util.inherits": true
       }
     },
+    "depd": {
+      "builtin": {
+        "events.EventEmitter.listenerCount": true,
+        "path.relative": true
+      },
+      "globals": {
+        "process": true
+      }
+    },
     "destroy": {
       "builtin": {
         "fs.ReadStream": true,

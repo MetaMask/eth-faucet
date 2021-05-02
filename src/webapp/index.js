@@ -1,5 +1,5 @@
 const h = require('h')
-const xhr = require('xhr')
+const fetch = require('cross-fetch');
 const EthQuery = require('eth-query')
 
 var state = {
@@ -234,34 +234,42 @@ async function getEther () {
   var uri = window.location.href
   var data = account
 
-  xhr({
-    method: 'POST',
-    body: data,
-    uri: uri,
-    headers: {
-      'Content-Type': 'application/rawdata'
-    }
-  }, function (err, resp, body) {
-    // display error
-    if (err) {
-      state.errorMessage = err || err.stack
-      return
-    }
-    // display error-in-body
-    try {
-      if (body.slice(0, 2) === '0x') {
-        state.transactions.push(body)
-        state.errorMessage = null
-      } else {
-        state.errorMessage = body
+  let res, err
+  
+  try {
+    res = await fetch(uri, {
+      method: 'POST',
+      body: data,
+      headers: {
+        'Content-Type': 'application/rawdata'
       }
-    } catch (err) {
-      state.errorMessage = err || err.stack
+    })
+  } catch (error) {
+    err = error
+  }
+
+  // display error
+  if (err) {
+    state.errorMessage = err || err.stack
+    return
+  }
+  // display error-in-body
+  let body
+  try {
+    body = await res.text()
+    if (body.slice(0, 2) === '0x') {
+      state.transactions.push(body)
+      state.errorMessage = null
+    } else {
+      state.errorMessage = body
     }
-    // display tx hash
-    console.log('faucet response:', body)
-    updateStateFromNetwork()
-  })
+  } catch (err) {
+    state.errorMessage = err || err.stack
+  }
+
+  // display tx hash
+  console.log('faucet response:', body)
+  updateStateFromNetwork()
 }
 
 async function sendTx (value) {

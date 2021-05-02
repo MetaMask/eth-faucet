@@ -5,11 +5,13 @@ RUN mkdir -p /www/
 WORKDIR /www/
 
 # install dependencies
-COPY .yarnrc yarn.lock package.json patches/ /www/
+COPY .yarnrc yarn.lock package.json /www/
+COPY patches /www/patches/
 RUN yarn setup
 
 # copy over app dir and build
-COPY config.js src/ /www/
+COPY config.js /www/
+COPY src /www/src/
 RUN yarn build
 
 # start server

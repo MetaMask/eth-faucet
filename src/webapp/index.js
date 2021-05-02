@@ -231,7 +231,7 @@ async function getEther () {
   // We already prompted to unlock in requestAccounts()
   if (!account) return
 
-  var uri = `${window.location.href}/request`
+  var uri = `${window.location.href}request`
   var data = account
 
   let res, err

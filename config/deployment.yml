@@ -40,6 +40,11 @@ metadata:
   name: faucet-ingress
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    # https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#rate-limiting
+    nginx.ingress.kubernetes.io/limit-connections: 1
+    nginx.ingress.kubernetes.io/limit-rps: 1
+    nginx.ingress.kubernetes.io/limit-rpm: 5
+    nginx.ingress.kubernetes.io/limit-burst-multiplier: 1
 spec:
   tls:
   - hosts:

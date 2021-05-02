@@ -253,6 +253,17 @@ async function getEther () {
     state.errorMessage = err || err.stack
     return
   }
+
+  if (res.code === '420') {
+    state.errorMessage = `Being ratelimited... try again later`
+    return
+  }
+
+  if (!res.ok) {
+    state.errorMessage = `Error: ${res.status} ${res.statusText}`
+    return
+  }
+
   // display error-in-body
   let body
   try {

@@ -11,14 +11,10 @@
     },
     "acorn": {
       "globals": {
-        "BigInt": true,
         "define": true
       }
     },
     "acorn-node": {
-      "globals": {
-        "BigInt": true
-      },
       "packages": {
         "acorn": true,
         "acorn-walk": true,
@@ -33,6 +29,9 @@
     "bn.js": {
       "builtin": {
         "buffer.Buffer": true
+      },
+      "globals": {
+        "Buffer": true
       }
     },
     "brorand": {
@@ -311,6 +310,14 @@
         "xtend": true
       }
     },
+    "is-core-module": {
+      "globals": {
+        "process.versions": true
+      },
+      "packages": {
+        "has": true
+      }
+    },
     "json-stable-stringify": {
       "packages": {
         "jsonify": true
@@ -439,6 +446,7 @@
     },
     "readable-stream": {
       "builtin": {
+        "events.EventEmitter": true,
         "stream": true,
         "util": true
       },
@@ -480,6 +488,7 @@
         "process.versions": true
       },
       "packages": {
+        "is-core-module": true,
         "path-parse": true
       }
     },
@@ -500,26 +509,7 @@
     },
     "secp256k1": {
       "globals": {
-        "__dirname": true,
-        "contextRandomize": true,
-        "ecdh": true,
-        "ecdsaRecover": true,
-        "ecdsaSign": true,
-        "ecdsaVerify": true,
-        "privateKeyNegate": true,
-        "privateKeyTweakAdd": true,
-        "privateKeyTweakMul": true,
-        "privateKeyVerify": true,
-        "publicKeyCombine": true,
-        "publicKeyConvert": true,
-        "publicKeyCreate": true,
-        "publicKeyNegate": true,
-        "publicKeyTweakAdd": true,
-        "publicKeyTweakMul": true,
-        "publicKeyVerify": true,
-        "signatureExport": true,
-        "signatureImport": true,
-        "signatureNormalize": true
+        "__dirname": true
       },
       "native": true,
       "packages": {

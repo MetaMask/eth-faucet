@@ -1,5 +1,5 @@
 diff --git a/node_modules/acorn/dist/acorn.js b/node_modules/acorn/dist/acorn.js
-index 798c667..c2c9170 100644
+index 0523f0e..a1aba9c 100644
 --- a/node_modules/acorn/dist/acorn.js
 +++ b/node_modules/acorn/dist/acorn.js
 @@ -4573,7 +4573,7 @@

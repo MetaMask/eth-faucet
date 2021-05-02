@@ -4,14 +4,9 @@
   "private": true,
   "description": "",
   "main": "index.js",
-  "browserify": {
-    "transform": [
-      "envify"
-    ]
-  },
   "dependencies": {
+    "@lavamoat/allow-scripts": "^1.0.5",
     "@pablopunk/geo-ip": "^1.0.0",
-    "allow-scripts": "^1.5.3",
     "body-parser": "^1.15.2",
     "cors": "^2.8.1",
     "emoji-flag": "^1.1.0",
@@ -21,7 +16,7 @@
     "ethjs-query": "^0.3.8",
     "express": "^4.14.0",
     "express-rate-limit": "^5.1.3",
-    "lavamoat": "^4.0.1",
+    "lavamoat": "^5.3.1",
     "patch-package": "^6.2.2",
     "request": "^2.75.0",
     "web3-provider-engine": "^15.0.12",
@@ -34,12 +29,13 @@
     "ethers": "^4.0.47",
     "ganache-cli": "^6.9.1",
     "h": "^0.1.0",
-    "lavamoat-browserify": "^10.2.1",
+    "lavamoat-browserify": "^13.1.1",
     "standard": "^14.3.3",
     "tape": "^5.0.0",
     "xhr": "^2.2.2"
   },
   "scripts": {
+    "setup": "yarn install && patch-package && allow-scripts",
     "test": "concurrently --kill-others --success=first 'npm:test:ganache' 'npm:test:server' 'npm:test:runner'",
     "test:ganache": "ganache-cli --defaultBalanceEther '1000000000' -m 'stool sorry reveal vacuum notice grass trap aspect trigger marble mountain cargo'",
     "test:server": "sleep 3 && FAUCET_CONFIG='test' FAUCET_CONFIG_PATH='../../test/config.js' npm start",
@@ -49,19 +45,20 @@
     "start": "(cd src/server && lavamoat index.js)",
     "build": "(cd src/bundler && lavamoat index.js)",
     "deploy": "docker-compose pull && docker-compose build && docker-compose stop && docker-compose up -d && docker-compose logs -f --tail 200",
-    "after-install": "NODE_ENV=test patch-package && allow-scripts",
-    "post-install": "patch-package",
     "lavamoat": "yarn run lavamoat:server && yarn run lavamoat:bundler && yarn run lavamoat:webapp",
-    "lavamoat:webapp": "(cd src/webapp && browserify index.js --plugin [ lavamoat-browserify --writeAutoConfig ] > /dev/null)",
-    "lavamoat:bundler": "(cd src/bundler && lavamoat index.js --writeAutoConfig)",
-    "lavamoat:server": "(cd src/server && lavamoat index.js --writeAutoConfig)"
-  },
-  "allowScripts": {
-    "keccak": true,
-    "secp256k1": true,
-    "core-js": false,
-    "scrypt": false
+    "lavamoat:webapp": "(cd src/webapp && browserify index.js --plugin [ lavamoat-browserify --writeAutoPolicy ] > /dev/null)",
+    "lavamoat:bundler": "(cd src/bundler && lavamoat index.js --writeAutoPolicy)",
+    "lavamoat:server": "(cd src/server && lavamoat index.js --writeAutoPolicy)"
   },
   "author": "kumavis",
-  "license": "ISC"
+  "license": "ISC",
+  "lavamoat": {
+    "allowScripts": {
+      "scrypt": false,
+      "keccak": true,
+      "secp256k1": true,
+      "@lavamoat/preinstall-always-fail": false,
+      "core-js": false
+    }
+  }
 }

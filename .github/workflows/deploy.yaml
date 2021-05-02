@@ -17,7 +17,7 @@ jobs:
       uses: actions/checkout@main
 
     - name: Prepare config file
-      run: echo ${{ secrets.FAUCET_CONFIG }} > $GITHUB_WORKSPACE/config.js
+      run: echo '${{ secrets.FAUCET_CONFIG }}' > $GITHUB_WORKSPACE/config.js
 
     - name: Build container image
       run: docker build -t registry.digitalocean.com/metamask/eth-faucet:$(echo $GITHUB_SHA | head -c7) .

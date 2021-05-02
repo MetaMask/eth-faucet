@@ -17,7 +17,9 @@ jobs:
       uses: actions/checkout@main
 
     - name: Prepare config file
-      run: printf '${{ secrets.FAUCET_CONFIG }}' > $GITHUB_WORKSPACE/config.js
+      env:
+        FAUCET_CONFIG: ${{ secrets.FAUCET_CONFIG }}
+      run: printf "$FAUCET_CONFIG" > $GITHUB_WORKSPACE/config.js
 
     - name: Build container image
       run: docker build -t registry.digitalocean.com/metamask/eth-faucet:$(echo $GITHUB_SHA | head -c7) .
@@ -37,7 +39,9 @@ jobs:
       run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|registry.digitalocean.com/metamask/eth-faucet:'${TAG}'|' $GITHUB_WORKSPACE/config/deployment.yml
 
     - name: Save DigitalOcean kubeconfig with short-lived credentials
-      run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ${{ secrets.DIGITALOCEAN_CLUSTER_ID }}
+      env:
+        CLUSTER_ID: ${{ secrets.DIGITALOCEAN_CLUSTER_ID }}
+      run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 "$CLUSTER_ID"
 
     - name: Deploy to DigitalOcean Kubernetes
       run: kubectl --validate=false apply -f $GITHUB_WORKSPACE/config/deployment.yml

@@ -76,7 +76,7 @@ function startServer () {
     app.post('/', rateLimiter)
   }
   // handle fauceting request
-  app.post('/', handleRequest)
+  app.post('/request', handleRequest)
 
   // start server
   const server = app.listen(PORT, function () {

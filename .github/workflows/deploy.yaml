@@ -1,4 +1,5 @@
 # based on https://github.com/do-community/example-doctl-action/blob/master/.github/workflows/workflow.yaml
+name: Deploy to DigitalOcean
 
 on:
   push:

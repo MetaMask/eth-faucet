@@ -24,6 +24,8 @@ bundler.transform(envify({
 // add app entry
 bundler.add(srcPath)
 
+fs.mkdirSync(path.dirname(destPath), { recursive: true })
+
 // build app
 bundler.bundle()
   .pipe(fs.createWriteStream(destPath))

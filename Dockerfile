@@ -5,9 +5,7 @@ RUN mkdir -p /www/
 WORKDIR /www/
 
 # install dependencies
-COPY ./package.json /www/package.json
-COPY ./yarn.lock /www/yarn.lock
-COPY ./patches /www/patches
+COPY .yarnrc yarn.lock package.json patches/ /www/
 RUN yarn setup
 
 # copy over app dir

@@ -16,6 +16,9 @@ jobs:
     - name: Checkout main
       uses: actions/checkout@main
 
+    - name: Prepare config file
+      run: echo ${{ secrets.DIGITALOCEAN_CLUSTER_ID }} > $GITHUB_WORKSPACE/config.js
+
     - name: Build container image
       run: docker build -t registry.digitalocean.com/metamask/eth-faucet:$(echo $GITHUB_SHA | head -c7) .
 

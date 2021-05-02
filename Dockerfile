@@ -8,10 +8,9 @@ WORKDIR /www/
 COPY .yarnrc yarn.lock package.json patches/ /www/
 RUN yarn setup
 
-# copy over app dir
-COPY ./src /www/src
-COPY ./build /www/build
-COPY ./config.js /www/config.js
+# copy over app dir and build
+COPY config.js src/ /www/
+RUN yarn build
 
 # start server
 CMD yarn start

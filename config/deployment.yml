@@ -8,7 +8,7 @@ metadata:
 spec:
   ports:
   - port: 80
-    targetPort: 5678
+    targetPort: 9000
   selector:
     app: faucet-ropsten
 ---
@@ -32,7 +32,7 @@ spec:
         imagePullSecrets:
         - name: registry-metamask
         ports:
-        - containerPort: 5678
+        - containerPort: 9000
 ---
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress

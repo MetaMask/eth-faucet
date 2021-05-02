@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: faucet-ropsten
+  annotations:
+    service.beta.kubernetes.io/do-loadbalancer-protocol: "https"
+    service.beta.kubernetes.io/do-loadbalancer-hostname: "faucet.metamask.io"
+spec:
+  ports:
+  - port: 80
+    targetPort: 5678
+  selector:
+    app: faucet-ropsten
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: faucet-ropsten
+spec:
+  selector:
+    matchLabels:
+      app: faucet-ropsten
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: faucet-ropsten
+    spec:
+      containers:
+      - name: faucet-ropsten
+        image: <IMAGE>
+        ports:
+        - containerPort: 5678
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: faucet-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  tls:
+  - hosts:
+    - faucet.metamask.io
+    secretName: faucet-tls
+  rules:
+  - host: faucet.metamask.io
+    http:
+      paths:
+      - backend:
+          serviceName: faucet-ropsten
+          servicePort: 80

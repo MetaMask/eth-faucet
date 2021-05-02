@@ -1,5 +1,4 @@
-FROM node:12
-MAINTAINER kumavis
+FROM node:14
 
 # setup app dir
 RUN mkdir -p /www/

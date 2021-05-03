@@ -19,7 +19,7 @@ Running `yarn build` will prepare the webapp.
 
 Running `yarn start` starts the server.
 
-Will not work without a `config.js` file specified. You can run it with `ganache-cli` by pasting one of your generated private keys into a file like this:
+Will not work without a `config.js` file. You can run it on a local testnet like `ganache-cli` by pasting one of your generated private keys into a file like this:
 
 ```javascript
 module.exports = {

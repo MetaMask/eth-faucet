@@ -3,7 +3,7 @@
 [![Greenkeeper badge](https://badges.greenkeeper.io/MetaMask/eth-faucet.svg?token=126240abfcbf915f71b337dfc332d4ad63e362166827d61078593e2ae20aff36&ts=1501793671323)](https://greenkeeper.io/)
 
 configure:
-edit config.js to have your config details.
+create a `config.js` with private key and rpc endpoint.
 first namespace is used in `docker-compose.yml`.
 ```
 cp config.js.example config.js
@@ -13,11 +13,11 @@ Or pass the environment variable `FAUCET_CONFIG_LOCATION` to the build step.
 
 ### development:
 
-After `yarn install`, you must run `yarn run post-install` to complete the installation. This is a workaround for applying a dependency install script whitelist.
+Running `yarn setup` will install and prepare dependencies.
 
-The `yarn start` script runs `node server.js`, which runs browserify once on startup on the `app.js` script. That means the basic approach to development requires restarting the server on each change to see the result.
+Running `yarn build` will prepare the webapp.
 
-Good thing it's a simple app!
+Running `yarn start` starts the server.
 
 Will not work without a `config.js` file specified. You can run it with `ganache-cli` by pasting one of your generated private keys into a file like this:
 
@@ -31,9 +31,7 @@ module.exports = {
 ```
 
 ### note:
-our nonce tracking sucks, so we shutdown the faucet regularly
+the faucet regularly restarts to ensure its in a good state
 
 ### deploy:
-```
-docker-compose pull && docker-compose build && docker-compose stop && docker-compose up -d && docker-compose logs -f --tail 200
-```
+continuous deployment is setup via github actions and kubernetes

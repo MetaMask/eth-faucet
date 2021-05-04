@@ -11,6 +11,10 @@ cp config.js.example config.js
 
 Or pass the environment variable `FAUCET_CONFIG_LOCATION` to the build step.
 
+### if you need more eth, dont build a spam bot
+
+contact me or the Ethereum Foundation
+
 ### development:
 
 Running `yarn setup` will install and prepare dependencies.

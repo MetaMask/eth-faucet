@@ -255,7 +255,7 @@ async function getEther () {
     return
   }
 
-  if (res.status === '420') {
+  if (res.status === 420) {
     state.errorMessage = `Being ratelimited... try again later`
     return
   }

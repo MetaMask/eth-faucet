@@ -12,7 +12,6 @@ const path = require('path')
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const RateLimit = require('express-rate-limit')
 const EthQuery = require('ethjs-query')
 const BN = require('bn.js')
 const ethUtil = require('ethereumjs-util')
@@ -65,16 +64,6 @@ function startServer () {
   // serve app
   app.use(express.static(appPath))
 
-  // add IP-based rate limiting
-  if (!process.env.SKIP_RATE_LIMITER) {
-    // configure rate limiter
-    const rateLimiter = new RateLimit({
-      windowMs: 60 * min,
-      max: 5,
-      message: `Too many requests created from this IP, limit 5/hr`
-    })
-    app.post('/', rateLimiter)
-  }
   // handle fauceting request
   app.post('/v0/request', handleRequest)
 

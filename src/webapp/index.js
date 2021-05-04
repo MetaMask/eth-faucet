@@ -266,9 +266,7 @@ async function getEther () {
   }
 
   // display error-in-body
-  let body
   try {
-    body = await res.text()
     if (body.slice(0, 2) === '0x') {
       state.transactions.push(body)
       state.errorMessage = null

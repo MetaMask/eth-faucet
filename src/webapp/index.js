@@ -234,7 +234,7 @@ async function getEther () {
   var uri = `${window.location.href}v0/request`
   var data = account
 
-  let res, err
+  let res, body, err
   
   try {
     res = await fetch(uri, {
@@ -244,6 +244,7 @@ async function getEther () {
         'Content-Type': 'application/rawdata'
       }
     })
+    body = await res.text()
   } catch (error) {
     err = error
   }
@@ -260,7 +261,7 @@ async function getEther () {
   }
 
   if (!res.ok) {
-    state.errorMessage = `Error: ${res.status} ${res.statusText}`
+    state.errorMessage = `Error: ${res.status} ${res.statusText} ${body}`
     return
   }
 

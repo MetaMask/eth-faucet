@@ -57,6 +57,27 @@ function getNetwork () {
     if (res.error) return console.res.error(res.error)
     var network = res.result
     state.network = network
+
+    // set networkName for use in etherscan URL
+    switch(network) {
+      case '3': 
+        state.networkName = 'ropsten';
+        break
+      case '42':
+        state.networkName = 'kovan';
+        break  
+      case '4':
+        state.networkName = 'rinkeby';
+        break
+      case '5':
+        state.networkName = 'goerli';
+        break  
+      // not sure about the best way to handle this, but
+      // need to have something if they're on non-public testnet  
+      default:
+        state.networkName = 'unknown';
+        break  
+    }
     renderApp()
   })
 }
@@ -209,7 +230,7 @@ function renderApp () {
           }
         }, (
           state.transactions.map((txHash) => {
-            return link(`https://ropsten.etherscan.io/tx/${txHash}`, txHash)
+            return link(`https://${state.networkName}.etherscan.io/tx/${txHash}`, txHash)
           })
         ))
       ])
@@ -232,16 +253,18 @@ async function getEther () {
   if (!account) return
 
   var uri = `${window.location.href}v0/request`
-  var data = account
+  var data = {
+    'account' : account,
+    'network' : state.network,
+  }
 
   let res, body, err
-  
   try {
     res = await fetch(uri, {
       method: 'POST',
       body: data,
       headers: {
-        'Content-Type': 'application/rawdata'
+        'Content-Type': 'application/json'
       }
     })
     body = await res.text()

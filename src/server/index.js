@@ -87,6 +87,11 @@ function startServer () {
   async function handleRequest (req, res) {
     try {
       // parse address
+      // can parse for network here.
+      // can either be json object or
+      // inserted in a combined rawdata string with address, and then parsed out here
+      // depending on what the network is, make sure ethQuery engine knows when 
+      // testing balance and sending transaction
       let targetAddress = req.body
       if (!targetAddress || typeof targetAddress !== 'string') {
         return didError(res, new Error(`Address parse failure - request body empty`))

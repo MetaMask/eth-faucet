@@ -36,6 +36,8 @@ console.log('Acting as faucet for address:', config.address)
 //
 
 // ProviderEngine based caching layer, with fallback to geth
+// 
+// need to be able to dynamically change rpcOrigin based on network requesting funds
 const engine = rpcWrapperEngine({
   rpcUrl: config.rpcOrigin,
   addressHex: config.address,
@@ -110,6 +112,8 @@ function startServer () {
       const alignedIpAddress = ipAddress.padStart(15, ' ')
       const requestorMessage = `${flag} ${alignedIpAddress} requesting for ${targetAddress}`
       // check for greediness
+      //
+      // need to change network here:
       const balance = await ethQuery.getBalance(targetAddress, 'pending')
       const balanceTooFull = balance.gt(MAX_BALANCE)
       if (balanceTooFull) {
@@ -117,6 +121,7 @@ function startServer () {
         return didError(res, new Error('User is greedy - already has too much ether'))
       }
       // send value
+      // need ot change network here as well:
       const txHash = await ethQuery.sendTransaction({
         to: targetAddress,
         from: config.address,

@@ -45,18 +45,18 @@ function startApp () {
 }
 
 function updateStateFromNetwork () {
-  getNetwork()
+  getChainId()
   getAccounts()
   getBalances()
   renderApp()
 }
 
-function getNetwork () {
-  global.provider.sendAsync({ id: 1, jsonrpc: '2.0', method: 'net_version' }, function (err, res) {
+function getChainId () {
+  global.provider.sendAsync({ id: 1, jsonrpc: '2.0', method: 'eth_chainId' }, function (err, res) {
     if (err) return console.error(err)
     if (res.error) return console.res.error(res.error)
-    var network = res.result
-    state.network = network
+    var chainId = res.result
+    state.chainId = chainId
     renderApp()
   })
 }
@@ -122,8 +122,8 @@ function renderApp () {
   //   return render(h('span', 'web3 detected - Loading...'))
   // }
 
-  // render wrong network warning
-  if (state.network === '1') {
+  // render wrong chain id warning
+  if (state.chainId === '1') {
     return render([
 
       h('section.container', [

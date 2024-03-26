@@ -15,7 +15,7 @@
     "ethereumjs-tx": "^2.1.2",
     "ethereumjs-util": "^7.0.0",
     "ethjs-query": "^0.3.8",
-    "express": "^4.17.3",
+    "express": "^4.19.2",
     "lavamoat": "^5.3.1",
     "patch-package": "^6.2.2",
     "request": "^2.75.0",
